@@ -1,11 +1,13 @@
-#' @title
-#' Preparing study area for Simulation of effects of climate change on fire regime:
-#' implications for BCR6 Caribou and landbird communities in the Northwest Territories project
+utils::globalVariables(c("PRENAME"))
+
+#' Preparing study area for NWT project
+#'
+#' Used in project "ProjecSimulation of effects of climate change on fire regime:
+#' implications for BCR6 Caribou and landbird communities in the Northwest Territories"
 #'
 #' @description
-#' Downloads, reprojects, crops and masks to speficic areas in canada such as:
-#' BCR6, random areas, provinces and territories, or any of the last in the
-#' BCR6.
+#' Downloads, reprojects, crops and masks to specific areas in Canada such as:
+#' BCR6, random areas, provinces and territories, or any of the last in the BCR6.
 #'
 #' @param testArea          Logical. Indicates if the test area should
 #'                          be anything other than `NULL`. Default is `NULL`.
@@ -16,17 +18,16 @@
 #'                          as a character string with a province or territory that is contained
 #'                          in the BCR6 or 'Canada' if the whole Canadian BCR6 is wanted.
 #'                          Default is `NULL`.
-#' @param destinationPath   Path to where to save downloaded files. Default is `tempdir()`.
 #'
 #' @param ...               Arguments to be passed to `prepInputs` or `Cache` (i.e. targetFile,
 #'                          cacheId, destinationPath, overwrite, etc.).
 #'
 #' @author Tati Micheletti and Geneviève Degré-Timmons
 #' @export
-#' @importFrom SpaDES.tools randomPolygon
 #' @importFrom magrittr %>%
 #' @importFrom reproducible prepInputs
 #' @rdname defineStudyArea
+#' @importFrom SpaDES.tools randomPolygon
 defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset = NULL, ...) {
   dots <- list(...)
   rP <- NULL
@@ -44,8 +45,10 @@ defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset 
       polyMatrix <- matrix(c(-79.471273, 48.393518), ncol = 2)
       areaSize <- 10000000
       set.seed(1234)
-      rP <- SpaDES.tools::randomPolygon(x = polyMatrix, hectares = areaSize) # Create Random polygon in southern Ontario
-      message(crayon::yellow("Test area is TRUE, specificTestArea is 'NULL'. Cropping and masking to an area in south Ontario, Canada."))
+      # Create Random polygon in southern Ontario
+      rP <- SpaDES.tools::randomPolygon(x = polyMatrix, hectares = areaSize)
+      message(crayon::yellow("Test area is TRUE, specificTestArea is 'NULL'.",
+                             "Cropping and masking to an area in south Ontario, Canada."))
     } else {
       if (specificTestArea == "BCR6") {
         if (is.null(mapSubset)) {

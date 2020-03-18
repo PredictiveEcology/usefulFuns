@@ -3,6 +3,7 @@
 #' @param years numeric. Years available/intended to be used for the giphy
 #' @param dataPath character. Path to data
 #' @param typeSim character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
+#' @param colNA character. The color to use for NA.
 #' @param saveRAS logical. Save the raster for posterior use?
 #' @param overwrite logical.
 #'

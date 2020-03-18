@@ -1,8 +1,10 @@
 utils::globalVariables(c("MDC_0", "MDC_m", "pixelID", "y"))
 
-#'  Function to create raster stack for climate sensitive models
+#' Function to create raster stack for climate sensitive models
 #'
-#'  Designed primarily for NWT project, but somewhat flexible.
+#' Designed primarily for NWT project, but somewhat flexible.
+#'
+#' @param pathInputs Default NULL (TODO: description needed)
 #'
 #' @param variables Character string of the variables to be used, i.e. c("PPT", "Tmax").
 #'
@@ -57,7 +59,7 @@ utils::globalVariables(c("MDC_0", "MDC_m", "pixelID", "y"))
 #' @importFrom utils zip
 #'
 #' @include grepMulti.R
-#' @rdname createModels
+#' @rdname prepareClimateLayers
 prepareClimateLayers <- function(pathInputs = NULL,
                                  variables = NULL,
                                  years = NULL,

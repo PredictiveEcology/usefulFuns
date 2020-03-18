@@ -1,4 +1,4 @@
-#' prepInputStack is a wrapper to prepInput a stack of raster layers.
+#' Simple wrapper around \code{prepInputs} for a stack of raster layers
 #'
 #' @param targetFile Character string giving the path to the eventual file
 #'   (raster, shapefile, csv, etc.) after downloading and extracting from a zip
@@ -62,35 +62,34 @@
 #'  functions, e.g., \code{\link{cropInputs}}. See details and examples.
 #'
 #' @param useCache Passed to Cache in various places. Defaults to \code{getOption("reproducible.useCache")}
-#' 
+#'
 #' @return RasterStack
 #'
 #' @author Tati Micheletti
 #' @export
 #' @importFrom reproducible prepInputs postProcess
 #' @importFrom raster nlayers stack
-#' 
+#'
 #' @rdname prepInputStack
 
-prepInputStack <- function(...){
-  
+prepInputStack <- function(...) {
   dots <- list(...)
   message("prepInput a raster stack...")
   stackLayers <- reproducible::prepInputs(archive = dots$archive,
-                                           url = dots$url,
+                                          url = dots$url,
                                           targetFile = dots$targetFile,
                                           alsoExtract = dots$alsoExtract,
-                                           destinationPath = dots$destinationPath, 
-                                           fun = "raster::stack")
+                                          destinationPath = dots$destinationPath,
+                                          fun = "raster::stack")
   postProcessedLayers <- lapply(X = seq_len(nlayers(stackLayers)), FUN = function(layer){
-    lay <- reproducible::postProcess(stackLayers[[layer]], studyArea = dots$studyArea, 
-                       rasterToMatch = dots$rasterToMatch, destinationPath = dots$destinationPath,
-                       filename2 = dots$filename2)
+    lay <- reproducible::postProcess(stackLayers[[layer]], studyArea = dots$studyArea,
+                                     rasterToMatch = dots$rasterToMatch, destinationPath = dots$destinationPath,
+                                     filename2 = dots$filename2)
     names(lay) <- names(stackLayers[[layer]])
     return(lay)
   })
   postProcessedLayers <- raster::stack(postProcessedLayers)
   names(postProcessedLayers) <- names(stackLayers) # Added this one for computers that can't process in memory and have to write a temporary file
 
-    return(postProcessedLayers)
+  return(postProcessedLayers)
 }

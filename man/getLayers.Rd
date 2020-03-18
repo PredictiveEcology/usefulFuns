@@ -2,8 +2,7 @@
 % Please edit documentation in R/getLayers.R
 \name{getLayers}
 \alias{getLayers}
-\title{getLayers gets the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.
-It is a function designed to work inside a SpaDES module.}
+\title{Get the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.}
 \usage{
 getLayers(
   currentTime,
@@ -67,8 +66,7 @@ getLayers(
 TODO
 }
 \description{
-getLayers gets the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.
-It is a function designed to work inside a SpaDES module.
+Get the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.
 }
 \author{
 Tati Micheletti

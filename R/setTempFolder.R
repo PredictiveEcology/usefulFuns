@@ -3,7 +3,7 @@
 #'
 #' @param paths paths set with \code{SpaDES.core::setPaths()}.
 #' @param setTmpFolder logical. Should the function reset your temp folder to a new location?
-#' @param name caracter. User name for a final verification. If you are sure you want to set
+#' @param usr character. User name for a final verification. If you are sure you want to set
 #'             your temporary location, use "Tati".
 #'
 #' @return invisible
@@ -13,7 +13,7 @@
 #' @importFrom reproducible asPath checkPath
 #'
 #' @rdname setTempFolder
-setTempFolder <- function(paths, setTmpFolder, usr){
+setTempFolder <- function(paths, setTmpFolder, usr) {
   # Set a storage project folder
   workDirectory <- getwd()
   message("Your current temporary directory is ", tempdir())

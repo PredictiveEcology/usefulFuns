@@ -17,6 +17,8 @@ plotLeadingVegetationType(
 
 \item{typeSim}{character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
 
+\item{colNA}{character. The color to use for NA.}
+
 \item{saveRAS}{logical. Save the raster for posterior use?}
 
 \item{overwrite}{logical.}

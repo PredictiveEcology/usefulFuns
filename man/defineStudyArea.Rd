@@ -2,8 +2,7 @@
 % Please edit documentation in R/defineStudyArea.R
 \name{defineStudyArea}
 \alias{defineStudyArea}
-\title{Preparing study area for Simulation of effects of climate change on fire regime:
-implications for BCR6 Caribou and landbird communities in the Northwest Territories project}
+\title{Preparing study area for NWT project}
 \usage{
 defineStudyArea(
   testArea = NULL,
@@ -27,13 +26,14 @@ Default is `NULL`.}
 
 \item{...}{Arguments to be passed to `prepInputs` or `Cache` (i.e. targetFile,
 cacheId, destinationPath, overwrite, etc.).}
-
-\item{destinationPath}{Path to where to save downloaded files. Default is `tempdir()`.}
 }
 \description{
-Downloads, reprojects, crops and masks to speficic areas in canada such as:
-BCR6, random areas, provinces and territories, or any of the last in the
-BCR6.
+Downloads, reprojects, crops and masks to specific areas in Canada such as:
+BCR6, random areas, provinces and territories, or any of the last in the BCR6.
+}
+\details{
+Used in project "ProjecSimulation of effects of climate change on fire regime:
+implications for BCR6 Caribou and landbird communities in the Northwest Territories"
 }
 \author{
 Tati Micheletti and Geneviève Degré-Timmons

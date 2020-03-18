@@ -2,10 +2,10 @@ utils::globalVariables(c("var"))
 
 #' Plots summary of burns
 #'
-#' @param years numeric. Years available/intended to be used for the giphy
 #' @param dataPath character. Path to data
 #' @param typeSim character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
-#' @param saveRAS logical. Save the raster for posterior use?
+#' @param lastYear TODO
+#' @param theObject TODO
 #' @param overwrite logical. Default FALSE
 #'
 #' @return plot

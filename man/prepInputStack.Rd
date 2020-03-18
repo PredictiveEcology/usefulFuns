@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepInputStack.R
 \name{prepInputStack}
 \alias{prepInputStack}
-\title{prepInputStack is a wrapper to prepInput a stack of raster layers.}
+\title{Simple wrapper around \code{prepInputs} for a stack of raster layers}
 \usage{
 prepInputStack(...)
 }
@@ -74,7 +74,7 @@ even if they pass the checksums or the files are all there.}
 RasterStack
 }
 \description{
-prepInputStack is a wrapper to prepInput a stack of raster layers.
+Simple wrapper around \code{prepInputs} for a stack of raster layers
 }
 \author{
 Tati Micheletti

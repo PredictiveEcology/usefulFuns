@@ -1,14 +1,19 @@
 #' Prepare DUCKS layer
-#' @description This function is intendend to prepare the DUCKS Unlimited Hybrid Wetland
-#'              v. 2.1 layer to be used for different purposes. The output is a RasterLayer
-#'              cropped and reprojected to the \code{studyArea}, as well as resampled to the
-#'              \code{rasterToMatch} if any of these are provided.
+#'
+#' This function is intended to prepare the DUCKS Unlimited Hybrid Wetland v. 2.1 layer
+#' to be used for different purposes.
+#' The output is a RasterLayer cropped and reprojected to the \code{studyArea},
+#' as well as resampled to the \code{rasterToMatch} if any of these are provided.
 #'
 #' @param destinationPath Path where to save the downloaded file.
-#' @param url The url from where the layer should be downloaded from. if \code{NULL}, the default is \code{}
-#' @param studyArea Study area for which the layer should be cropped to
-#' @param rasterToMatch If output rasters should
 #' @param lccLayer Which year should be used as a base for the vegetation layer? Default to 2005
+#' @param url The url from where the layer should be downloaded from.
+#'            If \code{NULL}, the default is used.
+#' @param archive TODO
+#' @param targetFile TODO
+#' @param studyArea Study area for which the layer should be cropped to
+#' @param rasterToMatch TODO
+#' @param overwrite Logical indicating whether to overwrite the previously processed file.
 #'
 #' @return RasterLayer
 #'

@@ -12,11 +12,11 @@ utils::globalVariables(c(".N", "cells", "N"))
 #'                      wetlands == 2
 #'                      uplands > 2
 #'
-#'  @param pathData Where the layers are stored and/or should be saved to
+#' @param pathData Where the layers are stored and/or should be saved to
 #'
-#'  @param studyArea If the layer should be cropped and masked after classification. Optional.
+#' @param studyArea If the layer should be cropped and masked after classification. Optional.
 #'
-#'  @param RasterToMatch raster to match the new layer after classification to. Optional.
+#' @param RasterToMatch raster to match the new layer after classification to. Optional.
 #'
 #' @return As with \code{\link[archivist]{cache}}, returns the value of the
 #' function call or the cached version (i.e., the result from a previous call
