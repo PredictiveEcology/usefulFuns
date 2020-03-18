@@ -27,16 +27,15 @@
 #' @importFrom magrittr %>%
 #' @importFrom reproducible prepInputs
 #' @rdname defineStudyArea
-
 defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset = NULL, ...) {
   dots <- list(...)
   rP <- NULL
-  if (any(is.null(testArea), (!is.null(testArea) &
-                              testArea == FALSE))) {
+  if (any(is.null(testArea), (!is.null(testArea) & testArea == FALSE))) {
     if (!is.null(specificTestArea)) {
-      warning(crayon::yellow(paste0(
-        "Test area is FALSE or NULL, but specificTestArea is not. Ignoring 'specificTestArea' and running the shapefile without a study area. ",
-        "To set a study area, use testArea == TRUE.")))
+      warning(crayon::yellow(
+        "Test area is FALSE or NULL, but specificTestArea is not.",
+        "Ignoring 'specificTestArea' and running the shapefile without a study area.",
+        "To set a study area, use testArea == TRUE."))
     } else {
       message(crayon::yellow("Test area is FALSE or NULL. Running the shapefile without a study area."))
     }
@@ -50,7 +49,8 @@ defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset 
     } else {
       if (specificTestArea == "BCR6") {
         if (is.null(mapSubset)) {
-          message(crayon::yellow("Test area is TRUE, specificTestArea is 'BCR6', and mapSubset is NULL. Cropping and masking to the whole BCR6."))
+          message(crayon::yellow("Test area is TRUE, specificTestArea is 'BCR6', and mapSubset is NULL.",
+                                 "Cropping and masking to the whole BCR6."))
           rP <- reproducible::prepInputs(url = "https://drive.google.com/open?id=1sEiXKnAOCi-f1BF7b4kTg-6zFlGr0YOH",
                                          ...)
         }

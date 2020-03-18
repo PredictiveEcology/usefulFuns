@@ -9,14 +9,11 @@
 #' @author Tati Micheletti
 #' @export
 #' @importFrom data.table data.table rbindlist
-#'
+#' @importFrom stats median
 #' @include substrBoth.R
 #'
 #' @rdname meanValuesTime
-
-meanValuesTime <- function(ras,
-                           scenario,
-                           initialTime){
+meanValuesTime <- function(ras, scenario, initialTime) {
   # scenario == "LandR.CS_fS" | "LandR_fS" | "LandR_SCFM" | "LandR.CS_SCFM"
   if (is(ras, "RasterStack")){
     fullTable <- lapply(names(ras), FUN = function(year){
@@ -38,7 +35,8 @@ meanValuesTime <- function(ras,
           t1 <- Sys.time()
           Mean <- mean(eachRasToCalc[], na.rm = TRUE)
           Median <- median(eachRasToCalc[], na.rm = TRUE)
-          yr <- as.numeric(substrBoth(strng = names(eachRasToCalc), howManyCharacters = nchar(initialTime[1]), fromEnd = TRUE))
+          yr <- as.numeric(substrBoth(strng = names(eachRasToCalc),
+                                      howManyCharacters = nchar(initialTime[1]), fromEnd = TRUE))
           dt <- data.table::data.table(average = Mean, Median = Median,
                                        year = yr, scenario = scenario,
                                        rasType = rasType)

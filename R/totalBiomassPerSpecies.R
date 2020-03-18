@@ -1,7 +1,12 @@
+if (getRversion() >= "3.1.0") {
+  utils::globalVariables(c(".", "..cols", ":=",
+                           "age", "B", "bWeightedAge", "noPixels", "speciesCode", "year"))
+}
+
 #' Plots biomass per species: proportional or absolute, and total or just overstory
 #'
 #' @param dataPath character. Path to data
-#' @param typeSim character. Which typeSimation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
+#' @param typeSim character. Which typeSimulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
 #' @param columnsType logical. Should the plot be continuous (lines) or columns?
 #' @param proportional logical. Should the plot be of the proportional biomass?
 #' @param overstory logical. Should the plot be of the overstory biomass?
@@ -13,32 +18,30 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom ggplot2 geom_line ggplot ggtitle geom_ribbon theme
-#' @importFrom data.table data.table rbindlist getDTthreads setDTthreads
-#' @importFrom SpaDES.core paddedFloatToChar
+#' @importFrom data.table := data.table getDTthreads rbindlist setDTthreads
 #' @importFrom googledrive drive_upload
+#' @importFrom grDevices dev.off png
 #' @importFrom LandR sppColors vegTypeMapGenerator
-#' @importFrom quickPlot clearPlot
+#' @importFrom quickPlot clearPlot Plot
 #' @importFrom raster writeRaster
+#' @importFrom SpaDES.core paddedFloatToChar
 #' @importFrom SpaDES.tools rasterizeReduced
-#'
+#' @importFrom utils data
 #' @include bringObjectTS.R
-#'
 #' @rdname totalBiomassPerSpecies
-
 totalBiomassPerSpecies <- function(dataPath,
                                    typeSim,
                                    proportional = FALSE,
                                    columnsType = FALSE,
                                    overstory = FALSE,
                                    overwrite = FALSE,
-                                   maxVal = 2e10){
+                                   maxVal = 2e10) {
   prop <- NULL
   overS <- NULL
   if (isTRUE(proportional)) prop <- "_Prop"
   if (isTRUE(overstory)) overS <- "_Overstory"
   if (!isTRUE(overwrite)){
-  pat <- c("biomassMapStack_", typeSim, prop, overS)
+    pat <- c("biomassMapStack_", typeSim, prop, overS)
     fileName <- usefun::grepMulti(x = list.files(dataPath, full.names = TRUE), patterns = pat) #[ FIX ] It won't make the "missing" leading years...
     if (length(fileName) != 0){
       message("Plots exist and overwrite is FALSE. Returning paths")
@@ -98,10 +101,10 @@ totalBiomassPerSpecies <- function(dataPath,
     }
     return(thisPeriod)
   })
-)
+  )
 
-  if (isTRUE(proportional)){
-    if (isTRUE(overstory)){
+  if (isTRUE(proportional)) {
+    if (isTRUE(overstory)) {
       y <- biomassBySpecies$overstoryBiomassProp # Propor = TRUE, Overst = TRUE
     } else {
       y <- biomassBySpecies$propBiomassBySpecies  # Propor = TRUE, Overst = FALSE
@@ -114,8 +117,8 @@ totalBiomassPerSpecies <- function(dataPath,
     }
   }
 
-  png(filename = file.path(dataPath, paste0("biomassMapStack_", typeSim, prop, overS, ".png")), height = 600, width = 900)
-  library("ggplot2")
+  png(filename = file.path(dataPath, paste0("biomassMapStack_", typeSim, prop, overS, ".png")),
+      height = 600, width = 900)
 
   if (columnsType){
     plot2 <- ggplot(data = biomassBySpecies, aes(x = year, y = y,
@@ -123,32 +126,31 @@ totalBiomassPerSpecies <- function(dataPath,
       geom_col(aes(y = y)) +
       scale_fill_viridis_d() +
       labs(x = "Year", y = "Total Biomass", title = paste0("Total biomass by species\n",
-                                                     "across pixels - ", typeSim, " ", overS)) +
+                                                           "across pixels - ", typeSim, " ", overS)) +
       theme_bw() +
       theme(legend.text = element_text(size = 20), legend.title = element_blank(),
             text = element_text(size=20),
             axis.text.x = element_text(size = 20),
             title = element_text(size = 22)) +
       ylim(0, maxVal)
-    quickPlot::clearPlot()
+    clearPlot()
     print(plot2)
     dev.off()
-
   } else {
     plot2 <- ggplot(data = biomassBySpecies, aes(x = year, y = y,
                                                  fill = speciesCode, group = speciesCode)) +
       geom_area(position = "stack") +
       scale_fill_manual(values = sppColorVect) +
       labs(x = "Year", y = "Total Biomass", title = paste0("Total biomass by species\n",
-                                              "across pixels - ", typeSim, " ", overS)) +
+                                                           "across pixels - ", typeSim, " ", overS)) +
       theme(legend.text = element_text(size = 16), legend.title = element_blank(),
             text = element_text(size=16),
             axis.text.x = element_text(size = 16)) +
       ylim(0, maxVal)
-    quickPlot::clearPlot()
-    quickPlot::Plot(plot2, new = TRUE)
+    clearPlot()
+    Plot(plot2, new = TRUE)
     dev.off()
   }
 
-return(plot2)
+  return(plot2)
 }

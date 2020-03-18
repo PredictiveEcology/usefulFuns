@@ -2,7 +2,7 @@
 % Please edit documentation in R/reviseSpeciesTraits.R
 \name{reviseSpeciesTraits}
 \alias{reviseSpeciesTraits}
-\title{Bootstraps rasters for testing significancy on comparable rasters of different species or scenarios}
+\title{Bootstraps rasters for testing significance on comparable rasters of different species or scenarios}
 \usage{
 reviseSpeciesTraits(
   speciesTable = NULL,
@@ -29,7 +29,7 @@ In this case, the function will use the ORIGINAL species table traits (from LAND
 Table of updated tree species traits to be used in LandR biomass simulation
 }
 \description{
-Bootstraps rasters for testing significancy on comparable rasters of different species or scenarios
+Bootstraps rasters for testing significance on comparable rasters of different species or scenarios
 }
 \author{
 Tati Micheletti

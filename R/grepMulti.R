@@ -11,7 +11,6 @@
 #' @author Tati Micheletti
 #' @export
 #' @rdname grepMulti
-
 grepMulti <- function(x, patterns, unwanted = NULL) {
   rescued <- sapply(x, function(fun) all(sapply(X = patterns, FUN = grepl, fun)))
   recovered <- x[rescued]

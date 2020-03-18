@@ -1,13 +1,18 @@
-# helpers for bootstrapPercentChanges
+if (getRversion() >= "3.1.0") {
+  utils::globalVariables(c("..column", "direction", "id", "location",
+                           "result", "sd", "simulation", "species", "value"))
+}
 
+## helpers for bootstrapPercentChanges
 .calculateSignificantChangesInBirds <- function(dataPath, years, species = NULL, pixelBased = TRUE,
-                                               sampleSize = "auto", redFactorTimes = 15,
-                                               studyArea = NULL, repetition = NULL){ # limited to 2 years!
-  if (is.null(species)){
+                                                sampleSize = "auto", redFactorTimes = 15,
+                                                studyArea = NULL, repetition = NULL) { # limited to 2 years!
+  if (is.null(species)) {
     spFiles <- grepMulti(x = list.files(dataPath), patterns = c(years[1],".tif"))
     splittedAllNames <- strsplit(x = spFiles, split = "predicted") # including anything else i.e. diversity rasters
-    splittedAllNames2 <- splittedAllNames[!splittedAllNames %in% usefun::grepMulti(x = splittedAllNames, patterns = paste0("_", years[1]))]
-    splitted <- unlist(lapply(splittedAllNames, function(birdFilename){
+    splittedAllNames2 <- splittedAllNames[!splittedAllNames %in% grepMulti(x = splittedAllNames,
+                                                                           patterns = paste0("_", years[1]))]
+    splitted <- unlist(lapply(splittedAllNames, function(birdFilename) {
       if (length(birdFilename)==1) return(NULL)
       return(birdFilename[length(birdFilename)])
     }))
@@ -265,9 +270,8 @@
   return(location)
 }
 
-.tTestMeansSD <- function(mean1, mean2, sd1, sd2,
-                         sampleSize1, sampleSize2, m0 = 0,
-                         equal.variance = FALSE){
+.tTestMeansSD <- function(mean1, mean2, sd1, sd2, sampleSize1, sampleSize2, m0 = 0,
+                          equal.variance = FALSE) {
   # FROM Macro: https://stats.stackexchange.com/questions/30394/how-to-perform-two-sample-t-tests-in-r-by-inputting-sample-statistics-rather-tha
   # mean1, mean2: the sample means
   # sd1, sd2: the sample standard deviations
@@ -275,30 +279,31 @@
   # m0: the null value for the difference in means to be tested for. Default is 0.
   # equal.variance: whether or not to assume equal variance. Default is FALSE.
 
-  if(equal.variance == FALSE ){
+  if (equal.variance == FALSE ) {
     se <- sqrt( (sd1^2/sampleSize1) + (sd2^2/sampleSize2) )
     # welch-satterthwaite df
-    df <- ( (sd1^2/sampleSize1 + sd2^2/sampleSize2)^2 )/( (sd1^2/sampleSize1)^2/(sampleSize1-1) + (sd2^2/sampleSize2)^2/(sampleSize2-1) )
+    df <- ( (sd1^2/sampleSize1 + sd2^2/sampleSize2)^2 )/( (sd1^2/sampleSize1)^2/(sampleSize1-1) +
+                                                            (sd2^2/sampleSize2)^2/(sampleSize2-1) )
   } else {
     # pooled standard deviation, scaled by the sample sizes
     se <- sqrt( (1/sampleSize1 + 1/sampleSize2) * ((sampleSize1-1)*sd1^2 + (sampleSize2-1)*sd2^2)/(sampleSize1+sampleSize2-2) )
     df <- sampleSize1 + sampleSize2 - 2
   }
   t <- (mean1 - mean2 - m0)/se
-  dat <- c(mean1-mean2, se, t, 2*pt(-abs(t),df))
+  dat <- c(mean1-mean2, se, t, 2*stats::pt(-abs(t),df))
   names(dat) <- c("DifferenceOfMeans", "stdError", "t", "pValue")
   return(dat)
 }
 
-.calcICPercentChange <- function(percChange){
+.calcICPercentChange <- function(percChange) {
   increasedIC <- tryCatch({
-    t.test(percChange[direction == "increased", value], conf.level = 0.95)$conf.int},
+    stats::t.test(percChange[direction == "increased", value], conf.level = 0.95)$conf.int},
     error = function(e) return(NA))
   decreasedIC <- tryCatch({
-    t.test(percChange[direction == "decreased", value], conf.level = 0.95)$conf.int},
+    stats::t.test(percChange[direction == "decreased", value], conf.level = 0.95)$conf.int},
     error = function(e) return(NA))
   noChangeIC <- tryCatch({
-    t.test(percChange[direction == "no change", value], conf.level = 0.95)$conf.int},
+    stats::t.test(percChange[direction == "no change", value], conf.level = 0.95)$conf.int},
     error = function(e) return(NA))
   dt <- data.table::data.table(direction = c("increased", "decreased", "noChange"),
                                lower95 = c(increasedIC[1], decreasedIC[1], noChangeIC[1]),

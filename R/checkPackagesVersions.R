@@ -17,16 +17,16 @@
 #' @author Tati Micheletti
 #' @export
 #' @importFrom data.table data.table rbindlist
-#' @importFrom reproducible Require
+#' @importFrom utils sessionInfo
 #' @rdname checkPackagesVersions
-
 checkPackagesVersions <- function(simList = NULL, filePath = NULL){
-  if (is.null(simList)){
-    attachedPackages <- sessionInfo()
+  if (is.null(simList)) {
+    attachedPackages <- utils::sessionInfo()
     allPackages <- c(attachedPackages$basePkgs, names(attachedPackages$otherPkgs))
     packagesVersions <- data.table::rbindlist(lapply(X = allPackages, FUN = function(pkg){
       sha  <- remotes:::local_sha(pkg)
-      pkgV <- data.table::data.table(package = pkg, version = sha, repository = ifelse(nchar(sha)==40, "git", "CRAN"))
+      pkgV <- data.table::data.table(package = pkg, version = sha,
+                                     repository = ifelse(nchar(sha) == 40, "git", "CRAN"))
     }))
     if (!is.null(filePath)) saveRDS(object = packagesVersions, file = filePath)
     return(packagesVersions)

@@ -13,19 +13,18 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom ggplot2 ggplot geom_line geom_ribbon theme_bw aes facet_grid
 #' @importFrom data.table data.table rbindlist
 #' @importFrom grDevices png
 #' @importFrom googledrive drive_upload as_id
 #'
 #' @rdname avrgTimeComparison
-
 avrgTimeComparison <- function(...,
                                upload,
                                outputFolder,
                                comparisonID,
                                folderID,
-                               plotCI = TRUE){ # Caribou RSF average through time. Can take up to 2 comparisons for now
+                               plotCI = TRUE){
+  # Caribou RSF average through time. Can take up to 2 comparisons for now
 
   if (is.null(comparisonID))
     comparisonID <- "generic"
@@ -55,11 +54,11 @@ avrgTimeComparison <- function(...,
   }
   p <- ggplot(data = dt, aes(x = year, y = average,
                              group = scenario))
- if (plotCI & NROW(dtSd) != 0) {
+  if (plotCI & NROW(dtSd) != 0) {
     p <- p +  geom_ribbon(aes(fill = scenario, ymin = (average - IC), ymax = (average + IC)), alpha = 0.5)
-}
-    p <- p + geom_line(aes(color = scenario)) +
-      theme_bw()
+  }
+  p <- p + geom_line(aes(color = scenario)) +
+    theme_bw()
   if (length(unique(dt$grouping)) != 1){
     p <- p + facet_grid(grouping ~ ., scales = "free_y") +
       theme(legend.position = "bottom")

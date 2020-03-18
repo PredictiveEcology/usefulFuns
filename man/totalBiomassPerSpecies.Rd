@@ -17,7 +17,7 @@ totalBiomassPerSpecies(
 \arguments{
 \item{dataPath}{character. Path to data}
 
-\item{typeSim}{character. Which typeSimation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
+\item{typeSim}{character. Which typeSimulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
 
 \item{proportional}{logical. Should the plot be of the proportional biomass?}
 

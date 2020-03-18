@@ -8,21 +8,19 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom ggplot2 geom_line ggplot ggtitle
-#' @importFrom data.table data.table rbindlist getDTthreads setDTthreads
-#' @importFrom SpaDES.core paddedFloatToChar
+#' @importFrom data.table data.table getDTthreads rbindlist setDTthreads
 #' @importFrom googledrive drive_upload
+#' @importFrom grDevices dev.off png
+#' @importFrom SpaDES.core paddedFloatToChar
 #'
 #' @rdname biomassPerSpeciesYearGIF
-
-biomassPerSpeciesYearGIF <- function(dataPath, years = NULL, uploadTo){
-
+biomassPerSpeciesYearGIF <- function(dataPath, years = NULL, uploadTo) {
   # Collect info on all years creating a table, then plot the results
-if (is.null(years)){
-  ysrName <- paddedFloatToChar(seq(0,100, by = 10), padL = 3)
-} else {
-  ysrName <- years
-}
+  if (is.null(years)) {
+    ysrName <- paddedFloatToChar(seq(0,100, by = 10), padL = 3)
+  } else {
+    ysrName <- years
+  }
   cohortDataComplete <- rbindlist(lapply(X = ysrName, FUN = function(yr){
     tryCatch({
       simBM <- readRDS(file.path(dataPath, paste0("cohortData_year", yr,".rds")))
@@ -55,7 +53,7 @@ if (is.null(years)){
 
   #PLOT
   dt <- as.data.frame(BiomassPerSpecies)
-  library("ggplot2")
+
   meanBiomassPerSpecies <- ggplot(dt, aes(x = year, y = meanBiomass, group = speciesCode)) +
     geom_line(size=1.2, aes(color = speciesCode)) +
     ggtitle(label = "Mean biomass per species per year")
@@ -73,18 +71,15 @@ if (is.null(years)){
     ggtitle(label = "Total biomass per species per year")
 
   p <- lapply(X = c("totalBiomassPerSpecies", "medianBiomassPerSpecies", "meanBiomassPerSpecies"),
-         function(plotting){
+         function(plotting) {
     gifName <- file.path(dataPath, paste0(plotting,
                                           toupper(format(Sys.time(), "%d%b%y")),".png"))
-    png(gifName,
-        width = 700, height = 480)
+    png(gifName, width = 700, height = 480)
     print(get(plotting))
     dev.off()
     if (is.character(uploadTo)){
-      googledrive::drive_upload(gifName,
-                                path = as_id(uploadTo))
+      googledrive::drive_upload(gifName, path = as_id(uploadTo))
     }
-
   })
   return(p)
 }

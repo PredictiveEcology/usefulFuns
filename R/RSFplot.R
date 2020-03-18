@@ -14,14 +14,12 @@
 #' @author Tati Micheletti
 #' @export
 #' @importFrom crayon green red
-#' @importFrom raster getValues raster reclassify writeRaster nlayers
-#' @importFrom rasterVis gplot
 #' @importFrom googledrive drive_upload as_id
-#' @importFrom ggplot2 geom_raster scale_fill_manual coord_equal labs element_blank theme
 #' @importFrom grDevices colorRampPalette
+#' @importFrom raster getValues nlayers raster reclassify writeRaster
+#' @importFrom rasterVis gplot
 #'
 #' @rdname RSFplot
-
 RSFplot <- function(ras,
                     upload = FALSE,
                     writeReclasRas = FALSE,
@@ -33,8 +31,8 @@ RSFplot <- function(ras,
   } else {
     vals <- raster::getValues(ras)
   }
-  getBin <- function(vals){
-    (max(vals, na.rm = TRUE)-min(vals, na.rm = TRUE))/10
+  getBin <- function(vals) {
+    (max(vals, na.rm = TRUE) - min(vals, na.rm = TRUE)) / 10
   }
   bin <- getBin(vals)
   mn <- min(vals, na.rm = TRUE)
@@ -51,15 +49,12 @@ RSFplot <- function(ras,
 
   r <- reclassify(ras, m)
 
-  greenRed<-colorRampPalette(c("darkgreen","yellow","red"))
+  greenRed <- colorRampPalette(c("darkgreen","yellow","red"))
   colsGR <- greenRed(10)
-stk <-  lapply(1:nlayers(x = r), function(lay){
-    y <- usefun::substrBoth(strng = names(r[[lay]]),
-                       howManyCharacters = 4,
-                       fromEnd = TRUE)
-    rasNameFinal <- file.path(outputFolder, paste0(rasName,"_",
-                                                   y, ".tif"))
-    library("ggplot2")
+  stk <-  lapply(1:nlayers(x = r), function(lay) {
+    y <- substrBoth(strng = names(r[[lay]]), howManyCharacters = 4, fromEnd = TRUE)
+    rasNameFinal <- file.path(outputFolder, paste0(rasName, "_", y, ".tif"))
+
     p <- gplot(r[[lay]]) +
       geom_raster(aes(fill = factor(value))) +
       scale_fill_manual(values = colsGR, aesthetics = "fill") +
@@ -74,8 +69,7 @@ stk <-  lapply(1:nlayers(x = r), function(lay){
 
     print(p)
     if (writeReclasRas)
-      writeRaster(r[[lay]], filename = rasNameFinal, format = "GTiff",
-                  overwrite = TRUE)
+      writeRaster(r[[lay]], filename = rasNameFinal, format = "GTiff", overwrite = TRUE)
 
     if(upload){
       if (is.null(folderID)) stop("Please provide folderID when upload == TRUE")

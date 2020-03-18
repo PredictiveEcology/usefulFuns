@@ -23,20 +23,16 @@
 #'
 #' @author Tati Micheletti
 #' @export
+#' @importFrom data.table data.table
 #' @importFrom LandR prepInputsLCC
 #' @importFrom raster raster projectRaster extract
-#' @importFrom data.table data.table
-#' @importFrom reproducible prepInputs postProcess Require
+#' @importFrom reproducible prepInputs postProcess
 #' @rdname classifyWetlands
-
 classifyWetlands <- function(LCC,
                              wetLayerInput,
                              pathData,
                              studyArea = NULL,
                              RasterToMatch = NULL){
-  Require("LandR")
-  Require("raster")
-
   # Load LCC layer
   rasLCC <- LandR::prepInputsLCC(year = LCC, destinationPath = pathData,
                                  studyArea = studyArea, filename2 = paste0("LCC", LCC),

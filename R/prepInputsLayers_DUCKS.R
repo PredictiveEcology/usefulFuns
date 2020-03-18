@@ -13,8 +13,9 @@
 #' @return RasterLayer
 #'
 #' @export
+#' @importFrom crayon green red yellow
 #' @importFrom reproducible asPath Cache prepInputs
-#' @include classifyWetlands
+#' @include classifyWetlands.R
 #' @rdname prepInputsLayers_DUCKS
 prepInputsLayers_DUCKS <- function(destinationPath, lccLayer = "2005",
                                    url = NULL, archive = NULL,
@@ -29,7 +30,7 @@ prepInputsLayers_DUCKS <- function(destinationPath, lccLayer = "2005",
   if (is.null(archive))
     archive <- "HWL_BCR6.zip"
 
-  message(crayon::yellow("  Trying to load DUCKS Unlimited Hybrid Wetland v. 2.1 layers..."))
+  message(yellow("  Trying to load DUCKS Unlimited Hybrid Wetland v. 2.1 layers..."))
   tryCatch({
       DUCKSlayer <- Cache(prepInputs,
                           targetFile = targetFile,
@@ -44,15 +45,16 @@ prepInputsLayers_DUCKS <- function(destinationPath, lccLayer = "2005",
                           overwrite = overwrite,
                           userTags =  c("DUCKs", "Hybrid", "Wetland"))
 
-      message(crayon::green("  DUCKS Unlimited Hybrid Wetland v. 2.1 layers successfully loaded."))
+      message(green("  DUCKS Unlimited Hybrid Wetland v. 2.1 layers successfully loaded."))
 
       DUCKSlayerReclass <- classifyWetlands(LCC = lccLayer, wetLayerInput = DUCKSlayer,
-                                                    pathData = destinationPath, studyArea = studyArea)
+                                            pathData = destinationPath, studyArea = studyArea)
 
     return(DUCKSlayerReclass)
   }, error = function(e){
-    message(crayon::red(paste0("  Downloading DUCKS Unlimited Hybrid Wetland v. 2.1 layers failed. This is probably a restriction access issue.
-                               A wetlands layer based on LCC05 will be downloaded instead.")))
+    message(red(paste("  Downloading DUCKS Unlimited Hybrid Wetland v. 2.1 layers failed.",
+                      "This is probably a restriction access issue.",
+                      "A wetlands layer based on LCC05 will be downloaded instead.")))
     url <- "https://drive.google.com/open?id=10RRHsy2vX6xaOLNPQSvz66k-xn_4X7GY"
     targetFile <- "wetlandsLayer.tif"
     archive <- "wetlandsLayer.zip"

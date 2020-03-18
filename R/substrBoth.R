@@ -10,8 +10,7 @@
 #' @export
 #'
 #' @rdname substrBoth
-
-substrBoth <- function(strng, howManyCharacters, fromEnd = TRUE){
+substrBoth <- function(strng, howManyCharacters, fromEnd = TRUE) {
   if (fromEnd) return(substr(x = strng, start = nchar(strng) - howManyCharacters+1, nchar(strng))) else
   return(substr(x = strng, start = 1, stop = howManyCharacters))
 }

@@ -9,10 +9,10 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom ggplot2 geom_line ggplot ggtitle
 #' @importFrom data.table data.table rbindlist getDTthreads setDTthreads
 #' @importFrom SpaDES.core paddedFloatToChar
 #' @importFrom googledrive drive_upload
+#' @importFrom grDevices dev.off png recordPlot
 #' @importFrom LandR sppColors vegTypeMapGenerator
 #' @importFrom quickPlot clearPlot
 #' @importFrom raster writeRaster stack raster
@@ -21,21 +21,20 @@
 #' @include grepMulti.R
 #'
 #' @rdname plotLeadingVegetationType
-
 plotLeadingVegetationType <- function(dataPath,
                                       typeSim,
                                       colNA = "grey85",
                                       saveRAS = TRUE,
                                       overwrite = FALSE){
-if (!isTRUE(overwrite)){
-  fileName <- usefun::grepMulti(x = list.files(dataPath, full.names = TRUE), patterns = c("RAS_LeadingTypeYear", ".tif")) #[ FIX ] It won't make the "missing" leading years...
-  if (length(fileName) != 0){
-    fileName <- fileName[!fileName %in% usefun::grepMulti(x = fileName, patterns = c("aux"))]
-    message("Rasters exist and overwrite is FALSE. Returning")
-    stk <- raster::stack(lapply(X = fileName, FUN = raster::raster))
-    return(stk)
-   }
-}
+  if (!isTRUE(overwrite)){
+    fileName <- usefun::grepMulti(x = list.files(dataPath, full.names = TRUE), patterns = c("RAS_LeadingTypeYear", ".tif")) #[ FIX ] It won't make the "missing" leading years...
+    if (length(fileName) != 0){
+      fileName <- fileName[!fileName %in% usefun::grepMulti(x = fileName, patterns = c("aux"))]
+      message("Rasters exist and overwrite is FALSE. Returning")
+      stk <- raster::stack(lapply(X = fileName, FUN = raster::raster))
+      return(stk)
+    }
+  }
 
   cohorDataList <- bringObjectTS(path = dataPath, rastersNamePattern = "cohortData")
   pixelGroupList <- bringObjectTS(path = dataPath, rastersNamePattern = "pixelGroupMap")
@@ -77,15 +76,14 @@ if (!isTRUE(overwrite)){
                   format = "GTiff", overwrite = TRUE)
     })
   }
-  # library("quickPlot")
   # quickPlot::clearPlot()
   # for (index in seq_along(leadingSpecies))
   #   quickPlot::Plot(leadingSpecies[[index]], title = names(leadingSpecies)[[index]])
   png(filename = file.path(dataPath, paste0("leadingVegetation", typeSim, ".png")), height = 600, width = 900)
-    quickPlot::clearPlot()
-  quickPlot::Plot(leadingSpecies[[1]], title = paste0(names(leadingSpecies)[[1]], " - ", typeSim))
-  quickPlot::Plot(leadingSpecies[[length(leadingSpecies)]],
-                  title = paste0(names(leadingSpecies)[[length(leadingSpecies)]], " - ", typeSim)) # Shortcut for the current vs. future landscapes.
+  clearPlot()
+  Plot(leadingSpecies[[1]], title = paste0(names(leadingSpecies)[[1]], " - ", typeSim))
+  Plot(leadingSpecies[[length(leadingSpecies)]],
+       title = paste0(names(leadingSpecies)[[length(leadingSpecies)]], " - ", typeSim)) # Shortcut for the current vs. future landscapes.
   # Couldn't get raster plot to work. Might be easier to make a ggplot
   p <- recordPlot()
   dev.off()
