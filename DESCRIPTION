@@ -43,7 +43,7 @@ Imports:
 Suggests:
     unixtools
 Remotes:
-    PredictiveEcology/LandR@development
+    PredictiveEcology/LandR@ecozone
 Collate: 
     'RSFplot.R'
     'avrgTimeComparison.R'
