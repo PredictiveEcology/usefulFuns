@@ -1,7 +1,14 @@
 # usefun
+
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/PredictiveEcology/usefun.svg?branch=master)](https://travis-ci.org/PredictiveEcology/usefun)
+<!-- badges: end -->
+
 ##  Useful functions
 
-devtools::install_github("tati-micheletti/usefun")
+```r
+devtools::install_github("PredictiveEcology/usefun")
+```
 
 ### Making hexStickers
 
