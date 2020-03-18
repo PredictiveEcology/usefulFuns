@@ -227,7 +227,7 @@ utils::globalVariables(c("..column", "direction", "id", "location",
         if (tryCatch({
           pryr::where(name = "sbsetID", env = env)
           return(FALSE)},
-          error = function(e) return(TRUE))){
+          error = function(e) return(TRUE))) {
           assign(x = "sbsetID", value = sample(x = dtForTest[!is.na(dtForTest)[ID]]$ID,
                                                size = sampleSize, replace = FALSE),
                  envir = env)

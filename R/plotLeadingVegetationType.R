@@ -1,3 +1,5 @@
+utils::globalVariables(c("Boreal", "NWT"))
+
 #' Plots Leading Vegetation Type using cohortData and pixelGroupMap
 #'
 #' @param dataPath character. Path to data
@@ -26,7 +28,7 @@ plotLeadingVegetationType <- function(dataPath,
                                       typeSim,
                                       colNA = "grey85",
                                       saveRAS = TRUE,
-                                      overwrite = FALSE){
+                                      overwrite = FALSE) {
   if (!isTRUE(overwrite)){
     fileName <- usefun::grepMulti(x = list.files(dataPath, full.names = TRUE), patterns = c("RAS_LeadingTypeYear", ".tif")) #[ FIX ] It won't make the "missing" leading years...
     if (length(fileName) != 0){

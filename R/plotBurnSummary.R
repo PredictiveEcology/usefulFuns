@@ -1,4 +1,4 @@
-utils::globalVariables(c("var"))
+utils::globalVariables(c("areaBurned", "sumAB", "Nfires", "val", "var", "year"))
 
 #' Plots summary of burns
 #'
@@ -15,7 +15,7 @@ utils::globalVariables(c("var"))
 #' @importFrom data.table data.table rbindlist getDTthreads setDTthreads
 #' @importFrom googledrive drive_upload
 #' @importFrom graphics par plot
-#' @importFrom grid textGrob
+#' @importFrom grid gpar textGrob
 #' @importFrom gridExtra grid.arrange
 #' @importFrom LandR sppColors vegTypeMapGenerator
 #' @importFrom quickPlot clearPlot
@@ -33,7 +33,7 @@ plotBurnSummary <- function(dataPath,
                             overwrite = FALSE) {
 
   fileName <- file.path(dataPath, paste0("burnSummary", typeSim, ".png"))
-  if (all(file.exists(fileName), !isTRUE(overwrite))){
+  if (all(file.exists(fileName), !isTRUE(overwrite))) {
     message("Plot exist and overwrite is FALSE. Returning plot path")
     return(fileName)
   }

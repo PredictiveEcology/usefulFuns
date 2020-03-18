@@ -1,5 +1,6 @@
 utils::globalVariables(c(".", "..cols", ":=",
-                         "age", "B", "bWeightedAge", "noPixels", "speciesCode", "year"))
+                         "age", "B", "Boreal", "bWeightedAge", "noPixels", "NWT",
+                         "speciesCode", "year"))
 
 #' Plots biomass per species: proportional or absolute, and total or just overstory
 #'
@@ -70,7 +71,7 @@ totalBiomassPerSpecies <- function(dataPath,
   mixed <- structure("#D0FB84", names = "Mixed")
   sppColorVect[length(sppColorVect)+1] <- mixed
   attributes(sppColorVect)$names[length(sppColorVect)] <- "Mixed"
-  biomassBySpecies <- rbindlist(lapply(X = names(cohortDataList), FUN = function(yr){
+  biomassBySpecies <- rbindlist(lapply(X = names(cohortDataList), FUN = function(yr) {
     cohort <- cohortDataList[[yr]]
     pixelGroup <- pixelGroupList[[yr]]
     if (NROW(cohort[duplicated(cohort)]) != 0)

@@ -1,3 +1,5 @@
+utils::globalVariables(c("LandisCode"))
+
 #' Bootstraps rasters for testing significance on comparable rasters of different species or scenarios
 #'
 #' @param speciesTable data.table. Table to be updated. If returnTable == TRUE this can be NULL.

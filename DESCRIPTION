@@ -77,7 +77,6 @@ Collate:
     'makeReclassifyMatrix.R'
     'meanValuesTime.R'
     'moduleSticker.R'
-    'modulesAvailable.R'
     'plotBurnSummary.R'
     'plotLeadingVegetationType.R'
     'plotVegetationBiomass.R'

@@ -33,14 +33,14 @@ setTempFolder <- function(paths, setTmpFolder, usr) {
       tempFolder <- asPath(reproducible::checkPath(file.path(paths$cachePath, "tmp"), create = TRUE))
 
       # Set a temporary folder
-      if (Sys.info()['sysname'] == "Windows"){
+      if (Sys.info()['sysname'] == "Windows") {
         write(paste0("TMPDIR = '", tempFolder, "'"), file = file.path(Sys.getenv('R_USER'), '.Renviron'))
       } else {
-        if (requireNamespace(unixtools, quietly = TRUE)) {
+        if (requireNamespace("unixtools", quietly = TRUE)) {
            unixtools::set.tempdir(tempFolder)
         } else {
-          stop("Package 'unixtools' required. Install it via:\n",
-               "install.packages(\"unixtools\", repos = \"https://www.rforge.net/\")")
+          message("Package 'unixtools' required. Install it via:\n",
+                  "install.packages(\"unixtools\", repos = \"https://www.rforge.net/\")")
         }
       }
     } else {

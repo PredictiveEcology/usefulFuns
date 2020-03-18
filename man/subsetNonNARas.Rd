@@ -2,21 +2,21 @@
 % Please edit documentation in R/subsetNonNARas.R
 \name{subsetNonNARas}
 \alias{subsetNonNARas}
-\title{subsetNonNARas get all the values of a raster and remove the NA's, keeping pixel ID.}
+\title{Get all the values of a raster and remove the NA's, keeping pixel ID.}
 \usage{
 subsetNonNARas(ras, N = NULL)
 }
 \arguments{
 \item{ras}{RasterLayer.}
 
-\item{N}{numeric. If passed, subsets N pixels from the raster. If NULL, 
+\item{N}{numeric. If passed, subsets N pixels from the raster. If NULL,
 returns the whole non-NA raster values. Default is NULL.}
 }
 \value{
 data.table of pixel values and pixel ID
 }
 \description{
-subsetNonNARas get all the values of a raster and remove the NA's, keeping pixel ID.
+Get all the values of a raster and remove the NA's, keeping pixel ID.
 }
 \author{
 Tati Micheletti
