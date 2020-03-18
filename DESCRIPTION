@@ -39,7 +39,8 @@ Imports:
     SpaDES.core, 
     SpaDES.tools,
     stats,
-    sysfonts,
+    sysfonts
+Suggests:
     unixtools
 Remotes:
     PredictiveEcology/LandR@development

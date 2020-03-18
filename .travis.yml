@@ -24,6 +24,8 @@ matrix:
   #       - libudunits2-dev
   #   services:
   #     - xvfb
+  #   before_install:
+  #     - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
   #   r_binary_packages:
   #     - BH
   #   r_packages:
@@ -46,15 +48,14 @@ matrix:
         - libudunits2-dev
     services:
       - xvfb
+    before_install:
+    - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
     r_binary_packages:
       - BH
       - dplyr
       - igraph
       - RSQlite
       - stringi
-    after_success:
-      - Rscript -e 'covr::coveralls(type = "all", quiet = FALSE)'
-      - Rscript -e 'lintr::lint_package()'
     r_packages:
       - covr
       - devtools
@@ -62,6 +63,9 @@ matrix:
       - rgeos
     r_github_packages:
       - jimhester/lintr
+    after_success:
+      - Rscript -e 'covr::coveralls(type = "all", quiet = FALSE)'
+      - Rscript -e 'lintr::lint_package()'
   - os: linux
     dist: xenial
     addons:
@@ -80,6 +84,8 @@ matrix:
     services:
       - xvfb
     r: devel
+    before_install:
+    - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
     r_binary_packages:
       - BH
       - dplyr
@@ -102,8 +108,9 @@ matrix:
     latex: false
     r_build_args: '--no-build-vignettes'
     r_check_args: '--as-cran --ignore-vignettes --no-examples'
-    before_script:
+    before_install:
     - Rscript -e "install.packages(c('rgdal', 'rgeos', 'XML'), type = 'source')"
+    - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
 r_build_args: " "
 r_check_args: "--as-cran"
 warnings_are_errors: true

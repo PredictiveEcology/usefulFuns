@@ -48,7 +48,6 @@ setTempFolder <- function(paths, setTmpFolder, usr){
     }
   }
   if (setTmpFolder == TRUE & answer == "YES")
-  message(paste0("You changed your temporary folder location,",
-                    "\n If you are using Windows, please restart",
-                 " your R session so the changes can take effect."))
+  message("You changed your temporary folder location.\n",
+          "If you are using Windows, please restart your R session so the changes can take effect.")
 }
