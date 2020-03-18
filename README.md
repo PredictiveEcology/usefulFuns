@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/PredictiveEcology/usefun.svg?branch=master)](https://travis-ci.org/PredictiveEcology/usefun)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/tati-micheletti/usefun?branch=master&svg=true)](https://ci.appveyor.com/project/tati-micheletti/usefun)
 <!-- badges: end -->
 
 ##  Useful functions

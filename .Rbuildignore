@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 figures/
 ^\.travis\.yml$
+^appveyor\.yml$
