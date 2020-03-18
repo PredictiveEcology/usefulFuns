@@ -40,7 +40,8 @@ and "TaigaPlains" (RSF) have been implemented. Default is "M3".}
 
 \item{years}{Character string of the years to use. i.e. c(2011:20100).}
 
-\item{GDriveFolder}{Character string of the folder in google drive to upload the layers to. Handy for shared projects.}
+\item{GDriveFolder}{Character string of the folder in google drive to upload the layers to.
+Handy for shared projects.}
 
 \item{climateFilePath}{Character string of the path to the climate file in google drive
 (i.e. "https://drive.google.com/open?id=1wcgytGJmfZGaapZZ9M9blfGa-45eLVWE" for
@@ -71,7 +72,8 @@ If you wanna provide the variables to be produced, don't use birds or fireSense 
 
 \item{overwrite}{logical. Default to FALSE. Should the layers be overwritten if exist?}
 
-\item{overwriteOriginalData}{logical. Default to FALSE. If changes happen in the original layer (the one provided in climateFilePath),
+\item{overwriteOriginalData}{logical. Default to FALSE. If changes happen in the original layer
+(the one provided in climateFilePath),
 set this to TRUE to overwrite the zip files downloaded.}
 }
 \value{
@@ -81,10 +83,7 @@ names list of the quote of the model that can be parsed to generate the simulate
 This function returns a list of all years, with each year being the local path for the raster stack that contains all variables
 }
 \description{
-Designed as a helper to create caribou models based on 2011 ECCC report on population demographics and RSF.
-This function uses \code{usefun::createEquation()} internally
-
-Function to create raster stack for climate sensitive models. Designed primarily for NWT project, but somewhat flexible.
+Designed primarily for NWT project, but somewhat flexible.
 }
 \author{
 Tati Micheletti

@@ -41,8 +41,11 @@ Imports:
     stats,
     sysfonts
 Suggests:
+    covr,
+    lintr,
     unixtools
 Remotes:
+    jimhester/lintr,
     PredictiveEcology/LandR@ecozone
 Collate: 
     'RSFplot.R'

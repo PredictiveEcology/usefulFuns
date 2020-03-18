@@ -1,7 +1,5 @@
-if (getRversion() >= "3.1.0") {
-  utils::globalVariables(c(".", "..cols", ":=",
-                           "age", "B", "bWeightedAge", "noPixels", "speciesCode", "year"))
-}
+utils::globalVariables(c(".", "..cols", ":=",
+                         "age", "B", "bWeightedAge", "noPixels", "speciesCode", "year"))
 
 #' Plots biomass per species: proportional or absolute, and total or just overstory
 #'
@@ -56,7 +54,7 @@ totalBiomassPerSpecies <- function(dataPath,
   pixelGroupList <- bringObjectTS(path = dataPath, rastersNamePattern = "pixelGroupMap")
 
   sppEquivCol <- "NWT"
-  data("sppEquivalencies_CA", package = "LandR")
+  data("sppEquivalencies_CA", package = "LandR", envir = environment())
   sppEquivalencies_CA[, NWT := c(Abie_Bal = "Abie_Bal",
                                  Betu_Pap = "Betu_Pap",
                                  Lari_Lar = "Lari_Lar",

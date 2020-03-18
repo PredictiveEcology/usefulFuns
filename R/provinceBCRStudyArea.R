@@ -1,4 +1,5 @@
-#' @title
+utils::globalVariables(c("BCR", "NAME_1"))
+
 #' Preparing study area based on BCR and Canadian or American provinces or states.
 #'
 #' @description
@@ -19,13 +20,11 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom magrittr %>%
-#' @importFrom reproducible prepInputs postProcess
-#' @importFrom raster getData subset
 #' @importFrom crayon yellow
+#' @importFrom magrittr %>%
+#' @importFrom raster getData subset
+#' @importFrom reproducible prepInputs postProcess
 #' @rdname provinceBCRStudyArea
-#'
-
 provinceBCRStudyArea <- function(bcr = NULL, province = NULL, country, ...) {
   dots <- list(...)
   if (is.null(country) | length(country) != 1){

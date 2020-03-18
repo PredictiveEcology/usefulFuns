@@ -1,3 +1,5 @@
+utils::globalVariables(c("group", "x", "y"))
+
 #' Creates a GIF of total biomass change
 #'
 #' @param years numeric. Years available/intended to be used for the giphy

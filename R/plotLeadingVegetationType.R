@@ -40,7 +40,7 @@ plotLeadingVegetationType <- function(dataPath,
   pixelGroupList <- bringObjectTS(path = dataPath, rastersNamePattern = "pixelGroupMap")
 
   sppEquivCol <- "NWT"
-  data("sppEquivalencies_CA", package = "LandR")
+  data("sppEquivalencies_CA", package = "LandR", envir = environment())
   sppEquivalencies_CA[, NWT := c(Abie_Bal = "Abie_Bal",
                                  Betu_Pap = "Betu_Pap",
                                  Lari_Lar = "Lari_Lar",

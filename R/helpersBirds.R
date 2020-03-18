@@ -1,7 +1,5 @@
-if (getRversion() >= "3.1.0") {
-  utils::globalVariables(c("..column", "direction", "id", "location",
-                           "result", "sd", "simulation", "species", "value"))
-}
+utils::globalVariables(c("..column", "direction", "id", "location",
+                         "result", "sd", "simulation", "species", "value"))
 
 ## helpers for bootstrapPercentChanges
 .calculateSignificantChangesInBirds <- function(dataPath, years, species = NULL, pixelBased = TRUE,
@@ -33,7 +31,7 @@ if (getRversion() >= "3.1.0") {
     dtForTest <- usefun::cbindFromList(birdInyears)
     if (!is.null(studyArea)){
       # rasPath <- usefun::grepMulti(x = list.files(dataPath, recursive = TRUE, full.names = TRUE), patterns = c(bird)) # JUST A TEMPLATE!
-      # # location <- reproducible::Cache(prepStudyAreaForBirds, studyArea = studyArea, dataPath = dataPath, RTMpath = rasPath[1],
+      # # location <- reproducible::Cache(.prepStudyAreaForBirds, studyArea = studyArea, dataPath = dataPath, RTMpath = rasPath[1],
       # #                                 userTags = c("object:location", "purpose:Edehzhie"))
       dtForTest <- cbind(dtForTest, data.table::data.table(location = studyArea))
       uniqueLocations <- unique(dtForTest$location)[!is.na(unique(dtForTest$location))]
@@ -185,11 +183,11 @@ if (getRversion() >= "3.1.0") {
 }
 
 .calculatePvalueOfRasters <- function(dtForTest, pixelBased = FALSE,
-                                      sampleSize, species, redFactorTimes,
-                                      bird){
-  if (pixelBased){
-    if (!is.null(sampleSize)){
-      if (all(sampleSize == "auto", bird == species[[1]])){ # NEEDS TO HAPPEN ONLY FOR THE FIRST BIRD SPECIES AND STAY
+                                      sampleSize, species, redFactorTimes, bird) {
+  if (pixelBased) {
+    if (!is.null(sampleSize)) {
+      if (all(sampleSize == "auto", bird == species[[1]])) {
+        # NEEDS TO HAPPEN ONLY FOR THE FIRST BIRD SPECIES AND STAY
         # COMPUTE IDEAL SIZE SAMPLE FOR SAMPLING USING Cohen's D And Hedges G Effect Size
         treatment <- dtForTest[[2]][!is.na(dtForTest[[2]])]
         control <- dtForTest[[1]][!is.na(dtForTest[[1]])]
@@ -259,8 +257,8 @@ if (getRversion() >= "3.1.0") {
   return(list(mean1 = mean1, mean2 = mean2, p.value = p.value))
 }
 
-.prepStudyAreaForBirds <- function(studyArea, dataPath){
-  if (is(studyArea, "character")){
+.prepStudyAreaForBirds <- function(studyArea, dataPath) {
+  if (is(studyArea, "character")) {
     studyArea <- prepInputs(url = studyArea, targetFile = "birdRTMEdehzhie.tif",
                             destinationPath = dataPath,
                             userTags = "birdRTMEdehzhie", filename2 = "birdRTMEdehzhie")

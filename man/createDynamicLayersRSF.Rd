@@ -60,7 +60,7 @@ The end of this time is 20 years later (i.e. 40-60 years).}
 
 \item{elevation}{RasterLayer of elevation}
 
-\item{vrug}{RasterLayer of ruggeness}
+\item{vrug}{RasterLayer of ruggedness}
 
 \item{LCC}{RasterLayer of landcover classes 2005}
 
@@ -87,8 +87,7 @@ RasterStack of layers
 createDynamicLayerRSF creates the necessary layers for predictive caribou RSF module.
 It is a function designed to work inside a SpaDES module.
 
-createDynamicLayerRSF creates the necessary layers for predictive caribou RSF module.
-It is a function designed to work inside a SpaDES module.
+Create the necessary layers for predictive caribou RSF module
 }
 \author{
 Tati Micheletti

@@ -2,7 +2,7 @@
 % Please edit documentation in R/classifyWetlands.R
 \name{classifyWetlands}
 \alias{classifyWetlands}
-\title{classifyWetlands classifies wetlands (really!) using the wetlands layer set as input and a either LCC05 or LCC2010}
+\title{Classify wetlands (really!) using the wetlands layer set as input and a either LCC05 or LCC2010}
 \usage{
 classifyWetlands(
   LCC,
@@ -35,7 +35,7 @@ function call or the cached version (i.e., the result from a previous call
 to this same cached function with identical arguments).
 }
 \description{
-classifyWetlands classifies wetlands (really!) using the wetlands layer set as input and a either LCC05 or LCC2010
+Classify wetlands (really!) using the wetlands layer set as input and a either LCC05 or LCC2010
 }
 \author{
 Tati Micheletti

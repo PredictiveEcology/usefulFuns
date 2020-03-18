@@ -1,7 +1,4 @@
-if (getRversion() >= "3.1.0") {
-  utils::globalVariables(c("var"))
-}
-
+utils::globalVariables(c("var"))
 
 #' Plots summary of burns
 #'

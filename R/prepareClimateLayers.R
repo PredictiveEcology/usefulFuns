@@ -1,10 +1,15 @@
-#' Function to create raster stack for climate sensitive models. Designed primarily for NWT project, but somewhat flexible.
+utils::globalVariables(c("MDC_0", "MDC_m", "pixelID", "y"))
+
+#'  Function to create raster stack for climate sensitive models
+#'
+#'  Designed primarily for NWT project, but somewhat flexible.
 #'
 #' @param variables Character string of the variables to be used, i.e. c("PPT", "Tmax").
 #'
 #' @param years Character string of the years to use. i.e. c(2011:20100).
 #'
-#' @param GDriveFolder Character string of the folder in google drive to upload the layers to. Handy for shared projects.
+#' @param GDriveFolder Character string of the folder in google drive to upload the layers to.
+#'                     Handy for shared projects.
 #'
 #' @param climateFilePath Character string of the path to the climate file in google drive
 #'                        (i.e. "https://drive.google.com/open?id=1wcgytGJmfZGaapZZ9M9blfGa-45eLVWE" for
@@ -34,7 +39,8 @@
 #'
 #' @param overwrite logical. Default to FALSE. Should the layers be overwritten if exist?
 #'
-#' @param overwriteOriginalData logical. Default to FALSE. If changes happen in the original layer (the one provided in climateFilePath),
+#' @param overwriteOriginalData logical. Default to FALSE. If changes happen in the original layer
+#'                              (the one provided in climateFilePath),
 #'                              set this to TRUE to overwrite the zip files downloaded.
 #'
 #' @return This function returns a list of all years, with each year being the local path for the raster stack that contains all variables
@@ -43,7 +49,7 @@
 #' @export
 #' @importFrom crayon red green yellow
 #' @importFrom data.table data.table
-#' @importFrom googledrive drive_get drive_ls
+#' @importFrom googledrive drive_auth drive_get drive_ls
 #' @importFrom raster crs crs<- getValues raster setValues stack
 #' @importFrom reproducible assessDataType basename2 Cache postProcess preProcess
 #' @importFrom stats na.omit
@@ -76,7 +82,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
     message(red(paste0("The year ", y, " does not have climate projections. Returning NULL")))
     return(NULL)
   }
-  drive_auth(email = authEmail)
+  googledrive::drive_auth(email = authEmail)
   # 1. Make sure it has all defaults
   if (!all(doughtMonths %in% 4:9)){
     stop("Drought calculation for Months other than April to June is not yet supported") # TODO
@@ -167,7 +173,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
     message(crayon::red(paste0("variables is NULL, using all variables available in the climate layers. ",
                                "ATTENTION! This might be very slow!", " Total number of variables loaded: ", length(variables))))
   }
-  if (model == "birds"){
+  if (model == "birds") {
     variables <- c("AHM", "bFFP", "CMD", "DD_0", "DD_18",
                    "DD18", "DD5", "eFFP", "EMT", "EXT", "FFP",
                    "MAP", "MAT", "MCMT", "MSP", "MWMT", "NFFD",
@@ -196,7 +202,8 @@ prepareClimateLayers <- function(pathInputs = NULL,
       # B. If we don't have the year LOCALLY, see if we have in the cloud
       message(yellow(paste0(fileName, " does not exist locally or should be overwritten. Checking the cloud... ")))
       filesInFolder <- drive_ls(path = as_id(GDriveFolder), recursive = FALSE)
-      if (all(paste0(basename2(file_path_sans_ext(fileName)), ".zip") %in% filesInFolder$name, !isTRUE(overwrite))){
+      if (all(paste0(basename2(file_path_sans_ext(fileName)), ".zip") %in% filesInFolder$name,
+              !isTRUE(overwrite))){
         rw <- which(filesInFolder$name == paste0(basename2(tools::file_path_sans_ext(fileName)), ".zip"))
         # googledrive::drive_download(file = as_id(filesInFolder$id[rw]),
         #                             path = file.path(pathInputs, paste0(basename2(tools::file_path_sans_ext(fileName)), ".zip")))
