@@ -46,7 +46,7 @@ Suggests:
     unixtools
 Remotes:
     jimhester/lintr,
-    PredictiveEcology/LandR@ecozone
+    PredictiveEcology/LandR@ecoregion
 Collate: 
     'RSFplot.R'
     'avrgTimeComparison.R'
