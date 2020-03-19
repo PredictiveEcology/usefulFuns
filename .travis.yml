@@ -28,6 +28,10 @@ matrix:
   #     - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
   #   r_binary_packages:
   #     - BH
+  #    r_github_packages:
+  #    - achubaty/amc@development
+  #    - PredictiveEcolog/map@development
+  #    - PredictiveEcolog/pemisc@development
   #   r_packages:
   #     - rgdal
   #     - rgeos
@@ -63,6 +67,9 @@ matrix:
       - rgeos
     r_github_packages:
       - jimhester/lintr
+      - achubaty/amc@development
+      - PredictiveEcolog/map@development
+      - PredictiveEcolog/pemisc@development
     after_success:
       - Rscript -e 'covr::coveralls(type = "all", quiet = FALSE)'
       - Rscript -e 'lintr::lint_package()'
@@ -92,6 +99,10 @@ matrix:
       - igraph
       - RSQlite
       - stringi
+    r_github_packages:
+      - achubaty/amc@development
+      - PredictiveEcolog/map@development
+      - PredictiveEcolog/pemisc@development
     r_packages:
       - devtools
       - rgdal
@@ -109,13 +120,14 @@ matrix:
     r_build_args: '--no-build-vignettes'
     r_check_args: '--as-cran --ignore-vignettes --no-examples'
     before_install:
-    - Rscript -e "install.packages(c('rgdal', 'rgeos', 'XML'), type = 'source')"
-    - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
+      - Rscript -e "install.packages(c('rgdal', 'rgeos', 'XML'), type = 'source')"
+      - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
+    r_github_packages:
+      - achubaty/amc@development
+      - PredictiveEcolog/map@development
+      - PredictiveEcolog/pemisc@development
 r_build_args: " "
 r_check_args: "--as-cran"
-r_github_packages:
-  - PredictiveEcolog/map@development
-  - PredictiveEcolog/pemisc@development
 warnings_are_errors: true
 notifications:
   email:
