@@ -45,7 +45,7 @@ Suggests:
     lintr,
     unixtools
 Remotes:
-    achubaty/amc,
+    achubaty/amc@development,
     jimhester/lintr,
     PredictiveEcology/LandR@ecoregion
 Collate: 
