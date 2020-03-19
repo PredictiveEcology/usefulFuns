@@ -2,6 +2,6 @@
 #'
 #' @import ggplot2
 #' @import methods
-#' @name pemisc-package
-#' @rdname pemisc-package
+#' @name usefun-package
+#' @rdname usefun-package
 NULL
