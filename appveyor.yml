@@ -33,6 +33,7 @@ environment:
 clone_depth: 5
 
 build_script:
+  - travis-tool.sh install_github PredictiveEcolog/map@development PredictiveEcolog/pemisc@development
   - travis-tool.sh install_deps
 
 test_script:

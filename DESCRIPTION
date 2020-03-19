@@ -47,9 +47,7 @@ Suggests:
 Remotes:
     achubaty/amc,
     jimhester/lintr,
-    PredictiveEcology/LandR@ecoregion,
-    PredictiveEcology/map,
-    PredictiveEcology/pemisc
+    PredictiveEcology/LandR@ecoregion
 Collate: 
     'RSFplot.R'
     'avrgTimeComparison.R'
