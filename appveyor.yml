@@ -62,12 +62,12 @@ artifacts:
     name: Bits
 
 notifications:
- - provider: Email
-   to:
-     - alex.chubaty@gmail.com
-     - '{{commitAuthorEmail}}'
-    subject: 'usefun: r-appveyor build {{status}}'
-    message: "https://ci.appveyor.com/project/achubaty/usefun"
-    on_build_success: false
-    on_build_failure: false
-    on_build_status_changed: true
+   - provider: Email
+     to:
+       - alex.chubaty@gmail.com
+       - '{{commitAuthorEmail}}'
+      subject: 'usefun: r-appveyor build {{status}}'
+      message: "{{message}}, {{commitId}}, ..."
+      on_build_success: false
+      on_build_failure: false
+      on_build_status_changed: true
