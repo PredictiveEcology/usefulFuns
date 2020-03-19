@@ -1,9 +1,11 @@
 language: r
-cache: packages
-cran: https://cran.rstudio.com/
+cache:
+  - $HOME/.ccache
+  - packages
+cran: https://cloud.r-project.org
 env:
   global:
-    - CRAN_REPO=https://cran.rstudio.com
+    - CRAN_REPO=https://cloud.r-project.org
 jobs:
   include:
   # - os: linux
@@ -14,6 +16,7 @@ jobs:
   #       sources:
   #       - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
   #       packages:
+  #       - ccache
   #       - gdal-bin
   #       - libgdal-dev
   #       - libgdal1-dev
@@ -24,6 +27,9 @@ jobs:
   #   services:
   #     - xvfb
   #   before_install:
+  #     - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
+  #     - echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+  #   before_script:
   #     - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
   #   r_binary_packages:
   #     - BH
@@ -38,6 +44,7 @@ jobs:
         sources:
         - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
         packages:
+        - ccache
         - gdal-bin
         - libgdal-dev
         - libgdal1-dev
@@ -48,7 +55,10 @@ jobs:
     services:
       - xvfb
     before_install:
-    - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
+      - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
+      - echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+    before_script:
+      - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
     r_binary_packages:
       - BH
       - dplyr
@@ -72,6 +82,7 @@ jobs:
         sources:
         - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
         packages:
+        - ccache
         - gdal-bin
         - libgdal-dev
         - libgdal1-dev
@@ -84,7 +95,10 @@ jobs:
       - xvfb
     r: devel
     before_install:
-    - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
+      - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
+      - echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
+    before_script:
+      - Rscript -e "install.packages('unixtools', repos = 'https://www.rforge.net/')"
     r_binary_packages:
       - BH
       - dplyr
