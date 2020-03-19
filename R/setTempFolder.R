@@ -40,7 +40,7 @@ setTempFolder <- function(paths, setTmpFolder, usr) {
            unixtools::set.tempdir(tempFolder)
         } else {
           message("Package 'unixtools' required. Install it via:\n",
-                  "install.packages(\"unixtools\", repos = \"https://www.rforge.net/\")")
+                  "  devtools::instal_github('s-u/unixtools')")
         }
       }
     } else {

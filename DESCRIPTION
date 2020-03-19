@@ -9,7 +9,6 @@ License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
-AdditionalRepositories: https://www.rforge.net
 Depends:
     R (>= 3.6)
 Imports:
@@ -47,7 +46,8 @@ Suggests:
 Remotes:
     achubaty/amc@development,
     jimhester/lintr,
-    PredictiveEcology/LandR@ecoregion
+    PredictiveEcology/LandR@ecoregion,
+    s-u/unixtools
 Collate: 
     'RSFplot.R'
     'avrgTimeComparison.R'
