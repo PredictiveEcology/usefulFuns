@@ -21,6 +21,7 @@ jobs:
   #       - libgdal-dev
   #       - libgdal1-dev
   #       - libgeos-dev
+  #       - libgit2-dev
   #       - libmagick++-dev
   #       - libnlopt-dev
   #       - libproj-dev
@@ -48,6 +49,7 @@ jobs:
         - libgdal-dev
         - libgdal1-dev
         - libgeos-dev
+        - libgit2-dev
         - libmagick++-dev
         - libnlopt-dev
         - libproj-dev
@@ -85,6 +87,7 @@ jobs:
         - libgdal-dev
         - libgdal1-dev
         - libgeos-dev
+        - libgit2-dev
         - libmagick++-dev
         - libnlopt-dev
         - libproj-dev
@@ -113,6 +116,7 @@ jobs:
       homebrew:
         packages:
         - imagemagick@6
+        - libgit2
         - libxml2
         - udunits
         update: true
