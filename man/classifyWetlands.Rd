@@ -30,7 +30,7 @@ uplands > 2}
 \item{RasterToMatch}{raster to match the new layer after classification to. Optional.}
 }
 \value{
-As with \code{\link[archivist]{cache}}, returns the value of the
+As with \code{archivist::cache}, returns the value of the
 function call or the cached version (i.e., the result from a previous call
 to this same cached function with identical arguments).
 }

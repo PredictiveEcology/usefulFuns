@@ -9,7 +9,7 @@ utils::globalVariables(c("Coefficient", "StdErr", "Value"))
 #'
 #' @param replicates numeric. Number of repetitions to be added to the bootstrapping.
 #'
-#' @return As with \code{\link[archivist]{cache}}, returns the value of the
+#' @return As with \code{archivist::cache}, returns the value of the
 #' function call or the cached version (i.e., the result from a previous call
 #' to this same cached function with identical arguments).
 #'

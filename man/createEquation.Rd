@@ -15,7 +15,7 @@ as 'Coefficient'. If 'Intercept' is not found, it enters \code{browser()} mode.}
 \item{replicates}{numeric. Number of repetitions to be added to the bootstrapping.}
 }
 \value{
-As with \code{\link[archivist]{cache}}, returns the value of the
+As with \code{archivist::cache}, returns the value of the
 function call or the cached version (i.e., the result from a previous call
 to this same cached function with identical arguments).
 }
