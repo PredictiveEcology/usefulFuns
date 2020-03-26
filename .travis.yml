@@ -33,6 +33,11 @@ jobs:
   #     - echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
   #   r_binary_packages:
   #     - BH
+  #     - dplyr
+  #     - ggplot2
+  #     - igraph
+  #     - RSQlite
+  #     - stringi
   #   r_packages:
   #     - rgdal
   #     - rgeos
@@ -62,6 +67,7 @@ jobs:
     r_binary_packages:
       - BH
       - dplyr
+      - ggplot2
       - igraph
       - RSQlite
       - stringi
@@ -102,6 +108,7 @@ jobs:
     r_binary_packages:
       - BH
       - dplyr
+      - ggplot2
       - igraph
       - RSQlite
       - stringi
