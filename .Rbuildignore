@@ -1,3 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 figures/
+^\.travis\.yml$
+^appveyor\.yml$
+^appveyor_cache\.txt$

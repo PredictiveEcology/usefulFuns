@@ -1,3 +1,5 @@
+utils::globalVariables(c("meanAge", "medianAge", "years"))
+
 #' Plots of forest age
 #'
 #' @param dataPath character. Path to data
@@ -16,16 +18,13 @@
 #' @importFrom raster writeRaster
 #' @importFrom SpaDES.core paddedFloatToChar
 #' @importFrom SpaDES.tools rasterizeReduced
-#'
 #' @include substrBoth.R
-#'
 #' @rdname forestAgePlot
 forestAgePlot <- function(dataPath, typeSim,
                           addCaribousuitability = FALSE,
-                          overwrite = FALSE){
-
+                          overwrite = FALSE) {
   fileName <- file.path(dataPath, paste0("forestAgePlot", typeSim, ".png"))
-  if (all(file.exists(fileName), !isTRUE(overwrite))){
+  if (all(file.exists(fileName), !isTRUE(overwrite))) {
     message("Plot exist and overwrite is FALSE. Returning plot path")
     return(fileName)
   }

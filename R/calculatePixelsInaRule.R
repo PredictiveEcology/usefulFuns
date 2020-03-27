@@ -1,10 +1,11 @@
 #' Uses a set of rules to calculate how many non-NA pixels in a raster follow those rules,
-#' usig a shapefile to subset those of interest
+#' using a shapefile to subset those of interest
 #'
 #' @param ras rasterLayer to calculate the n of pixels that follow a given rule
 #' @param rule character string of rule to determine which pixels should be computed
 #' @param shp shapefile indicating the different areas to subset the pixels to consider in the calculation
 #' @param pol numeric. Representation of the polygon of interest in `pol` for the calculation
+#' @param ... Additional arguments
 #'
 #' @return A list of the percent disturbance, total pixels not NA and how many pixels are disturbed according to the ruls
 #'

@@ -12,7 +12,7 @@ setTempFolder(paths, setTmpFolder, usr)
 
 \item{setTmpFolder}{logical. Should the function reset your temp folder to a new location?}
 
-\item{name}{caracter. User name for a final verification. If you are sure you want to set
+\item{usr}{character. User name for a final verification. If you are sure you want to set
 your temporary location, use "Tati".}
 }
 \value{

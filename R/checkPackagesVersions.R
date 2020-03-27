@@ -17,14 +17,15 @@
 #' @author Tati Micheletti
 #' @export
 #' @importFrom data.table data.table rbindlist
-#' @importFrom utils sessionInfo
+#' @importFrom utils getFromNamespace sessionInfo
 #' @rdname checkPackagesVersions
 checkPackagesVersions <- function(simList = NULL, filePath = NULL){
   if (is.null(simList)) {
     attachedPackages <- utils::sessionInfo()
     allPackages <- c(attachedPackages$basePkgs, names(attachedPackages$otherPkgs))
+    local_sha <- utils::getFromNamespace(local_sha, "remotes")
     packagesVersions <- data.table::rbindlist(lapply(X = allPackages, FUN = function(pkg){
-      sha  <- remotes:::local_sha(pkg)
+      sha  <- local_sha(pkg)
       pkgV <- data.table::data.table(package = pkg, version = sha,
                                      repository = ifelse(nchar(sha) == 40, "git", "CRAN"))
     }))

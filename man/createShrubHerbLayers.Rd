@@ -2,8 +2,7 @@
 % Please edit documentation in R/createShrubHerbLayers.R
 \name{createShrubHerbLayers}
 \alias{createShrubHerbLayers}
-\title{createShrubHerbLayers creates the necessary shrub or herb layers for predictive caribou RSF module. 
-It is a function designed to work inside a SpaDES module.}
+\title{Creates the necessary shrub or herb layers for predictive caribou RSF module.}
 \usage{
 createShrubHerbLayers(
   landCoverECCC,
@@ -26,8 +25,7 @@ createShrubHerbLayers(
 RasterLayer of herbs or shrubs
 }
 \description{
-createShrubHerbLayers creates the necessary shrub or herb layers for predictive caribou RSF module. 
-It is a function designed to work inside a SpaDES module.
+Creates the necessary shrub or herb layers for predictive caribou RSF module.
 }
 \author{
 Tati Micheletti

@@ -17,13 +17,13 @@
 #' @export
 #' @importFrom crayon yellow green
 #' @importFrom data.table data.table rbindlist
-#' @importFrom reproducible prepInputs Cache
-#' @importFrom stats wilcox.test t.test
-#' @importFrom pryr where
 #' @importFrom effsize cohen.d
-#' @importFrom raster getValues raster
 #' @importFrom future plan
 #' @importFrom future.apply future_lapply
+#' @importFrom pryr where
+#' @importFrom raster getValues raster
+#' @importFrom reproducible prepInputs Cache
+#' @importFrom stats wilcox.test t.test
 #'
 #' @include helpersBirds.R
 #' @include grepMulti.R
@@ -31,7 +31,6 @@
 #' @include cbindFromList.R
 #'
 #' @rdname bootstrapPercentChanges
-
 bootstrapPercentChanges <- function(dataPath,
                                     years = c(2001, 2100),
                                     sampleSize = "auto",
@@ -40,7 +39,7 @@ bootstrapPercentChanges <- function(dataPath,
                                     species = NULL, useFuture = FALSE){
 
   if (class(shp) == "character"){
-    studyArea <- Cache(prepStudyAreaForBirds, studyArea = shp,
+    studyArea <- Cache(.prepStudyAreaForBirds, studyArea = shp,
                        dataPath = reproducible::checkPath(file.path(dataPath, "birdRTMEdehzhieRAS"),
                                                           create = TRUE))
   } else {

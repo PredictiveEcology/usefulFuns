@@ -1,4 +1,6 @@
-#' classifyWetlands classifies wetlands (really!) using the wetlands layer set as input and a either LCC05 or LCC2010
+utils::globalVariables(c(".N", "cells", "N"))
+
+#' Classify wetlands (really!) using the wetlands layer set as input and a either LCC05 or LCC2010
 #'
 #' @param LCC numeric. 2005 (250m resolution) or 2010 (30m resolution) landcover  rasters.
 #'
@@ -10,22 +12,21 @@
 #'                      wetlands == 2
 #'                      uplands > 2
 #'
-#'  @param pathData Where the layers are stored and/or should be saved to
+#' @param pathData Where the layers are stored and/or should be saved to
 #'
-#'  @param studyArea If the layer should be cropped and masked after classification. Optional.
+#' @param studyArea If the layer should be cropped and masked after classification. Optional.
 #'
-#'  @param RasterToMatch raster to match the new layer after classification to. Optional.
+#' @param RasterToMatch raster to match the new layer after classification to. Optional.
 #'
-#'
-#' @return As with \code{\link[archivist]{cache}}, returns the value of the
+#' @return As with \code{archivist::cache}, returns the value of the
 #' function call or the cached version (i.e., the result from a previous call
 #' to this same cached function with identical arguments).
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom data.table data.table
+#' @importFrom data.table as.data.table data.table
 #' @importFrom LandR prepInputsLCC
-#' @importFrom raster raster projectRaster extract
+#' @importFrom raster extract projectRaster raster res values xyFromCell
 #' @importFrom reproducible prepInputs postProcess
 #' @rdname classifyWetlands
 classifyWetlands <- function(LCC,
@@ -37,7 +38,7 @@ classifyWetlands <- function(LCC,
   rasLCC <- LandR::prepInputsLCC(year = LCC, destinationPath = pathData,
                                  studyArea = studyArea, filename2 = paste0("LCC", LCC),
                                  format = "GTiff", overwrite = TRUE)
-  if (as.character(crs(rasLCC))!=as.character(crs(wetLayerInput))){
+  if (as.character(crs(rasLCC))!=as.character(crs(wetLayerInput))) {
     rasLCC <- raster::projectRaster(from = rasLCC, crs = crs(wetLayerInput))
   }
   # get xy of all pixels in DUCKS that are 1, 2 or 3+

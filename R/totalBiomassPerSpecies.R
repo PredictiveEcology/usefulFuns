@@ -1,7 +1,6 @@
-if (getRversion() >= "3.1.0") {
-  utils::globalVariables(c(".", "..cols", ":=",
-                           "age", "B", "bWeightedAge", "noPixels", "speciesCode", "year"))
-}
+utils::globalVariables(c(".", "..cols", ":=",
+                         "age", "B", "Boreal", "bWeightedAge", "noPixels", "NWT",
+                         "speciesCode", "year"))
 
 #' Plots biomass per species: proportional or absolute, and total or just overstory
 #'
@@ -56,7 +55,7 @@ totalBiomassPerSpecies <- function(dataPath,
   pixelGroupList <- bringObjectTS(path = dataPath, rastersNamePattern = "pixelGroupMap")
 
   sppEquivCol <- "NWT"
-  data("sppEquivalencies_CA", package = "LandR")
+  data("sppEquivalencies_CA", package = "LandR", envir = environment())
   sppEquivalencies_CA[, NWT := c(Abie_Bal = "Abie_Bal",
                                  Betu_Pap = "Betu_Pap",
                                  Lari_Lar = "Lari_Lar",
@@ -72,7 +71,7 @@ totalBiomassPerSpecies <- function(dataPath,
   mixed <- structure("#D0FB84", names = "Mixed")
   sppColorVect[length(sppColorVect)+1] <- mixed
   attributes(sppColorVect)$names[length(sppColorVect)] <- "Mixed"
-  biomassBySpecies <- rbindlist(lapply(X = names(cohortDataList), FUN = function(yr){
+  biomassBySpecies <- rbindlist(lapply(X = names(cohortDataList), FUN = function(yr) {
     cohort <- cohortDataList[[yr]]
     pixelGroup <- pixelGroupList[[yr]]
     if (NROW(cohort[duplicated(cohort)]) != 0)

@@ -3,7 +3,7 @@
 #'
 #' @param paths paths set with \code{SpaDES.core::setPaths()}.
 #' @param setTmpFolder logical. Should the function reset your temp folder to a new location?
-#' @param name caracter. User name for a final verification. If you are sure you want to set
+#' @param usr character. User name for a final verification. If you are sure you want to set
 #'             your temporary location, use "Tati".
 #'
 #' @return invisible
@@ -13,7 +13,7 @@
 #' @importFrom reproducible asPath checkPath
 #'
 #' @rdname setTempFolder
-setTempFolder <- function(paths, setTmpFolder, usr){
+setTempFolder <- function(paths, setTmpFolder, usr) {
   # Set a storage project folder
   workDirectory <- getwd()
   message("Your current temporary directory is ", tempdir())
@@ -33,14 +33,14 @@ setTempFolder <- function(paths, setTmpFolder, usr){
       tempFolder <- asPath(reproducible::checkPath(file.path(paths$cachePath, "tmp"), create = TRUE))
 
       # Set a temporary folder
-      if (Sys.info()['sysname'] == "Windows"){
+      if (Sys.info()['sysname'] == "Windows") {
         write(paste0("TMPDIR = '", tempFolder, "'"), file = file.path(Sys.getenv('R_USER'), '.Renviron'))
       } else {
-        if (requireNamespace(unixtools, quietly = TRUE)) {
+        if (requireNamespace("unixtools", quietly = TRUE)) {
            unixtools::set.tempdir(tempFolder)
         } else {
-          stop("Package 'unixtools' required. Install it via:\n",
-               "install.packages(\"unixtools\", repos = \"https://www.rforge.net/\")")
+          message("Package 'unixtools' required. Install it via:\n",
+                  "  devtools::instal_github('s-u/unixtools')")
         }
       }
     } else {
@@ -48,7 +48,6 @@ setTempFolder <- function(paths, setTmpFolder, usr){
     }
   }
   if (setTmpFolder == TRUE & answer == "YES")
-  message(paste0("You changed your temporary folder location,",
-                    "\n If you are using Windows, please restart",
-                 " your R session so the changes can take effect."))
+  message("You changed your temporary folder location.\n",
+          "If you are using Windows, please restart your R session so the changes can take effect.")
 }

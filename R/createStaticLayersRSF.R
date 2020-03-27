@@ -1,8 +1,7 @@
-#' createDynamicLayerRSF creates the necessary layers for predictive caribou RSF module.
-#' It is a function designed to work inside a SpaDES module.
+#' Create the necessary layers for predictive caribou RSF module
 #'
 #' @param elevation RasterLayer of elevation
-#' @param vrug RasterLayer of ruggeness
+#' @param vrug RasterLayer of ruggedness
 #' @param LCC RasterLayer of landcover classes 2005
 #' @param reclassLCC05 List with reclassification for LCC05 values
 #'                     (i.e. LCC05 classes that should be classified as shrub or herbs)
@@ -18,15 +17,14 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom raster raster projectRaster extract dropLayer stack nlayers extent reclassify
-#' @importFrom SpaDES.tools rasterizeReduced
 #' @importFrom data.table data.table setkey
+#' @importFrom raster dropLayer extent extract nlayers projectRaster raster reclassify stack
 #' @importFrom reproducible prepInputs postProcess Require
+#' @importFrom SpaDES.tools rasterizeReduced
 #' @include createShrubHerbLayers.R
 #' @include nameAndBringOn.R
 #'
 #' @rdname createDynamicLayersRSF
-
 createStaticLayersRSF <- function(elevation,
                                   vrug,
                                   LCC,
@@ -36,18 +34,20 @@ createStaticLayersRSF <- function(elevation,
                                   vrugName,
                                   reclassLCC05,
                                   dynamicLayers,
-                                  RTM){
-
+                                  RTM) {
   message("Creating static layers. Cached objects are fine here...")
   elevation <- Cache(nameAndBringOn, ras = elevation, name = elevationName, RTM = RTM)
   vrug <- Cache(nameAndBringOn, ras = vrug, name = vrugName, RTM = RTM)
 
   # 1. Extract shrub and herb from LCC05: which classes are these? Don't forget naming
-  landCoverECCC <- raster::reclassify(x =  LCC, rcl = matrix(data = c(reclassLCC05[["classesLCC05"]],
-                                                                      reclassLCC05[["classesECCC"]]),
-                                                             ncol = 2, byrow = FALSE))
-  Herbs <- Cache(createShrubHerbLayers, reclassLCC05 = reclassLCC05, landCoverECCC = landCoverECCC, layerName = herbName)
-  Shrubs <- Cache(createShrubHerbLayers, reclassLCC05 = reclassLCC05, landCoverECCC = landCoverECCC, layerName = shrubName)
+  landCoverECCC <- raster::reclassify(x =  LCC,
+                                      rcl = matrix(data = c(reclassLCC05[["classesLCC05"]],
+                                                            reclassLCC05[["classesECCC"]]),
+                                                   ncol = 2, byrow = FALSE))
+  Herbs <- Cache(createShrubHerbLayers, reclassLCC05 = reclassLCC05, landCoverECCC = landCoverECCC,
+                 layerName = herbName)
+  Shrubs <- Cache(createShrubHerbLayers, reclassLCC05 = reclassLCC05, landCoverECCC = landCoverECCC,
+                  layerName = shrubName)
   Dec <- dynamicLayers$Deciduous
 
   # Need to override the deciduous from LandR with LCC05
@@ -73,7 +73,7 @@ createStaticLayersRSF <- function(elevation,
 
     message(paste0("The following layers don't match the base Deciduous (biomassMap) and will be fixed: ", crayon::magenta(whichNot)))
     fixedLayers <- raster::stack(lapply(X = whichNot, FUN = function(badLay){
-      fxL <- reproducible::postProcess(x = get(badLay), rasterToMatch = biomassMap, 
+      fxL <- reproducible::postProcess(x = get(badLay), rasterToMatch = dynamicLayers$Deciduous,
                                        useCache = getOption("reproducible.useCache", TRUE),
                                        destinationPath = tempdir(), filename2 = NULL)
       return(fxL)

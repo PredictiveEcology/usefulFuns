@@ -1,3 +1,6 @@
+utils::globalVariables(c("BiomassBySpecies", "medianBiomass", "meanBiomass", "pixelGroup",
+                         "totalBiomass"))
+
 #' Creates a GIF of biomass change
 #'
 #' @param years numeric. Years available/intended to be used for the giphy
@@ -12,6 +15,7 @@
 #' @importFrom googledrive drive_upload
 #' @importFrom grDevices dev.off png
 #' @importFrom SpaDES.core paddedFloatToChar
+#' @importFrom stats median sd
 #'
 #' @rdname biomassPerSpeciesYearGIF
 biomassPerSpeciesYearGIF <- function(dataPath, years = NULL, uploadTo) {

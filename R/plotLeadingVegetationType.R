@@ -1,7 +1,10 @@
+utils::globalVariables(c("Boreal", "NWT"))
+
 #' Plots Leading Vegetation Type using cohortData and pixelGroupMap
 #'
 #' @param dataPath character. Path to data
 #' @param typeSim character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
+#' @param colNA character. The color to use for NA.
 #' @param saveRAS logical. Save the raster for posterior use?
 #' @param overwrite logical.
 #'
@@ -25,7 +28,7 @@ plotLeadingVegetationType <- function(dataPath,
                                       typeSim,
                                       colNA = "grey85",
                                       saveRAS = TRUE,
-                                      overwrite = FALSE){
+                                      overwrite = FALSE) {
   if (!isTRUE(overwrite)){
     fileName <- usefun::grepMulti(x = list.files(dataPath, full.names = TRUE), patterns = c("RAS_LeadingTypeYear", ".tif")) #[ FIX ] It won't make the "missing" leading years...
     if (length(fileName) != 0){
@@ -40,7 +43,7 @@ plotLeadingVegetationType <- function(dataPath,
   pixelGroupList <- bringObjectTS(path = dataPath, rastersNamePattern = "pixelGroupMap")
 
   sppEquivCol <- "NWT"
-  data("sppEquivalencies_CA", package = "LandR")
+  data("sppEquivalencies_CA", package = "LandR", envir = environment())
   sppEquivalencies_CA[, NWT := c(Abie_Bal = "Abie_Bal",
                                  Betu_Pap = "Betu_Pap",
                                  Lari_Lar = "Lari_Lar",
