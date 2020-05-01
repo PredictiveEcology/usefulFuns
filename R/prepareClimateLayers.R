@@ -181,7 +181,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
 
   # 2. Check if we have the years chosen (we should lapply through years)
 yearsList <- lapply(X = years, FUN = function(y){
-  if (all(model == "fireSense", isTRUE(returnCalculatedLayersForFireSense), !isTRUE(overwrite))){
+  if (all(model == "fireSense", isTRUE(returnCalculatedLayersForFireSense), !isTRUE(overwriteOriginalData))){
     fileName <- file.path(pathInputs, paste0(paste(climateModel, RCP, ensemble,
                                                    fileResolution, model, "Calc", y, sep = "_"), ".grd"))
   } else {
@@ -300,7 +300,7 @@ yearsList <- lapply(X = years, FUN = function(y){
         names(variablesStack) <- paste("MDC", y)
         dType <- assessDataType(variablesStack)
       }
-      writeRaster(variablesStack, filename = fileName, datatype = dType)
+      writeRaster(variablesStack, filename = fileName, datatype = dType, overwrite = overwrite)
       variablesStack <- stack(fileName)
       filesToUpload <- grepMulti(x = list.files(dirname(fileName), full.names = TRUE),
                                          patterns = basename(tools::file_path_sans_ext(fileName)))
