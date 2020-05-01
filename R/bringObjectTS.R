@@ -13,12 +13,11 @@
 #' @importFrom crayon green magenta
 #' @importFrom raster raster
 #' @rdname bringObjectTS
-
 bringObjectTS <- function(path,
                           rastersNamePattern){
   message(crayon::green(paste0("Looking for files in ", path, "\nUsing the following pattern(s): ",
                                paste(rastersNamePattern, sep = "\n"))))
-  filesToLoad  <- grepMulti(x = list.files(path = path, full.names = TRUE), pattern = rastersNamePattern)
+  filesToLoad  <- grepMulti(x = list.files(path = path, full.names = TRUE), patterns = rastersNamePattern)
   if (length(filesToLoad) == 0)
     stop("No files in the folder that have this pattern. Did you pass the correct folder and/or patterns?")
   message(crayon::green("Loading the following file(s):"))

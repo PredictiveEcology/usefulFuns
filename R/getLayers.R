@@ -20,22 +20,21 @@
 #' @param reclassLCC05 List with reclassification for LCC05 values (i.e. LCC05 classes that should be classified as shrub or herbs)
 #' @param rasterToMatch RasterLayer template for these layers to match.
 #'
-#' @return
+#' @return TODO
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom LandR prepInputsLCC
 #' @importFrom crayon red
-#' @importFrom raster raster projectRaster extract dropLayer stack
-#' @importFrom SpaDES.tools rasterizeReduced
 #' @importFrom data.table data.table setkey
-#' @importFrom reproducible prepInputs postProcess Require
+#' @importFrom LandR prepInputsLCC
+#' @importFrom raster dropLayer extract projectRaster raster stack
+#' @importFrom reproducible prepInputs postProcess
+#' @importFrom SpaDES.tools rasterizeReduced
 #' @include createDynamicLayersRSF.R
 #' @include createStaticLayersRSF.R
 #' @include extractDisturbanceFast.R
 #'
 #' @rdname getLayers
-
 getLayers <- function(currentTime,
                       cohortData, # Has age info per pixel group
                       pixelGroupMap, #Map of pixel groups
@@ -60,8 +59,6 @@ getLayers <- function(currentTime,
     return(NA)
   }
   # In a posterior version, will need to make this flexible for the model covariates
-  reproducible::Require("raster")
-  reproducible::Require("magrittr")
   originalTime <- currentTime
   if (startTime > 1){
     relEndTime <- endTime - startTime
@@ -85,12 +82,12 @@ getLayers <- function(currentTime,
   if (!isRSF){
     listDistForEachShpForEachPoly <- lapply(X = names(listSACaribou), FUN = function(caribouShapefile){
       message("Calculating disturbance for ", caribouShapefile)
-      listPolyDist <- usefun::extractDisturbanceFast(ageMap = ageMap,
-                            caribouShapefile = listSACaribou[[caribouShapefile]],
-                            recoveryTime = recoveryTime,
-                            anthropogenicLayer = anthropogenicLayer,
-                            waterRaster = waterRaster,
-                            rasterToMatch = rasterToMatch)
+      listPolyDist <- extractDisturbanceFast(ageMap = ageMap,
+                                             caribouShapefile = listSACaribou[[caribouShapefile]],
+                                             recoveryTime = recoveryTime,
+                                             anthropogenicLayer = anthropogenicLayer,
+                                             waterRaster = waterRaster,
+                                             rasterToMatch = rasterToMatch)
     })
     names(listDistForEachShpForEachPoly) <- names(listSACaribou)
     return(listDistForEachShpForEachPoly)

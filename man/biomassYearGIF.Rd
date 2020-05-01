@@ -14,7 +14,7 @@ biomassYearGIF(dataPath, years = NULL, uploadTo)
 \item{uploadTo}{character. Google drive folder id. (i.e. "1ZqPVs33HxnnmjLUW94i7AuwAS-nloPGH")}
 }
 \value{
-RasterLtack
+RasterStack
 }
 \description{
 Creates a GIF of total biomass change

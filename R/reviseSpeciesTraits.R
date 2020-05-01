@@ -1,4 +1,4 @@
-#' Bootstraps rasters for testing significancy on comparable rasters of different species or scenarios
+#' Bootstraps rasters for testing significance on comparable rasters of different species or scenarios
 #'
 #' @param speciesTable data.table. Table to be updated. If returnTable == TRUE this can be NULL.
 #'                     In this case, the function will use the ORIGINAL species table traits (from LANDIS-II).
@@ -16,7 +16,6 @@
 #' @importFrom LandR getSpeciesTable
 #'
 #' @rdname reviseSpeciesTraits
-
 reviseSpeciesTraits <- function(speciesTable = NULL, updatedTable = NULL,
                                 destinationPath = tempdir(),
                                 returnTable = FALSE,

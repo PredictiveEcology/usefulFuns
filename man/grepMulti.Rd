@@ -4,12 +4,14 @@
 \alias{grepMulti}
 \title{grepMulti works similarly to \code{grepl}, but for multiple patterns and returning the object.}
 \usage{
-grepMulti(x, patterns)
+grepMulti(x, patterns, unwanted = NULL)
 }
 \arguments{
 \item{x}{object where to look for patterns.}
 
 \item{patterns}{Character vector of patterns to look for objects.}
+
+\item{unwanted}{Character vector of patterns to exclude from search.}
 }
 \value{
 The objects with specified patterns combined

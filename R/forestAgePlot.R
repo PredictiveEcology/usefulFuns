@@ -9,19 +9,17 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom ggplot2 geom_line ggplot ggtitle geom_ribbon theme
 #' @importFrom data.table data.table rbindlist getDTthreads setDTthreads
-#' @importFrom SpaDES.core paddedFloatToChar
 #' @importFrom googledrive drive_upload
 #' @importFrom LandR sppColors vegTypeMapGenerator
 #' @importFrom quickPlot clearPlot
 #' @importFrom raster writeRaster
+#' @importFrom SpaDES.core paddedFloatToChar
 #' @importFrom SpaDES.tools rasterizeReduced
 #'
 #' @include substrBoth.R
 #'
 #' @rdname forestAgePlot
-
 forestAgePlot <- function(dataPath, typeSim,
                           addCaribousuitability = FALSE,
                           overwrite = FALSE){
@@ -46,8 +44,8 @@ forestAgePlot <- function(dataPath, typeSim,
                 maxAge = max(r[], na.rm = TRUE),
                 medianAge = median(r[], na.rm = TRUE),
                 years = as.numeric(substrBoth(strng = index,
-                                                      howManyCharacters = 4,
-                                                      fromEnd = TRUE))))
+                                              howManyCharacters = 4,
+                                              fromEnd = TRUE))))
   }))
   oldBurn <- ifelse(addCaribousuitability, "red", "white")
   recentBurn <- ifelse(addCaribousuitability, "yellow", "white")
@@ -61,5 +59,5 @@ forestAgePlot <- function(dataPath, typeSim,
     ggtitle(paste0("Forest Age - ", typeSim)) +
     theme(legend.position = "bottom")
   ggsave(fileName, plot = agePlot)
-return(agePlot)
+  return(agePlot)
 }

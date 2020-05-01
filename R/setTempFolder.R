@@ -13,10 +13,8 @@
 #' @importFrom reproducible asPath checkPath
 #'
 #' @rdname setTempFolder
-#'
 setTempFolder <- function(paths, setTmpFolder, usr){
   # Set a storage project folder
-  require("reproducible")
   workDirectory <- getwd()
   message("Your current temporary directory is ", tempdir())
 
@@ -38,9 +36,12 @@ setTempFolder <- function(paths, setTmpFolder, usr){
       if (Sys.info()['sysname'] == "Windows"){
         write(paste0("TMPDIR = '", tempFolder, "'"), file = file.path(Sys.getenv('R_USER'), '.Renviron'))
       } else {
-        tryCatch(library(unixtools),
-                 error = function(e) install.packages("unixtools", repos = 'http://www.rforge.net/'))
-        unixtools::set.tempdir(tempFolder)
+        if (requireNamespace(unixtools, quietly = TRUE)) {
+           unixtools::set.tempdir(tempFolder)
+        } else {
+          stop("Package 'unixtools' required. Install it via:\n",
+               "install.packages(\"unixtools\", repos = \"https://www.rforge.net/\")")
+        }
       }
     } else {
       message("Temporary folder setting was CANCELED by the user")

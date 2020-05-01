@@ -10,18 +10,18 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom ggplot2 geom_line ggplot ggtitle
 #' @importFrom data.table data.table rbindlist getDTthreads setDTthreads
-#' @importFrom SpaDES.core paddedFloatToChar
 #' @importFrom googledrive drive_upload
+#' @importFrom graphics par plot
+#' @importFrom grDevices dev.off heat.colors png recordPlot
 #' @importFrom LandR sppColors vegTypeMapGenerator
 #' @importFrom quickPlot clearPlot
 #' @importFrom raster writeRaster
+#' @importFrom SpaDES.core paddedFloatToChar
 #'
 #' @include bringObjectTS.R
 #'
 #' @rdname plotVegetationBiomass
-
 plotVegetationBiomass <- function(years = c(2011, 2100),
                                   dataPath,
                                   typeSim,
@@ -37,20 +37,20 @@ plotVegetationBiomass <- function(years = c(2011, 2100),
       return(stk)
     }
   }
-  browser()
+  # browser() # just commented out 09DEC19 :: why was it here...? because the function isnt working properly. Apparently it is...? Feb 9th 2020
   cohorDataList <- lapply(years, FUN = function(y){
-  tbl <- bringObjectTS(path = dataPath, rastersNamePattern = c("cohortData", y))
+    tbl <- bringObjectTS(path = dataPath, rastersNamePattern = c("cohortData", y))
     return(tbl[[1]])
-    })
+  })
   names(cohorDataList) <- paste0("Year", years)
   pixelGroupList <- lapply(years, FUN = function(y){
     tbl <- bringObjectTS(path = dataPath, rastersNamePattern = c("pixelGroupMap", y))
     return(tbl[[1]])
   })
   names(pixelGroupList) <- paste0("Year", years)
-  browser()
+  # browser() # just commented out 09DEC19 :: why was it here...?
   # BIOMASS ~~~~~~~~~~~~~~~~
-    maxBiomassPlot <- lapply(X = c(1:length(cohorDataList)), function(index){
+  maxBiomassPlot <- lapply(X = c(1:length(cohorDataList)), function(index){
     cohort <- cohorDataList[[index]]
     pixelGroup <- pixelGroupList[[index]]
     a <- cohort[, list(sumBio = sum(B, na.rm = TRUE)), by = "pixelGroup"]
@@ -61,8 +61,8 @@ plotVegetationBiomass <- function(years = c(2011, 2100),
   if (saveRAS){
     lapply(1:length(maxBiomassPlot), function(index){
       writeRaster(x = maxBiomassPlot[[index]], filename = file.path(dataPath, paste0("RAS_",
-                                                                                       names(maxBiomassPlot)[index], ".tif")),
-                                                                    format = "GTiff", overwrite = TRUE)
+                                                                                     names(maxBiomassPlot)[index], ".tif")),
+                  format = "GTiff", overwrite = TRUE)
     })
   }
   rng = range(c(getValues(maxBiomassPlot[[1]]), getValues(maxBiomassPlot[[2]])), na.rm = TRUE)
@@ -73,10 +73,10 @@ plotVegetationBiomass <- function(years = c(2011, 2100),
   parSetup <- par()
   invisible(on.exit(par(parSetup)))
   if (length(years < 4)){
-    par(mfrow=c(1,length(years)))
+    par(mfrow = c(1,length(years)))
   } else {
-    if (all(length(years > 3), length(years < 7))){
-      par(mfrow=c(length(years)/2,length(years)))
+    if (all(length(years > 3), length(years < 7))) {
+      par(mfrow = c(length(years)/2,length(years)))
     }
   }
 
@@ -86,7 +86,14 @@ plotVegetationBiomass <- function(years = c(2011, 2100),
        main = paste0('Max biomass ', names(maxBiomassPlot)[[1]], " - ", typeSim), colNA = colNA)
   plot(maxBiomassPlot[[2]], breaks = brks, col = cols, lab.breaks = brks,
        main = paste0('Max biomass ', names(maxBiomassPlot)[[2]], " - ", typeSim), colNA = colNA)
-  p <- recordPlot()
-  dev.off()
-  return(p)
+
+  shouldPlot <- FALSE #TODO MAKE IT A PARAMETER. SET TO FALSE FOR SERVER
+  if(shouldPlot) {
+    p <- recordPlot()
+    dev.off()
+    return(p)
+  } else {
+    dev.off()
+    return(NULL)
+  }
 }
