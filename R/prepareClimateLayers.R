@@ -309,7 +309,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
           names(variablesStack) <- paste("MDC", y)
           dType <- assessDataType(variablesStack)
         }
-        writeRaster(variablesStack, filename = fileName, datatype = dType)
+        writeRaster(variablesStack, filename = fileName, datatype = dType, overwrite = overwrite)
         variablesStack <- stack(fileName)
         filesToUpload <- grepMulti(x = list.files(dirname(fileName), full.names = TRUE),
                                    patterns = basename(tools::file_path_sans_ext(fileName)))
