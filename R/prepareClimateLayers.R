@@ -175,7 +175,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
     message(crayon::red(paste0("variables is NULL, using all variables available in the climate layers. ",
                                "ATTENTION! This might be very slow!", " Total number of variables loaded: ", length(variables))))
   }
-  if (model == "birds") {
+  if (model == "birds"){
     variables <- c("AHM", "bFFP", "CMD", "DD_0", "DD_18",
                    "DD18", "DD5", "eFFP", "EMT", "EXT", "FFP",
                    "MAP", "MAT", "MCMT", "MSP", "MWMT", "NFFD",
@@ -189,7 +189,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
 
   # 2. Check if we have the years chosen (we should lapply through years)
   yearsList <- lapply(X = years, FUN = function(y) {
-    if (all(model == "fireSense", isTRUE(returnCalculatedLayersForFireSense), !isTRUE(overwrite))) {
+    if (all(model == "fireSense", isTRUE(returnCalculatedLayersForFireSense), !isTRUE(overwriteOriginalData))) {
       fileName <- file.path(pathInputs, paste0(paste(climateModel, RCP, ensemble,
                                                      fileResolution, model, "Calc", y, sep = "_"), ".grd"))
     } else {
@@ -318,6 +318,14 @@ prepareClimateLayers <- function(pathInputs = NULL,
                      path = googledrive::as_id(GDriveFolder))
         return(raster::stack(fileName))
       }
+      writeRaster(variablesStack, filename = fileName, datatype = dType, overwrite = overwrite)
+      variablesStack <- stack(fileName)
+      filesToUpload <- grepMulti(x = list.files(dirname(fileName), full.names = TRUE),
+                                         patterns = basename(tools::file_path_sans_ext(fileName)))
+      zip(zipfile = file_path_sans_ext(fileName), files = filesToUpload)
+      drive_upload(media = paste0(tools::file_path_sans_ext(fileName), ".zip"),
+                                path = googledrive::as_id(GDriveFolder))
+      return(raster::stack(fileName))
     }
   })
   names(yearsList) <- paste0("year", years)
