@@ -11,7 +11,7 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom data.table data.table rbindlist getDTthreads setDTthreads
+#' @importFrom data.table data.table getDTthreads rbindlist setDTthreads
 #' @importFrom googledrive drive_upload
 #' @importFrom graphics par plot
 #' @importFrom grDevices dev.off heat.colors png recordPlot
