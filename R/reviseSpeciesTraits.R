@@ -2,10 +2,12 @@ utils::globalVariables(c("LandisCode"))
 
 #' Bootstraps rasters for testing significance on comparable rasters of different species or scenarios
 #'
-#' @param speciesTable data.table. Table to be updated. If returnTable == TRUE this can be NULL.
+#' @param speciesTable \code{data.table}. Table to be updated.
+#'                     If \code{returnTable == TRUE} this can be NULL.
 #'                     In this case, the function will use the ORIGINAL species table traits (from LANDIS-II).
-#' @param updatedTable data.table. Table used to update speciesTable. If NULL, the function uses a default.
-#' @param destinationPath character. Where to save the table. Default is tempdir().
+#' @param updatedTable \code{data.table}. Table used to update \code{speciesTable}.
+#'                     If NULL, the function uses a default.
+#' @param destinationPath character. Where to save the table. Default is \code{tempdir().}
 #' @param returnTable logical. If TRUE, it uses the ORIGINAL species table traits from LANDIS-II. If FALSE, you have to supply your own table.
 #' @param species character.  Species to update the table for.
 #'
@@ -21,9 +23,8 @@ utils::globalVariables(c("LandisCode"))
 reviseSpeciesTraits <- function(speciesTable = NULL, updatedTable = NULL,
                                 destinationPath = tempdir(),
                                 returnTable = FALSE,
-                                species = c("BETU.PAP","LARI.LAR","PICE.GLA",
-                                            "PICE.MAR","PINU.BAN","POPU.TRE",
-                                            "PINU.CON")){
+                                species = c("BETU.PAP", "LARI.LAR", "PICE.GLA", "PICE.MAR",
+                                            "PINU.BAN", "POPU.TRE", "PINU.CON")) {
   if (returnTable){
     message(crayon::blue(paste0("This is the ORIGINAL species table traits (from LANDIS-II).",
                                "\nTo check the table to be used in the simulation, save the object \n",
