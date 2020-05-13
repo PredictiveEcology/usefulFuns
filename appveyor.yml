@@ -28,8 +28,8 @@ environment:
 
   - R_VERSION: release
 
-  #- R_VERSION: oldrel
-  #  RTOOLS_VERSION: 35
+  - R_VERSION: oldrel
+    RTOOLS_VERSION: 36
 
 clone_depth: 5
 
@@ -67,7 +67,7 @@ notifications:
     to:
       - alex.chubaty@gmail.com
       - '{{commitAuthorEmail}}'
-    subject: 'usefun: r-appveyor build {{status}}'
+    subject: 'usefulFuns: r-appveyor build {{status}}'
     message: "{{message}}, {{commitId}}, ..."
     on_build_success: false
     on_build_failure: false

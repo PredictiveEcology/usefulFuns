@@ -14,7 +14,7 @@ avrgTimeComparison(
 )
 }
 \arguments{
-\item{...}{List or tables of results coming from usefun::meanValuesTime to be compared.}
+\item{...}{List or tables of results coming from \code{meanValuesTime} to be compared.}
 
 \item{upload}{logical. Should the raster be updated to googledrive? Only works if the
 raster exists OR is set to be written.}

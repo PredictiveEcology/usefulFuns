@@ -2,7 +2,7 @@ utils::globalVariables(c("average", "IC", "rasType", "scenario"))
 
 #' Compare two or more scenarios for averages through time
 #'
-#' @param ... List or tables of results coming from usefun::meanValuesTime to be compared.
+#' @param ... List or tables of results coming from \code{meanValuesTime} to be compared.
 #' @param folderID character. Google folder id to upload to.
 #'                 Only needs to be provided if `upload == TRUE`. Default is `NULL``
 #' @param upload logical. Should the raster be updated to googledrive? Only works if the
@@ -16,8 +16,8 @@ utils::globalVariables(c("average", "IC", "rasType", "scenario"))
 #' @author Tati Micheletti
 #' @export
 #' @importFrom data.table data.table rbindlist
-#' @importFrom grDevices png
 #' @importFrom googledrive drive_upload as_id
+#' @importFrom grDevices png
 #'
 #' @rdname avrgTimeComparison
 avrgTimeComparison <- function(...,

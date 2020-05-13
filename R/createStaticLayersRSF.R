@@ -74,7 +74,7 @@ createStaticLayersRSF <- function(elevation,
     message(paste0("The following layers don't match the base Deciduous (biomassMap) and will be fixed: ", crayon::magenta(whichNot)))
     fixedLayers <- raster::stack(lapply(X = whichNot, FUN = function(badLay){
       fxL <- reproducible::postProcess(x = get(badLay), rasterToMatch = dynamicLayers$Deciduous,
-                                       useCache = FALSE,
+                                       useCache = getOption("reproducible.useCache", TRUE),
                                        destinationPath = tempdir(), filename2 = NULL)
       return(fxL)
     }
