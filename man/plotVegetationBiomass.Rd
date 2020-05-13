@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotVegetationBiomass.R
 \name{plotVegetationBiomass}
 \alias{plotVegetationBiomass}
-\title{Plots vegetation biomass Type using cohortData and pixelGroupMap}
+\title{Plots vegetation biomass type using \code{cohortData} and \code{pixelGroupMap}}
 \usage{
 plotVegetationBiomass(
   years = c(2011, 2100),
@@ -30,7 +30,7 @@ plotVegetationBiomass(
 plot
 }
 \description{
-Plots vegetation biomass Type using cohortData and pixelGroupMap
+Plots vegetation biomass type using \code{cohortData} and \code{pixelGroupMap}
 }
 \author{
 Tati Micheletti

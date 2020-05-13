@@ -1,4 +1,4 @@
-#' Plots vegetation biomass Type using cohortData and pixelGroupMap
+#' Plots vegetation biomass type using \code{cohortData} and \code{pixelGroupMap}
 #'
 #' @param years numeric. Years available/intended to be used for the giphy
 #' @param dataPath character. Path to data
