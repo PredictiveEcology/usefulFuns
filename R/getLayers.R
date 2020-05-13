@@ -1,5 +1,6 @@
-#' getLayers gets the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.
-#' It is a function designed to work inside a SpaDES module.
+utils::globalVariables(c("deciduous", "domSp"))
+
+#' Get the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.
 #'
 #' @param currentTime numeric. Current time being used (i.e. \code{time(sim)}).
 #' @param cohortData data.table. Output from LandR_Biomass module.

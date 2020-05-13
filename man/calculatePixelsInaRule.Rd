@@ -3,7 +3,7 @@
 \name{calculatePixelsInaRule}
 \alias{calculatePixelsInaRule}
 \title{Uses a set of rules to calculate how many non-NA pixels in a raster follow those rules,
-usig a shapefile to subset those of interest}
+using a shapefile to subset those of interest}
 \usage{
 calculatePixelsInaRule(ras, rule, pol, shp, ...)
 }
@@ -15,13 +15,15 @@ calculatePixelsInaRule(ras, rule, pol, shp, ...)
 \item{pol}{numeric. Representation of the polygon of interest in `pol` for the calculation}
 
 \item{shp}{shapefile indicating the different areas to subset the pixels to consider in the calculation}
+
+\item{...}{Additional arguments}
 }
 \value{
 A list of the percent disturbance, total pixels not NA and how many pixels are disturbed according to the ruls
 }
 \description{
 Uses a set of rules to calculate how many non-NA pixels in a raster follow those rules,
-usig a shapefile to subset those of interest
+using a shapefile to subset those of interest
 }
 \author{
 Tati Micheletti

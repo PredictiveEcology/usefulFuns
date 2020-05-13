@@ -1,4 +1,4 @@
-Package: usefun
+Package: usefulFuns
 Type: Package
 Title: Useful functions for my modules and packages
 Version: 0.1.0
@@ -9,7 +9,8 @@ License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
-AdditionalRepositories: https://www.rforge.net
+Depends:
+    R (>= 3.6)
 Imports:
     animation,
     crayon,
@@ -37,8 +38,14 @@ Imports:
     SpaDES.core, 
     SpaDES.tools,
     stats,
-    sysfonts,
-    unixtools
+    sysfonts
+Suggests:
+    covr,
+    lintr
+Remotes:
+    achubaty/amc@development,
+    jimhester/lintr,
+    PredictiveEcology/LandR@development
 Collate: 
     'RSFplot.R'
     'avrgTimeComparison.R'
@@ -69,7 +76,6 @@ Collate:
     'makeReclassifyMatrix.R'
     'meanValuesTime.R'
     'moduleSticker.R'
-    'modulesAvailable.R'
     'plotBurnSummary.R'
     'plotLeadingVegetationType.R'
     'plotVegetationBiomass.R'
@@ -78,7 +84,6 @@ Collate:
     'prepareClimateLayers.R'
     'provinceBCRStudyArea.R'
     'reviseSpeciesTraits.R'
-    'setTempFolder.R'
     'subsetNonNARas.R'
     'totalBiomassPerSpecies.R'
-    'usefun-package.R'
+    'usefulFuns-package.R'

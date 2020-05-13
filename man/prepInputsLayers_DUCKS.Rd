@@ -20,18 +20,25 @@ prepInputsLayers_DUCKS(
 
 \item{lccLayer}{Which year should be used as a base for the vegetation layer? Default to 2005}
 
-\item{url}{The url from where the layer should be downloaded from. if \code{NULL}, the default is \code{}}
+\item{url}{The url from where the layer should be downloaded from.
+If \code{NULL}, the default is used.}
+
+\item{archive}{TODO}
+
+\item{targetFile}{TODO}
 
 \item{studyArea}{Study area for which the layer should be cropped to}
 
-\item{rasterToMatch}{If output rasters should}
+\item{rasterToMatch}{TODO}
+
+\item{overwrite}{Logical indicating whether to overwrite the previously processed file.}
 }
 \value{
 RasterLayer
 }
 \description{
-This function is intendend to prepare the DUCKS Unlimited Hybrid Wetland
-             v. 2.1 layer to be used for different purposes. The output is a RasterLayer
-             cropped and reprojected to the \code{studyArea}, as well as resampled to the
-             \code{rasterToMatch} if any of these are provided.
+This function is intended to prepare the DUCKS Unlimited Hybrid Wetland v. 2.1 layer
+to be used for different purposes.
+The output is a RasterLayer cropped and reprojected to the \code{studyArea},
+as well as resampled to the \code{rasterToMatch} if any of these are provided.
 }

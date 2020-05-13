@@ -17,11 +17,11 @@ plotBurnSummary(
 
 \item{typeSim}{character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
 
+\item{lastYear}{TODO}
+
+\item{theObject}{TODO}
+
 \item{overwrite}{logical. Default FALSE}
-
-\item{years}{numeric. Years available/intended to be used for the giphy}
-
-\item{saveRAS}{logical. Save the raster for posterior use?}
 }
 \value{
 plot
