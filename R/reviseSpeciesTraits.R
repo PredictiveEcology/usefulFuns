@@ -2,10 +2,12 @@ utils::globalVariables(c("LandisCode"))
 
 #' Bootstraps rasters for testing significance on comparable rasters of different species or scenarios
 #'
-#' @param speciesTable data.table. Table to be updated. If returnTable == TRUE this can be NULL.
+#' @param speciesTable \code{data.table}. Table to be updated.
+#'                     If \code{returnTable == TRUE} this can be NULL.
 #'                     In this case, the function will use the ORIGINAL species table traits (from LANDIS-II).
-#' @param updatedTable data.table. Table used to update speciesTable. If NULL, the function uses a default.
-#' @param destinationPath character. Where to save the table. Default is tempdir().
+#' @param updatedTable \code{data.table}. Table used to update \code{speciesTable}.
+#'                     If NULL, the function uses a default.
+#' @param destinationPath character. Where to save the table. Default is \code{tempdir().}
 #' @param returnTable logical. If TRUE, it uses the ORIGINAL species table traits from LANDIS-II. If FALSE, you have to supply your own table.
 #' @param species character.  Species to update the table for.
 #'
@@ -21,19 +23,18 @@ utils::globalVariables(c("LandisCode"))
 reviseSpeciesTraits <- function(speciesTable = NULL, updatedTable = NULL,
                                 destinationPath = tempdir(),
                                 returnTable = FALSE,
-                                species = c("BETU.PAP","LARI.LAR","PICE.GLA",
-                                            "PICE.MAR","PINU.BAN","POPU.TRE",
-                                            "PINU.CON")){
+                                species = c("BETU.PAP", "LARI.LAR", "PICE.GLA", "PICE.MAR",
+                                            "PINU.BAN", "POPU.TRE", "PINU.CON")) {
   if (returnTable){
     message(crayon::blue(paste0("This is the ORIGINAL species table traits (from LANDIS-II).",
-                               "\nTo check the table to be used in the simulation, save the object \n",
-                               crayon::yellow("sim$species"), " in your next run.")))
+                                "\nTo check the table to be used in the simulation, save the object \n",
+                                crayon::yellow("sim$species"), " in your next run.")))
     tb <- LandR::getSpeciesTable(dPath = destinationPath)
     return(tb[LandisCode %in% species])
   } else {
     if (is.null(speciesTable))
       stop("speciesTable can only be NULL is returnTable == TRUE")
-    if (is.null(updatedTable)){
+    if (is.null(updatedTable)) {
       #  TOADD:
       #  CDF Long = 800, Mort = 15, GrowthCurv = 0,
       #  IDF Long = 500, Mort = 15, GrowthCurv = 0.1
@@ -58,10 +59,10 @@ reviseSpeciesTraits <- function(speciesTable = NULL, updatedTable = NULL,
                                                      0.1, 0.1,
                                                      0.8, 0.5),
                                      speciesCode = structure(1:10, .Label = c("Abie_Bal", "Betu_Pap",
-                                                                             "Lari_Lar", "Pice_Gla",
-                                                                             "Pice_Mar", "Pinu_Ban",
-                                                                             "Popu_Tre", "Pinu_Con",
-                                                                             "Abie_Las", "Pice_Eng"),
+                                                                              "Lari_Lar", "Pice_Gla",
+                                                                              "Pice_Mar", "Pinu_Ban",
+                                                                              "Popu_Tre", "Pinu_Con",
+                                                                              "Abie_Las", "Pice_Eng"),
                                                              class = "factor")),
                                 class = c("data.table", "data.frame"),
                                 row.names = c(NA, -10L),
@@ -69,16 +70,16 @@ reviseSpeciesTraits <- function(speciesTable = NULL, updatedTable = NULL,
       message(crayon::yellow(paste0("No updated species table trait was provided. Using default:")))
       print(updatedTable)
     }
-paramsToChange <- names(updatedTable)[!names(updatedTable) %in% c("species", "speciesCode")]
-speciesToChange <- unique(speciesTable$species)
- invisible(lapply(X = speciesToChange, function(sp){
-   lapply(X = paramsToChange, FUN = function(param){
-     speciesTable[species == sp, (param) := updatedTable[species == sp,
-                                                         eval(parse(text = param))]]
-   })
- })
- )
- message("Species trait table was updated: ")
- print(speciesTable)
+    paramsToChange <- names(updatedTable)[!names(updatedTable) %in% c("species", "speciesCode")]
+    speciesToChange <- unique(speciesTable$species)
+    invisible(lapply(X = speciesToChange, function(sp){
+      lapply(X = paramsToChange, FUN = function(param){
+        speciesTable[species == sp, (param) := updatedTable[species == sp,
+                                                            eval(parse(text = param))]]
+      })
+    })
+    )
+    message("Species trait table was updated: ")
+    print(speciesTable)
   }
 }

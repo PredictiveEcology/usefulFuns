@@ -1,4 +1,4 @@
-#' Plots vegetation biomass Type using cohortData and pixelGroupMap
+#' Plots vegetation biomass type using \code{cohortData} and \code{pixelGroupMap}
 #'
 #' @param years numeric. Years available/intended to be used for the giphy
 #' @param dataPath character. Path to data
@@ -11,7 +11,7 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom data.table data.table rbindlist getDTthreads setDTthreads
+#' @importFrom data.table data.table getDTthreads rbindlist setDTthreads
 #' @importFrom googledrive drive_upload
 #' @importFrom graphics par plot
 #' @importFrom grDevices dev.off heat.colors png recordPlot
