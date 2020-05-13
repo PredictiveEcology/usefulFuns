@@ -1,4 +1,4 @@
-Package: usefun
+Package: usefulFuns
 Type: Package
 Title: Useful functions for my modules and packages
 Version: 0.1.0
@@ -86,4 +86,4 @@ Collate:
     'reviseSpeciesTraits.R'
     'subsetNonNARas.R'
     'totalBiomassPerSpecies.R'
-    'usefun-package.R'
+    'usefulFuns-package.R'

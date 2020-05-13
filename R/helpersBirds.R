@@ -28,9 +28,9 @@ utils::globalVariables(c("..column", "direction", "id", "location",
       return(rasValue)
     })
     names(birdInyears) <- years
-    dtForTest <- usefun::cbindFromList(birdInyears)
+    dtForTest <- cbindFromList(birdInyears)
     if (!is.null(studyArea)){
-      # rasPath <- usefun::grepMulti(x = list.files(dataPath, recursive = TRUE, full.names = TRUE), patterns = c(bird)) # JUST A TEMPLATE!
+      # rasPath <- grepMulti(x = list.files(dataPath, recursive = TRUE, full.names = TRUE), patterns = c(bird)) # JUST A TEMPLATE!
       # # location <- reproducible::Cache(.prepStudyAreaForBirds, studyArea = studyArea, dataPath = dataPath, RTMpath = rasPath[1],
       # #                                 userTags = c("object:location", "purpose:Edehzhie"))
       dtForTest <- cbind(dtForTest, data.table::data.table(location = studyArea))

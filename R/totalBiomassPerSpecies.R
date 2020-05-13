@@ -41,7 +41,7 @@ totalBiomassPerSpecies <- function(dataPath,
   if (isTRUE(overstory)) overS <- "_Overstory"
   if (!isTRUE(overwrite)){
     pat <- c("biomassMapStack_", typeSim, prop, overS)
-    fileName <- usefun::grepMulti(x = list.files(dataPath, full.names = TRUE), patterns = pat) #[ FIX ] It won't make the "missing" leading years...
+    fileName <- grepMulti(x = list.files(dataPath, full.names = TRUE), patterns = pat) #[ FIX ] It won't make the "missing" leading years...
     if (length(fileName) != 0){
       message("Plots exist and overwrite is FALSE. Returning paths")
       return(fileName)
