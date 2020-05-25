@@ -34,19 +34,26 @@ createStaticLayersRSF <- function(elevation,
                                   vrugName,
                                   reclassLCC05,
                                   dynamicLayers,
-                                  RTM) {
+                                  RTM,
+                                  destinationPath) {
   message("Creating static layers. Cached objects are fine here...")
-  elevation <- Cache(nameAndBringOn, ras = elevation, name = elevationName, RTM = RTM)
-  vrug <- Cache(nameAndBringOn, ras = vrug, name = vrugName, RTM = RTM)
+  elevation <- Cache(nameAndBringOn, ras = elevation, 
+                     name = elevationName, RTM = RTM)
+  vrug <- Cache(nameAndBringOn, ras = vrug, 
+                name = vrugName, RTM = RTM)
 
   # 1. Extract shrub and herb from LCC05: which classes are these? Don't forget naming
   landCoverECCC <- raster::reclassify(x =  LCC,
                                       rcl = matrix(data = c(reclassLCC05[["classesLCC05"]],
                                                             reclassLCC05[["classesECCC"]]),
                                                    ncol = 2, byrow = FALSE))
-  Herbs <- Cache(createShrubHerbLayers, reclassLCC05 = reclassLCC05, landCoverECCC = landCoverECCC,
+  Herbs <- Cache(createShrubHerbLayers, 
+                 reclassLCC05 = reclassLCC05, 
+                 landCoverECCC = landCoverECCC,
                  layerName = herbName)
-  Shrubs <- Cache(createShrubHerbLayers, reclassLCC05 = reclassLCC05, landCoverECCC = landCoverECCC,
+  Shrubs <- Cache(createShrubHerbLayers, 
+                  reclassLCC05 = reclassLCC05, 
+                  landCoverECCC = landCoverECCC,
                   layerName = shrubName)
   Dec <- dynamicLayers$Deciduous
 
@@ -71,11 +78,15 @@ createStaticLayersRSF <- function(elevation,
       return(r)
     }))
 
-    message(paste0("The following layers don't match the base Deciduous (biomassMap) and will be fixed: ", crayon::magenta(whichNot)))
+    message(paste0("The following layers don't match the base Deciduous",
+                   " (biomassMap) and will be fixed: ", 
+                   crayon::magenta(whichNot)))
     fixedLayers <- raster::stack(lapply(X = whichNot, FUN = function(badLay){
-      fxL <- reproducible::postProcess(x = get(badLay), rasterToMatch = dynamicLayers$Deciduous,
-                                       useCache = FALSE,
-                                       destinationPath = tempdir(), filename2 = NULL)
+      fxL <- reproducible::postProcess(x = get(badLay), 
+                                       rasterToMatch = dynamicLayers$Deciduous,
+                                       useCache = getOption("reproducible.useCache", TRUE),
+                                       destinationPath = destinationPath, 
+                                       filename2 = NULL)
       return(fxL)
     }
     ))

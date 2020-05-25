@@ -22,7 +22,8 @@ extractDisturbanceFast <- function(ageMap,
                                recoveryTime = 40,
                                anthropogenicLayer = NULL,
                                waterRaster,
-                               rasterToMatch){
+                               rasterToMatch,
+                               destinationPath){
   # Make sure that the layers align. This will only happen once until the anthropogenic layer becomes dynamic.
   areStackable <- TRUE
 tryCatch({
@@ -33,19 +34,28 @@ tryCatch({
   if (!areStackable){
     waterRaster <- reproducible::postProcess(x = waterRaster,
                                              rasterToMatch = rasterToMatch,
-                                             destinationPath = tempdir(),
-                                             filename2 = NULL)
+                                             destinationPath = destinationPath,
+                                             filename2 = NULL, 
+                                             userTags = c("module:caribouPopGrowthModel",
+                                                          "objectName:waterRaster",
+                                                          "outterFun:postProcess"))
 
     ageMap <- reproducible::postProcess(x = ageMap,
                                              rasterToMatch = rasterToMatch,
-                                             destinationPath = tempdir(),
-                                             filename2 = NULL)
+                                             destinationPath = destinationPath,
+                                             filename2 = NULL, 
+                                        userTags = c("module:caribouPopGrowthModel",
+                                                     "objectName:ageMap",
+                                                     "outterFun:postProcess"))
     if (!is.null(anthropogenicLayer)){
       anthropogenicLayer <- reproducible::postProcess(x = anthropogenicLayer,
                                                       rasterToMatch = rasterToMatch,
                                                       maskWithRTM = TRUE,
-                                                      destinationPath = tempdir(),
-                                                      filename2 = NULL)
+                                                      destinationPath = destinationPath,
+                                                      filename2 = NULL, 
+                                                      userTags = c("module:caribouPopGrowthModel",
+                                                                   "objectName:anthropogenicLayer",
+                                                                   "outterFun:postProcess"))
     }
     areStackable <- TRUE
     tryCatch({
@@ -73,12 +83,19 @@ tryCatch({
     }
 
   # Extract the caribou shapefile values by fasterizing it. Way faster than raster::extract
-    caribouShapefile <- reproducible::postProcess(x = caribouShapefile, rasterToMatch = ageMap,
-                                                    destinationPath = tempdir(), filename2 = NULL)
+    caribouShapefile <- reproducible::postProcess(x = caribouShapefile, 
+                                                  rasterToMatch = ageMap,
+                                                  destinationPath = destinationPath, 
+                                                  filename2 = NULL, 
+                                                  userTags = c("module:caribouPopGrowthModel",
+                                                               "objectName:caribouShapefile",
+                                                               "outterFun:postProcess"))
     caribouShapefileSF <- sf::st_as_sf(caribouShapefile)
       nm <- if (!is.null(caribouShapefile$NAME)) "NAME" else "Name"
     caribouShapefileSF$ID <- as.numeric(seq(1:length(caribouShapefileSF[[nm]])))
-    caribouShapefileRas <- fasterize::fasterize(sf = caribouShapefileSF, raster = ageMap, field = "ID")
+    caribouShapefileRas <- fasterize::fasterize(sf = caribouShapefileSF, 
+                                                raster = ageMap, 
+                                                field = "ID")
 
     # Extract Fire
     listExtr <- lapply(X = caribouShapefileSF$ID, FUN = function(pol){
@@ -130,13 +147,16 @@ tryCatch({
           cummDist <- sum(isDistrubance, na.rm = TRUE)
           percentCumm <- 100*(cummDist/totPixelsNotNADist)
           if (percentCumm > 100){
-            message(crayon::red(paste0("Total disturbance for polygon ", crayon::cyan(caribouShapefileSF[[nm]][pol]), " presented ",
+            message(crayon::red(paste0("Total disturbance for polygon ", 
+                                       crayon::cyan(caribouShapefileSF[[nm]][pol]), " presented ",
                                        crayon::cyan(paste0(round(percentCumm, 0),"%")),
-                                       " pixels disturbed. \nThis might need some digging... For now, converting to 100%")))
+                                       " pixels disturbed. \nThis might need some digging... 
+                                       \nFor now, converting to 100%")))
             percentCumm <- 100
           }  # Data sanity check
           if (percentCumm < 0 ){  # Data sanity check
-              print("Something went wrong with the total distubance calculation. Value is negative. Please debug.")
+              print("Something went wrong with the total distubance calculation. 
+Value is negative. Please debug.")
               browser()
           }
 

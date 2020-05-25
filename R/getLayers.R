@@ -53,7 +53,8 @@ getLayers <- function(currentTime,
                       vrug = NULL,
                       LCC05 = NULL,
                       reclassLCC05 = NULL,
-                      rasterToMatch = NULL){
+                      rasterToMatch = NULL,
+                      destinationPath){
 
   if (is.null(pixelGroupMap)){
     message(crayon::red(paste0("pixelGroupMap is NULL for year ", currentTime, ". Returning NA")))
@@ -88,7 +89,8 @@ getLayers <- function(currentTime,
                                              recoveryTime = recoveryTime,
                                              anthropogenicLayer = anthropogenicLayer,
                                              waterRaster = waterRaster,
-                                             rasterToMatch = rasterToMatch)
+                                             rasterToMatch = rasterToMatch,
+                                             destinationPath = destinationPath)
     })
     names(listDistForEachShpForEachPoly) <- names(listSACaribou)
     return(listDistForEachShpForEachPoly)
@@ -102,8 +104,10 @@ getLayers <- function(currentTime,
     cohortDataRed <- cohortData[, c("pixelGroup", "deciduous"), with = FALSE]
     setkey(cohortDataRed, pixelGroup)
     cohortDataRed <- unique(cohortDataRed,  by = "pixelGroup")
-    biomassMap <- SpaDES.tools::rasterizeReduced(reduced = cohortDataRed, fullRaster = pixelGroupMap,
-                                                 newRasterCols = "deciduous", mapcode = "pixelGroup")
+    biomassMap <- SpaDES.tools::rasterizeReduced(reduced = cohortDataRed, 
+                                                 fullRaster = pixelGroupMap,
+                                                 newRasterCols = "deciduous", 
+                                                 mapcode = "pixelGroup")
 
     # ageMap = old and new burns
     # anthropogenicLayer = roadDensity
@@ -131,7 +135,8 @@ getLayers <- function(currentTime,
                                           vrugName = "Vrug",
                                           reclassLCC05 = reclassLCC05,
                                           dynamicLayers = dynamicLayers,
-                                          RTM = rasterToMatch)
+                                          RTM = rasterToMatch,
+                                          destinationPath = destinationPath)
 
     # We need to override the LandR_Biomass pixels with deciduous trees that were originally classified as
     # "herbaceous" by ECCC
