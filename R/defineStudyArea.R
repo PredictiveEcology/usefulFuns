@@ -2,36 +2,41 @@ utils::globalVariables(c("PRENAME"))
 
 #' @title
 #' Preparing study area for Canadian projects
-#' 
+#'
 #' @description
-#' Downloads, reprojects, crops and masks to speficic areas in canada such as: 
-#' boreal, random areas, provinces and territories, or any of the last in the 
+#' Downloads, reprojects, crops and masks to speficic areas in canada such as:
+#' boreal, random areas, provinces and territories, or any of the last in the
 #' boreal.
 #'
-#' @param testArea          Logical. Indicates if the test area should 
-#'                          be anything other than `NULL`. Default is `NULL`. 
-#' @param specificTestArea  A character string with a province or territory, or 'boreal'. 
+#' @param testArea          Logical. Indicates if the test area should
+#'                          be anything other than `NULL`. Default is `NULL`.
+#' @param specificTestArea  A character string with a province or territory, or 'boreal'.
 #'                          if boreal region (following Brandt et al., 2013) is wanted.
 #'                          Default is `NULL`.
-#' @param mapSubset         If specificTestArea is supplied as 'boreal', this can be set 
-#'                          as a character string with a province or territory that is contained 
+#' @param mapSubset         If specificTestArea is supplied as 'boreal', this can be set
+#'                          as a character string with a province or territory that is contained
 #'                          in the boreal or 'Canada' if the whole Canadian boreal is wanted.
 #'                          Default is `NULL`.
 #' @param destinationFolder Path to where to save downloaded files. Default is `tempdir()`.
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom SpaDES.tools randomPolygon 
 #' @importFrom reproducible prepInputs
+#' @importFrom SpaDES.tools randomPolygon
 #' @rdname defineStudyArea
 #'
 #' @examples
-#' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = NULL) ## rp is the whole North American boreal region
-#' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "Alberta", mapSubset = NULL) ## Alberta
-#' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = "Alberta") ## Alberta inside boreal extension
-#' 
-
-defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset = NULL, destinationFolder = tempdir()) {
+#' ## rp is the whole North American boreal region
+#' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = NULL)
+#'
+#' ## Alberta
+#' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "Alberta", mapSubset = NULL)
+#'
+#' ## Alberta inside boreal extension
+#' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = "Alberta")
+#'
+defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset = NULL,
+                            destinationFolder = tempdir()) {
   rP <- NULL
   if (any(is.null(testArea), (!is.null(testArea) &
                               testArea == FALSE))) {
@@ -44,7 +49,7 @@ defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset 
     }
   } else {
     if (is.null(specificTestArea)) {
-      polyMatrix <- matrix(c(-79.471273, 48.393518), ncol = 2) 
+      polyMatrix <- matrix(c(-79.471273, 48.393518), ncol = 2)
       areaSize <- 10000000
       set.seed(1234)
       rP <- SpaDES.tools::randomPolygon(x = polyMatrix, hectares = areaSize) # Create Random polygon in southern Ontario
@@ -69,7 +74,7 @@ defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset 
                         ". Please provide a Canadian province name in English for subsetMap, ",
                         "or use 'NULL' (does not subset boreal, dangerous when dealing with higher resolution)."))
           }
-          rP <- reproducible::prepInputs(url = "https://drive.google.com/open?id=0B_2riEic8l1mYW1SaVphNk9MaUdrRWhLYU1XUHdQcWhyMkxn", 
+          rP <- reproducible::prepInputs(url = "https://drive.google.com/open?id=0B_2riEic8l1mYW1SaVphNk9MaUdrRWhLYU1XUHdQcWhyMkxn",
                            alsoExtract = "similar",
                            studyArea = sA,
                            destinationPath = destinationFolder)
@@ -78,7 +83,7 @@ defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset 
         }
         if (!is.null(mapSubset) && mapSubset == "Canada") {
           message(crayon::yellow("Test area is TRUE. Cropping and masking to the Canadian Boreal."))
-          rP <- reproducible::prepInputs(url = "https://drive.google.com/open?id=0B_2riEic8l1mYW1SaVphNk9MaUdrRWhLYU1XUHdQcWhyMkxn", 
+          rP <- reproducible::prepInputs(url = "https://drive.google.com/open?id=0B_2riEic8l1mYW1SaVphNk9MaUdrRWhLYU1XUHdQcWhyMkxn",
                            alsoExtract = "similar",
                            destinationPath = destinationFolder)
           return(rP)
@@ -99,7 +104,7 @@ defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset 
             message(crayon::yellow(paste0("Test area is TRUE. Cropped and masked to ",
                                           specificTestArea)))
             return(rP)
-            
+
           }
         }
       }

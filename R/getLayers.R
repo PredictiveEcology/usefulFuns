@@ -20,6 +20,7 @@ utils::globalVariables(c("deciduous", "domSp"))
 #' @param LCC05 RasterLayer of landcover classes 2005
 #' @param reclassLCC05 List with reclassification for LCC05 values (i.e. LCC05 classes that should be classified as shrub or herbs)
 #' @param rasterToMatch RasterLayer template for these layers to match.
+#' @param destinationPath TODO
 #'
 #' @return TODO
 #'
@@ -54,7 +55,7 @@ getLayers <- function(currentTime,
                       LCC05 = NULL,
                       reclassLCC05 = NULL,
                       rasterToMatch = NULL,
-                      destinationPath){
+                      destinationPath) {
 
   if (is.null(pixelGroupMap)){
     message(crayon::red(paste0("pixelGroupMap is NULL for year ", currentTime, ". Returning NA")))
@@ -104,9 +105,9 @@ getLayers <- function(currentTime,
     cohortDataRed <- cohortData[, c("pixelGroup", "deciduous"), with = FALSE]
     setkey(cohortDataRed, pixelGroup)
     cohortDataRed <- unique(cohortDataRed,  by = "pixelGroup")
-    biomassMap <- SpaDES.tools::rasterizeReduced(reduced = cohortDataRed, 
+    biomassMap <- SpaDES.tools::rasterizeReduced(reduced = cohortDataRed,
                                                  fullRaster = pixelGroupMap,
-                                                 newRasterCols = "deciduous", 
+                                                 newRasterCols = "deciduous",
                                                  mapcode = "pixelGroup")
 
     # ageMap = old and new burns

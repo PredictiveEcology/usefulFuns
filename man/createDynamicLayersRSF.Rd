@@ -31,7 +31,8 @@ createStaticLayersRSF(
   vrugName,
   reclassLCC05,
   dynamicLayers,
-  RTM
+  RTM,
+  destinationPath
 )
 }
 \arguments{
@@ -77,6 +78,8 @@ The end of this time is 20 years later (i.e. 40-60 years).}
 
 \item{dynamicLayers}{RasterStack to be stacked with the staticLayers
 created in the current function to be passed for the model prediction.}
+
+\item{destinationPath}{TODO}
 }
 \value{
 RasterStack of layers

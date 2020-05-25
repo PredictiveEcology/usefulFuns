@@ -22,7 +22,8 @@ getLayers(
   vrug = NULL,
   LCC05 = NULL,
   reclassLCC05 = NULL,
-  rasterToMatch = NULL
+  rasterToMatch = NULL,
+  destinationPath
 )
 }
 \arguments{
@@ -61,6 +62,8 @@ getLayers(
 \item{reclassLCC05}{List with reclassification for LCC05 values (i.e. LCC05 classes that should be classified as shrub or herbs)}
 
 \item{rasterToMatch}{RasterLayer template for these layers to match.}
+
+\item{destinationPath}{TODO}
 }
 \value{
 TODO
