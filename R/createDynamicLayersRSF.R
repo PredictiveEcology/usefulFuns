@@ -18,15 +18,14 @@
 #'
 #' @author Tati Micheletti
 #' @export
-#' @importFrom raster raster projectRaster extract dropLayer stack nlayers extent
-#' @importFrom SpaDES.tools rasterizeReduced
 #' @importFrom data.table data.table setkey
+#' @importFrom raster raster projectRaster extract dropLayer stack nlayers extent
 #' @importFrom reproducible prepInputs postProcess Require
+#' @importFrom SpaDES.tools rasterizeReduced
 #' @include burnFromAge.R
 #' @include nameAndBringOn.R
 #'
 #' @rdname createDynamicLayersRSF
-
 createDynamicLayersRSF <- function(ageMap,
                                    biomassMap,
                                    biomassMapName,
@@ -37,8 +36,7 @@ createDynamicLayersRSF <- function(ageMap,
                                    roadDensityName,
                                    waterRaster,
                                    waterRasterName,
-                                   RTM){
-
+                                   RTM) {
   biomassMap <- nameAndBringOn(ras = biomassMap, name = biomassMapName, RTM = RTM)
   roadDensity <- nameAndBringOn(ras = roadDensity, name = roadDensityName, RTM = RTM)
   waterRaster <- nameAndBringOn(ras = waterRaster, name = waterRasterName, RTM = RTM)
@@ -53,10 +51,8 @@ createDynamicLayersRSF <- function(ageMap,
 
    # 2. Make sure all rasters are in the same extent
   tryCatch(expr = {
-
     dynamicStack <- raster::stack(burnStk, biomassMap, roadDensity, waterRaster)
     return(dynamicStack)
-
   }, error = function(e){
     message("One or more layers have a different extent and/or crs. Trying to fix with postProcess...")
 
@@ -72,14 +68,14 @@ createDynamicLayersRSF <- function(ageMap,
       return(r)
     }))
 
-    message(paste0("The following layers don't match the base Deciduous (biomassMap) and will be fixed: ", crayon::magenta(whichNot)))
+    message(paste0("The following layers don't match the base Deciduous (biomassMap) and will be fixed: ",
+                   crayon::magenta(whichNot)))
     fixedLayers <- raster::stack(lapply(X = whichNot, FUN = function(badLay){
-      fxL <- reproducible::postProcess(x = get(badLay), rasterToMatch = biomassMap, 
+      fxL <- reproducible::postProcess(x = get(badLay), rasterToMatch = biomassMap,
                                        useCache = getOption("reproducible.useCache", TRUE),
                                        destinationPath = tempdir(), filename2 = NULL)
       return(fxL)
-    }
-    ))
+    }))
     fineStacks <- setdiff(c("burnStk", "biomassMap", "roadDensity", "waterRaster"), whichNot)
     fineStacks <- raster::stack(lapply(X = fineStacks, FUN = function(r){
       ras <- get(r)

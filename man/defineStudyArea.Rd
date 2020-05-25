@@ -2,39 +2,46 @@
 % Please edit documentation in R/defineStudyArea.R
 \name{defineStudyArea}
 \alias{defineStudyArea}
-\title{Preparing study area for NWT project}
+\title{Preparing study area for Canadian projects}
 \usage{
 defineStudyArea(
   testArea = NULL,
   specificTestArea = NULL,
   mapSubset = NULL,
-  ...
+  destinationFolder = tempdir()
 )
 }
 \arguments{
 \item{testArea}{Logical. Indicates if the test area should
 be anything other than `NULL`. Default is `NULL`.}
 
-\item{specificTestArea}{A character string with a province or territory, or 'BCR6'.
-if BCR6 region (following Brandt et al., 2013) is wanted.
+\item{specificTestArea}{A character string with a province or territory, or 'boreal'.
+if boreal region (following Brandt et al., 2013) is wanted.
 Default is `NULL`.}
 
-\item{mapSubset}{If specificTestArea is supplied as 'BCR6', this can be set
+\item{mapSubset}{If specificTestArea is supplied as 'boreal', this can be set
 as a character string with a province or territory that is contained
-in the BCR6 or 'Canada' if the whole Canadian BCR6 is wanted.
+in the boreal or 'Canada' if the whole Canadian boreal is wanted.
 Default is `NULL`.}
 
-\item{...}{Arguments to be passed to `prepInputs` or `Cache` (i.e. targetFile,
-cacheId, destinationPath, overwrite, etc.).}
+\item{destinationFolder}{Path to where to save downloaded files. Default is `tempdir()`.}
 }
 \description{
-Downloads, reprojects, crops and masks to specific areas in Canada such as:
-BCR6, random areas, provinces and territories, or any of the last in the BCR6.
+Downloads, reprojects, crops and masks to speficic areas in canada such as:
+boreal, random areas, provinces and territories, or any of the last in the
+boreal.
 }
-\details{
-Used in project "ProjecSimulation of effects of climate change on fire regime:
-implications for BCR6 Caribou and landbird communities in the Northwest Territories"
+\examples{
+## rp is the whole North American boreal region
+rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = NULL)
+
+## Alberta
+rp <- defineStudyArea(testArea = TRUE, specificTestArea = "Alberta", mapSubset = NULL)
+
+## Alberta inside boreal extension
+rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = "Alberta")
+
 }
 \author{
-Tati Micheletti and Geneviève Degré-Timmons
+Tati Micheletti
 }

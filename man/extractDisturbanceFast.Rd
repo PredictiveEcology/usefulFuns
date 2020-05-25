@@ -2,7 +2,7 @@
 % Please edit documentation in R/extractDisturbanceFast.R
 \name{extractDisturbanceFast}
 \alias{extractDisturbanceFast}
-\title{extractDisturbanceFast extracts disturbance of anthropogenic and fire}
+\title{Extracts disturbance of anthropogenic and fire}
 \usage{
 extractDisturbanceFast(
   ageMap,
@@ -10,27 +10,33 @@ extractDisturbanceFast(
   recoveryTime = 40,
   anthropogenicLayer = NULL,
   waterRaster,
-  rasterToMatch
+  rasterToMatch,
+  destinationPath
 )
 }
 \arguments{
 \item{ageMap}{RasterLayer. Map with forest age.}
 
-\item{caribouShapefile}{Shapefile with polygons for which we want to calculate lambda for the caribou demographic model.}
+\item{caribouShapefile}{Shapefile with polygons for which we want to calculate lambda for the
+caribou demographic model.}
 
-\item{recoveryTime}{numeric. Recovery time in years that the forest needs to support Caribou. Default = 40.}
+\item{recoveryTime}{numeric. Recovery time in years that the forest needs to support Caribou.
+Default = 40.}
 
-\item{anthropogenicLayer}{Anthropogenic disturbance (raster) layer. Currently, road density layer used for both RSF and demographic models.}
+\item{anthropogenicLayer}{Anthropogenic disturbance (raster) layer. Currently, road density layer
+used for both RSF and demographic models.}
 
 \item{waterRaster}{Raster layer indicating water bodies.}
 
 \item{rasterToMatch}{RasterLayer template for these layers to match.}
+
+\item{destinationPath}{TODO}
 }
 \value{
 A list of the anthropogenic and fire disturbances as percent (0-100)
 }
 \description{
-extractDisturbanceFast extracts disturbance of anthropogenic and fire
+Extracts disturbance of anthropogenic and fire
 }
 \author{
 Tati Micheletti
