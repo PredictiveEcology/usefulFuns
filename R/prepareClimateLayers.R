@@ -196,11 +196,23 @@ prepareClimateLayers <- function(pathInputs = NULL,
       fileName <- file.path(pathInputs, paste0(paste(climateModel, RCP, ensemble, fileResolution, model, y, sep = "_"), ".grd"))
       dType <- "INT4S"
     }
+
     if (all(file.exists(fileName), !isTRUE(overwrite))) {
       message(green(paste0(fileName, " exists. Returning the raster stack")))
       # A. If we have the year, return
       return(stack(fileName))
-    } else {
+    } else if (all(file.exists(paste0(file_path_sans_ext(fileName), ".zip")), 
+                    !isTRUE(overwrite))) {
+      # B0. Check if we have the zip locally
+            message(green(paste0(fileName, " as a zipfile exists locally. Will be unzipped and returned as rasterStack. ")))
+      fileNameZip <- paste0(file_path_sans_ext(fileName), ".zip")
+
+        system(paste0("unzip -j ", fileNameZip, " ",
+                      paste0("*", tools::file_path_sans_ext(basename2(fileNameZip)), "*"),
+                      " -d ", pathInputs))
+
+      return(stack(fileName))
+      } else {
       # B. If we don't have the year LOCALLY, see if we have in the cloud
       message(yellow(paste0(fileName, " does not exist locally or should be overwritten. Checking the cloud... ")))
       filesInFolder <- drive_ls(path = as_id(GDriveFolder), recursive = FALSE)
