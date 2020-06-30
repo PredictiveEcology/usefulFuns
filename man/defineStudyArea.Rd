@@ -38,9 +38,10 @@ rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = 
 ## Alberta
 rp <- defineStudyArea(testArea = TRUE, specificTestArea = "Alberta", mapSubset = NULL)
 
+\dontrun{
 ## Alberta inside boreal extension
 rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = "Alberta")
-
+}
 }
 \author{
 Tati Micheletti
