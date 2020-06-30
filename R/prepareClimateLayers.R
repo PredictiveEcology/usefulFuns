@@ -201,7 +201,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
       message(green(paste0(fileName, " exists. Returning the raster stack")))
       # A. If we have the year, return
       return(stack(fileName))
-    } else if (all(file.exists(paste0(file_path_sans_ext(fileName), ".zip")), 
+    } else if (all(file.exists(paste0(file_path_sans_ext(fileName), ".zip")),
                     !isTRUE(overwrite))) {
       # B0. Check if we have the zip locally
             message(green(paste0(fileName, " as a zipfile exists locally. Will be unzipped and returned as rasterStack. ")))
@@ -212,12 +212,12 @@ prepareClimateLayers <- function(pathInputs = NULL,
                       " -d ", pathInputs))
 
       return(stack(fileName))
-      } else {
+    } else {
       # B. If we don't have the year LOCALLY, see if we have in the cloud
       message(yellow(paste0(fileName, " does not exist locally or should be overwritten. Checking the cloud... ")))
       filesInFolder <- drive_ls(path = as_id(GDriveFolder), recursive = FALSE)
       if (all(paste0(basename2(file_path_sans_ext(fileName)), ".zip") %in% filesInFolder$name,
-              !isTRUE(overwrite))){
+              !isTRUE(overwrite))) {
         rw <- which(filesInFolder$name == paste0(basename2(tools::file_path_sans_ext(fileName)), ".zip"))
         # googledrive::drive_download(file = as_id(filesInFolder$id[rw]),
         #                             path = file.path(pathInputs, paste0(basename2(tools::file_path_sans_ext(fileName)), ".zip")))
@@ -235,7 +235,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
         # B1. If we don't have it in the cloud, (use the years in file name), make it from the original layer.
         message(yellow(paste0(fileName, " does not exist locally nor in the cloud or needs to be overwritten. Creating layers... ")))
         fullDatasetName <- drive_get(as_id(climateFilePath))$name
-        if (any(!file.exists(file.path(pathInputs, fullDatasetName)), isTRUE(overwriteOriginalData))){
+        if (any(!file.exists(file.path(pathInputs, fullDatasetName)), isTRUE(overwriteOriginalData))) {
           message(red(paste0(fullDatasetName, " does not exist in your pathInputs (", pathInputs,
                              ") or needs to be overwritten. Downloading, unzipping and creating layers... This might take a few hours")))
           preProcess(url = climateFilePath, targetFile = "MAP.asc", # targetFile just to avoid error
@@ -273,7 +273,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
                          paste0("Rad_", c("wt", "sm", "at", "sp")),
                          paste0("Tmax_", c("wt", "sm", "at", "sp")),
                          paste0("Tmin_", c("wt", "sm", "at", "sp")),
-                         paste0("Tave_", c("wt", "sm", "at", "sp")))){
+                         paste0("Tave_", c("wt", "sm", "at", "sp")))) {
             message(crayon::red(paste0("ClimateNA 6.11 multiplies ", lay, "by 10 for storage.",
                                        "Backtransforming the layer")))
             variablesStack[[lay]] <- variablesStack[[lay]]/10
@@ -306,8 +306,8 @@ prepareClimateLayers <- function(pathInputs = NULL,
 
           # remove the variables from rasterStack for faster operations
           dt <- na.omit(data.table(raster::getValues(variablesStack), pixelID = 1:ncell(variablesStack)))
-          dt[,MDC_0 := 0]
-          for (Month in doughtMonths){
+          dt[, MDC_0 := 0]
+          for (Month in doughtMonths) {
             dt[, MDC_m := pmax(MDC_0 + .25 * nDays(Month) * (.36 * eval(parse(text = paste0("Tmax0", Month))) + L_f(Month)) -
                                  400 * log(1 + 3.937 * .83 * eval(parse(text = paste0("PPT0", Month))) / (800 * exp(-MDC_0/400))) +
                                  .25 * nDays(Month) * (.36 * eval(parse(text = paste0("Tmax0", Month))) + L_f(Month)),0)]
