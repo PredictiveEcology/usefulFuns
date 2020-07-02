@@ -45,7 +45,8 @@ Suggests:
 Remotes:
     achubaty/amc@development,
     jimhester/lintr,
-    PredictiveEcology/LandR@development
+    PredictiveEcology/LandR@development,
+    PredictiveEcology/reproducible@development
 Collate: 
     'RSFplot.R'
     'avrgTimeComparison.R'
