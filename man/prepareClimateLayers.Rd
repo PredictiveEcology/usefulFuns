@@ -18,7 +18,7 @@ prepareClimateLayers(
   rasterToMatch = NULL,
   studyArea = NULL,
   model = NULL,
-  doughtMonths = 4:9,
+  droughtMonths = 4:9,
   returnCalculatedLayersForFireSense = FALSE,
   yearsWithClimateProjections = 2011:2100,
   overwrite = FALSE,
@@ -56,7 +56,7 @@ Handy for shared projects.}
 \item{model}{For naming and shortcut for variables: ie. `birds` or `fireSense`.
 If you wanna provide the variables to be produced, don't use birds or fireSense here.}
 
-\item{doughtMonths}{numeric. Months for fireSense to calculate MonthDoughtCode (MDC) i.e. `4:9`.}
+\item{droughtMonths}{numeric. Months for fireSense to calculate MonthlyDroughtCode (MDC) i.e. `4:9`.}
 
 \item{returnCalculatedLayersForFireSense}{Logical. Should it calculate MDC (TRUE) or return the original variables (FALSE)? Default is FALSE.}
 

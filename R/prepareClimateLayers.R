@@ -1,4 +1,4 @@
-utils::globalVariables(c("MDC_0", "MDC_m", "pixelID", "y"))
+utils::globalVariables(c("MDC_0", "MDC_m", "pixelID"))
 
 #' Function to create raster stack for climate sensitive models
 #'
@@ -33,7 +33,7 @@ utils::globalVariables(c("MDC_0", "MDC_m", "pixelID", "y"))
 #' @param model For naming and shortcut for variables: ie. `birds` or `fireSense`.
 #'              If you wanna provide the variables to be produced, don't use birds or fireSense here.
 #'
-#' @param doughtMonths numeric. Months for fireSense to calculate MonthlyDroughtCode (MDC) i.e. `4:9`.
+#' @param droughtMonths numeric. Months for fireSense to calculate MonthlyDroughtCode (MDC) i.e. `4:9`.
 #'
 #' @param returnCalculatedLayersForFireSense Logical. Should it calculate MDC (TRUE) or return the original variables (FALSE)? Default is FALSE.
 #'
@@ -73,7 +73,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
                                  rasterToMatch = NULL,
                                  studyArea = NULL,
                                  model = NULL, # 'birds', 'fireSense'. If you wanna provide other variables, don't use birds or fireSense here.
-                                 doughtMonths = 4:9, # Months for fireSense to calculate MonthDoughtCode (MDC)
+                                 droughtMonths = 4:9, # Months for fireSense to calculate MonthDoughtCode (MDC)
                                  returnCalculatedLayersForFireSense = FALSE,
                                  yearsWithClimateProjections = 2011:2100,
                                  overwrite = FALSE,
@@ -86,7 +86,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
   }
   googledrive::drive_auth(email = authEmail)
   # 1. Make sure it has all defaults
-  if (!all(doughtMonths %in% 4:9)) {
+  if (!all(droughtMonths %in% 4:9)) {
     stop("Drought calculation for Months other than April to June is not yet supported") # TODO
   }
   if (is.null(model)) {
@@ -185,12 +185,16 @@ prepareClimateLayers <- function(pathInputs = NULL,
                    "Tave_wt", "TD")
   }
   if (model == "fireSense"){
-    variables <- c(paste0("Tmax0", doughtMonths), paste0("PPT0", doughtMonths))
-    #PPT, Tmax
+    variables <- c(paste0("Tmax0", droughtMonths), paste0("PPT0", droughtMonths))
   }
 
   # 2. Check if we have the years chosen (we should lapply through years)
   yearsList <- lapply(X = years, FUN = function(y) {
+    ## check if year is in the climate projection range; if not don't bother
+    if (!y %in% 2011:2100) {
+      message(red(paste("The year", y, "does not have climate projections.",
+                        "Returning NULL.")))
+    }
     if (all(model == "fireSense", isTRUE(returnCalculatedLayersForFireSense), !isTRUE(overwriteOriginalData))) {
       fileName <- file.path(pathInputs, paste0(paste(climateModel, RCP, ensemble,
                                                      fileResolution, model, "Calc", y, sep = "_"), ".grd"))
@@ -268,10 +272,10 @@ prepareClimateLayers <- function(pathInputs = NULL,
         # •	Monthly: Tmax, Tmin, Tave and Rad.'
         variablesStack <- raster::stack(lapply(names(variablesStack), function(lay) {
           if (lay %in% c("MAT", "MWMT", "MCMT", "TD", "AHM", "SHM", "EMT", "EXT", "MAR",
-                         paste0("Tmax0", doughtMonths),
-                         paste0("Tmin0", doughtMonths),
-                         paste0("Tave0", doughtMonths),
-                         paste0("Rad0", doughtMonths),
+                         paste0("Tmax0", droughtMonths),
+                         paste0("Tmin0", droughtMonths),
+                         paste0("Tave0", droughtMonths),
+                         paste0("Rad0", droughtMonths),
                          paste0("Rad_", c("wt", "sm", "at", "sp")),
                          paste0("Tmax_", c("wt", "sm", "at", "sp")),
                          paste0("Tmin_", c("wt", "sm", "at", "sp")),
@@ -309,7 +313,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
           # remove the variables from rasterStack for faster operations
           dt <- na.omit(data.table(raster::getValues(variablesStack), pixelID = 1:ncell(variablesStack)))
           dt[, MDC_0 := 0]
-          for (Month in doughtMonths) {
+          for (Month in droughtMonths) {
             dt[, MDC_m := pmax(MDC_0 + .25 * nDays(Month) * (.36 * eval(parse(text = paste0("Tmax0", Month))) + L_f(Month)) -
                                  400 * log(1 + 3.937 * .83 * eval(parse(text = paste0("PPT0", Month))) / (800 * exp(-MDC_0/400))) +
                                  .25 * nDays(Month) * (.36 * eval(parse(text = paste0("Tmax0", Month))) + L_f(Month)),0)]
