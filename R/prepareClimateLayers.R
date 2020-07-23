@@ -1,4 +1,4 @@
-utils::globalVariables(c("MDC_0", "MDC_m", "pixelID", "y"))
+utils::globalVariables(c("MDC_0", "MDC_m", "pixelID"))
 
 #' Function to create raster stack for climate sensitive models
 #'
@@ -33,7 +33,7 @@ utils::globalVariables(c("MDC_0", "MDC_m", "pixelID", "y"))
 #' @param model For naming and shortcut for variables: ie. `birds` or `fireSense`.
 #'              If you wanna provide the variables to be produced, don't use birds or fireSense here.
 #'
-#' @param doughtMonths numeric. Months for fireSense to calculate MonthDoughtCode (MDC) i.e. `4:9`.
+#' @param droughtMonths numeric. Months for fireSense to calculate MonthDoughtCode (MDC) i.e. `4:9`.
 #'
 #' @param returnCalculatedLayersForFireSense Logical. Should it calculate MDC (TRUE) or return the original variables (FALSE)? Default is FALSE.
 #'
@@ -68,25 +68,23 @@ prepareClimateLayers <- function(pathInputs = NULL,
                                  fileResolution = NULL,
                                  authEmail = NULL,
                                  RCP = NULL, # 45
-                                 climateModel = NULL, # CCSM ~CanESM2~ ==> On 21stNOV19 changed to CCSM due to the "squareness" of CanESM2
+                                 climateModel = NULL, # CCSM ~CanESM2~ ==> On 21stNOV19 changed 
+                                 # to CCSM due to the "squareness" of CanESM2
                                  ensemble = NULL, # r11i1p1
                                  rasterToMatch = NULL,
                                  studyArea = NULL,
-                                 model = NULL, # 'birds', 'fireSense'. If you wanna provide other variables, don't use birds or fireSense here.
-                                 doughtMonths = 4:9, # Months for fireSense to calculate MonthDoughtCode (MDC)
+                                 model = NULL, # 'birds', 'fireSense'. If you wanna provide 
+                                 # other variables, don't use birds or fireSense here.
+                                 droughtMonths = 4:9, # Months for fireSense to calculate MonthDoughtCode (MDC)
                                  returnCalculatedLayersForFireSense = FALSE,
                                  yearsWithClimateProjections = 2011:2100,
                                  overwrite = FALSE,
-                                 overwriteOriginalData = FALSE){ # If TRUE, it returns the calculated MDC layers already, not the original stack with Tmax and PPT
+                                 overwriteOriginalData = FALSE){ # If TRUE, it returns the 
+  # calculated MDC layers already, not the original stack with Tmax and PPT
 
-  # Check if the year is in the climate projection range. If not, don't even bother, return a raster of NA's
-  if (!all(years %in% 2011:2100)) {
-    message(red(paste0("The year ", y, " does not have climate projections. Returning NULL")))
-    return(NULL)
-  }
   googledrive::drive_auth(email = authEmail)
   # 1. Make sure it has all defaults
-  if (!all(doughtMonths %in% 4:9)){
+  if (!all(droughtMonths %in% 4:9)){
     stop("Drought calculation for Months other than April to June is not yet supported") # TODO
   }
   if (is.null(model)){
@@ -108,8 +106,9 @@ prepareClimateLayers <- function(pathInputs = NULL,
     message("climateModel is NULL, using default ", climateModel)
   }
   if (is.null(GDriveFolder)){
-    message("GDriveFolder is NULL, using default folder (https://drive.google.com/open?id=1Ww_GYtxB9ZALGjjJnML_F4Mgl8UR-zl9).
-            Ignore this message if you have already the file locally.")
+    message(paste0("GDriveFolder is NULL, using default folder ",
+    "(https://drive.google.com/open?id=1Ww_GYtxB9ZALGjjJnML_F4Mgl8UR-zl9).",
+    "Ignore this message if you have already the file(s) locally."))
     GDriveFolder <- "https://drive.google.com/open?id=1Ww_GYtxB9ZALGjjJnML_F4Mgl8UR-zl9"
   }
   if (is.null(pathInputs)){
@@ -119,8 +118,10 @@ prepareClimateLayers <- function(pathInputs = NULL,
   if (is.null(climateFilePath)){
     climateFilePath <- "https://drive.google.com/open?id=1wcgytGJmfZGaapZZ9M9blfGa-45eLVWE"
     threeArcMin <- TRUE
-    message("This function uses CanESM2 RCP45 resolution 3ArcMinute (~3 x 5Km).", "\nFile downloaded from climateFilePath URL: ", climateFilePath,").",
-            "\nIf another layer is intended, please provide the URL to the file.", "\n(This function does not download the files from ClimateNA)")
+    message("This function uses CanESM2 RCP45 resolution 3ArcMinute (~3 x 5Km).", 
+            "\nFile downloaded from climateFilePath URL: ", climateFilePath,").",
+            "\nIf another layer is intended, please provide the URL to the file.", 
+            "\n(This function does not download the files from ClimateNA)")
   }
   if (is.null(fileResolution)){ # For naming purposes mostly. Should only be passed if user is also passing the path to the complete file
     if (threeArcMin){
@@ -172,8 +173,10 @@ prepareClimateLayers <- function(pathInputs = NULL,
                    "Tmax_wt", "Tmin01", "Tmin02", "Tmin03", "Tmin04", "Tmin05",
                    "Tmin06", "Tmin07", "Tmin08", "Tmin09", "Tmin10", "Tmin11", "Tmin12",
                    "Tmin_at", "Tmin_sm", "Tmin_sp", "Tmin_wt")
-    message(crayon::red(paste0("variables is NULL, using all variables available in the climate layers. ",
-                               "ATTENTION! This might be very slow!", " Total number of variables loaded: ", length(variables))))
+    message(crayon::red(paste0("variables is NULL, using all variables ",
+                               "available in the climate layers. ",
+                               "ATTENTION! This might be very slow!", 
+                               " Total number of variables loaded: ", length(variables))))
   }
   if (model == "birds"){
     variables <- c("AHM", "bFFP", "CMD", "DD_0", "DD_18",
@@ -183,17 +186,30 @@ prepareClimateLayers <- function(pathInputs = NULL,
                    "Tave_wt", "TD")
   }
   if (model == "fireSense"){
-    variables <- c(paste0("Tmax0", doughtMonths), paste0("PPT0", doughtMonths))
-    #PPT, Tmax
+    variables <- c(paste0("Tmax0", droughtMonths), 
+                   paste0("PPT0", droughtMonths))
   }
 
   # 2. Check if we have the years chosen (we should lapply through years)
   yearsList <- lapply(X = years, FUN = function(y) {
-    if (all(model == "fireSense", isTRUE(returnCalculatedLayersForFireSense), !isTRUE(overwriteOriginalData))) {
+    # Check if the year is in the climate projection range. If not, don't 
+    # even bother, return a raster of NA's
+    if (!y %in% 2011:2100) {
+      message(red(paste0("The year", y, 
+                         "does not have climate projections. Returning NULL")))
+      return(NULL)
+    }
+    if (all(model == "fireSense", 
+            isTRUE(returnCalculatedLayersForFireSense), 
+            !isTRUE(overwriteOriginalData))){
       fileName <- file.path(pathInputs, paste0(paste(climateModel, RCP, ensemble,
-                                                     fileResolution, model, "Calc", y, sep = "_"), ".grd"))
+                                                     fileResolution, model, 
+                                                     "Calc", y, sep = "_"), 
+                                               ".grd"))
     } else {
-      fileName <- file.path(pathInputs, paste0(paste(climateModel, RCP, ensemble, fileResolution, model, y, sep = "_"), ".grd"))
+      fileName <- file.path(pathInputs, paste0(paste(climateModel, RCP, ensemble, 
+                                                     fileResolution, model, 
+                                                     y, sep = "_"), ".grd"))
       dType <- "INT4S"
     }
 
@@ -204,57 +220,77 @@ prepareClimateLayers <- function(pathInputs = NULL,
     } else if (all(file.exists(paste0(file_path_sans_ext(fileName), ".zip")),
                     !isTRUE(overwrite))) {
       # B0. Check if we have the zip locally
-            message(green(paste0(fileName, " as a zipfile exists locally. Will be unzipped and returned as rasterStack. ")))
+      message(green(paste0(fileName, " as a zipfile exists locally.",
+                                 " Will be unzipped and returned as rasterStack. ")))
       fileNameZip <- paste0(file_path_sans_ext(fileName), ".zip")
-
-        system(paste0("unzip -j ", fileNameZip, " ",
-                      paste0("*", tools::file_path_sans_ext(basename2(fileNameZip)), "*"),
+      system(paste0("unzip -j ", fileNameZip, " ",
+                      paste0("*", tools::file_path_sans_ext(basename2(fileNameZip)), 
+                             "*"),
                       " -d ", pathInputs))
-
       return(stack(fileName))
     } else {
       # B. If we don't have the year LOCALLY, see if we have in the cloud
-      message(yellow(paste0(fileName, " does not exist locally or should be overwritten. Checking the cloud... ")))
+      message(yellow(paste0(fileName, " does not exist locally or should be overwritten. ",
+                            "Checking the cloud... ")))
       filesInFolder <- drive_ls(path = as_id(GDriveFolder), recursive = FALSE)
       if (all(paste0(basename2(file_path_sans_ext(fileName)), ".zip") %in% filesInFolder$name,
-              !isTRUE(overwrite))) {
-        rw <- which(filesInFolder$name == paste0(basename2(tools::file_path_sans_ext(fileName)), ".zip"))
+              !isTRUE(overwrite))){
+        rw <- which(filesInFolder$name == paste0(basename2(tools::file_path_sans_ext(fileName)), 
+                                                 ".zip"))
         # googledrive::drive_download(file = as_id(filesInFolder$id[rw]),
-        #                             path = file.path(pathInputs, paste0(basename2(tools::file_path_sans_ext(fileName)), ".zip")))
+        #                             path = file.path(pathInputs, 
+        #                             paste0(basename2(tools::file_path_sans_ext(fileName)), 
+        #                             ".zip")))
         preProcess(url = paste0("https://drive.google.com/open?id=", filesInFolder$id[rw]),
                    alseExtract = "similar",
                    archive = paste0(basename2(file_path_sans_ext(fileName)), ".zip"),
-                   destinationPath = pathInputs) # Currently not really working. Giving error:
+                   destinationPath = pathInputs) 
+        # Currently not really working. Giving error:
         # Error in grepl(archive, pattern = destinationPathUser) :
         #   object 'destinationPathUser' not found
-        message(green(paste0(fileName, " now exists locally. Returning the raster stack with the following variables: ")))
+        message(green(paste0(fileName, " now exists locally. Returning the raster ",
+                             "stack with the following variables: ")))
         message(green(paste(variables, collapse = ", ")))
 
         return(stack(fileName))
       } else {
-        # B1. If we don't have it in the cloud, (use the years in file name), make it from the original layer.
-        message(yellow(paste0(fileName, " does not exist locally nor in the cloud or needs to be overwritten. Creating layers... ")))
+        # B1. If we don't have it in the cloud, (use the years in file name), 
+        # make it from the original layer.
+        message(yellow(paste0(fileName, " does not exist locally nor in the cloud or needs ",
+                              "to be overwritten. Creating layers... ")))
         fullDatasetName <- drive_get(as_id(climateFilePath))$name
-        if (any(!file.exists(file.path(pathInputs, fullDatasetName)), isTRUE(overwriteOriginalData))) {
+        if (any(!file.exists(file.path(pathInputs, fullDatasetName)), 
+                isTRUE(overwriteOriginalData))) {
           message(red(paste0(fullDatasetName, " does not exist in your pathInputs (", pathInputs,
-                             ") or needs to be overwritten. Downloading, unzipping and creating layers... This might take a few hours")))
-          preProcess(url = climateFilePath, targetFile = "MAP.asc", # targetFile just to avoid error
+                             ") or needs to be overwritten. Downloading, unzipping ",
+                             "and creating layers... This might take a few hours")))
+          preProcess(url = climateFilePath, 
+                     targetFile = "MAP.asc", # targetFile just to avoid error
                      filename2 = fullDatasetName,
-                     destinationPath = pathInputs) # Currently not working well. Downloads, but doesn't unzip. Needs to be implemented in prepInputs
+                     destinationPath = pathInputs)
           # 26NOV19: preProcess works, but need to specify targetFile
-          # # TEMPORARY SYSTEM CALL WITH THE OPTION x - this assumes you have '7za'. Possibly not necessary as preProcess seems to be working. Testing again.
-          # system(paste0("7za x ", file.path(pathInputs, fullDatasetName))) # ==> This hasn't been tested with the full file path. Just guessing it works... done by hand
+          # # TEMPORARY SYSTEM CALL WITH THE OPTION x - this assumes you have 
+          # '7za'. Possibly not necessary as preProcess seems to be working. Testing again.
+          # system(paste0("7za x ", file.path(pathInputs, fullDatasetName))) # ==> This hasn't
+          # been tested with the full file path. Just guessing it works... done by hand
         }
         datasetsPath <- file.path(pathInputs, file_path_sans_ext(fullDatasetName))
-        folders <- setdiff(list.dirs(path = datasetsPath), datasetsPath) # excluding original folder from the variable
-        currentYearsFolder <- grepMulti(x = folders, patterns = c(climateModel, RCP, ensemble, y))
+        folders <- setdiff(list.dirs(path = datasetsPath), datasetsPath) 
+        # excluding original folder from the variable
+        currentYearsFolder <- grepMulti(x = folders, 
+                                        patterns = c(climateModel, RCP, 
+                                                     ensemble, y))
         currentYearFiles <- list.files(currentYearsFolder)
         filesToLoad <- paste0(variables, ".asc")
         variablesStack <- stack(lapply(X = filesToLoad, FUN = function(variable){
           ras <- raster(x = file.path(currentYearsFolder, variable))
-          crs(ras) <- '+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0'
-          if (any(!is.null(rasterToMatch), !is.null(studyArea)))
-            ras <- postProcess(x = ras, studyArea = studyArea, rasterToMatch = rasterToMatch,
+          crs(ras) <- raster::CRS(paste0('+init=epsg:4326 +proj=longlat +ellps=WGS84 ",
+                                  "+datum=WGS84 +no_defs +towgs84=0,0,0'))
+          if (any(!is.null(rasterToMatch), 
+                  !is.null(studyArea)))
+            ras <- postProcess(x = ras, 
+                               studyArea = studyArea, 
+                               rasterToMatch = rasterToMatch,
                                filename2 = NULL)
           return(ras)
         })
@@ -266,10 +302,10 @@ prepareClimateLayers <- function(pathInputs = NULL,
         # •	Monthly: Tmax, Tmin, Tave and Rad.'
         variablesStack <- raster::stack(lapply(names(variablesStack), function(lay){
           if (lay %in% c("MAT", "MWMT", "MCMT", "TD", "AHM", "SHM", "EMT", "EXT", "MAR",
-                         paste0("Tmax0", doughtMonths),
-                         paste0("Tmin0", doughtMonths),
-                         paste0("Tave0", doughtMonths),
-                         paste0("Rad0", doughtMonths),
+                         paste0("Tmax0", droughtMonths),
+                         paste0("Tmin0", droughtMonths),
+                         paste0("Tave0", droughtMonths),
+                         paste0("Rad0", droughtMonths),
                          paste0("Rad_", c("wt", "sm", "at", "sp")),
                          paste0("Tmax_", c("wt", "sm", "at", "sp")),
                          paste0("Tmin_", c("wt", "sm", "at", "sp")),
@@ -292,7 +328,10 @@ prepareClimateLayers <- function(pathInputs = NULL,
               '6' = 5.8,
               '7' = 6.4,
               '8' = 5.0,
-              '9' = 2.4)[[as.character(Month)]] # TODO [ FIX ] Update for all Months, check latitude problem. Ideally, bring original table in here.
+              '9' = 2.4)[[as.character(Month)]] 
+            # TODO [ FIX ] Update for all Months, 
+            # check latitude problem. 
+            # Ideally, bring original table in here.
           }
 
           nDays <- function(Month){
@@ -305,23 +344,41 @@ prepareClimateLayers <- function(pathInputs = NULL,
           }
 
           # remove the variables from rasterStack for faster operations
-          dt <- na.omit(data.table(raster::getValues(variablesStack), pixelID = 1:ncell(variablesStack)))
-          dt[, MDC_0 := 0]
-          for (Month in doughtMonths) {
-            dt[, MDC_m := pmax(MDC_0 + .25 * nDays(Month) * (.36 * eval(parse(text = paste0("Tmax0", Month))) + L_f(Month)) -
-                                 400 * log(1 + 3.937 * .83 * eval(parse(text = paste0("PPT0", Month))) / (800 * exp(-MDC_0/400))) +
-                                 .25 * nDays(Month) * (.36 * eval(parse(text = paste0("Tmax0", Month))) + L_f(Month)),0)]
+          dt <- na.omit(data.table(raster::getValues(variablesStack), 
+                                   pixelID = 1:ncell(variablesStack)))
+          dt[,MDC_0 := 0]
+          for (Month in droughtMonths){
+            dt[, MDC_m := pmax(
+              MDC_0 + .25 * nDays(Month) *
+                (.36 * eval(parse(
+                  text = paste0("Tmax0", Month)
+                )) +
+                  L_f(Month)) -
+                400 * log(1 + 3.937 * .83 *
+                            eval(parse(
+                              text = paste0("PPT0", Month)
+                            )) /
+                            (800 * exp(-MDC_0 / 400))) +
+                .25 * nDays(Month) * (.36 * eval(parse(
+                  text = paste0("Tmax0", Month)
+                )) + L_f(Month)),
+              0
+            )]
             dt[, MDC_0 := pmax((MDC_0 + MDC_m) / 2, 0)]
           }
           # Set new raster variable to raster
           MDC <- merge(data.table(pixelID = 1:ncell(variablesStack)),
                        dt[, c("pixelID", "MDC_0")], by = "pixelID", all.x = TRUE)
           setkey(MDC, pixelID)
-          variablesStack <- raster::setValues(x = variablesStack[[1]], values = MDC$MDC_0)
+          variablesStack <- raster::setValues(x = variablesStack[[1]], 
+                                              values = MDC$MDC_0)
           names(variablesStack) <- paste("MDC", y)
           dType <- assessDataType(variablesStack)
         }
-        writeRaster(variablesStack, filename = fileName, datatype = dType, overwrite = overwrite)
+        writeRaster(variablesStack, 
+                    filename = fileName, 
+                    datatype = dType, 
+                    overwrite = overwrite)
         variablesStack <- stack(fileName)
         filesToUpload <- grepMulti(x = list.files(dirname(fileName), full.names = TRUE),
                                    patterns = basename(tools::file_path_sans_ext(fileName)))
@@ -330,12 +387,17 @@ prepareClimateLayers <- function(pathInputs = NULL,
                      path = googledrive::as_id(GDriveFolder))
         return(raster::stack(fileName))
       }
-      writeRaster(variablesStack, filename = fileName, datatype = dType, overwrite = overwrite)
+      writeRaster(variablesStack, filename = fileName, 
+                  datatype = dType, 
+                  overwrite = overwrite)
       variablesStack <- stack(fileName)
-      filesToUpload <- grepMulti(x = list.files(dirname(fileName), full.names = TRUE),
-                                         patterns = basename(tools::file_path_sans_ext(fileName)))
-      zip(zipfile = file_path_sans_ext(fileName), files = filesToUpload)
-      drive_upload(media = paste0(tools::file_path_sans_ext(fileName), ".zip"),
+      filesToUpload <- grepMulti(x = list.files(dirname(fileName), 
+                                                full.names = TRUE),
+                                 patterns = basename(tools::file_path_sans_ext(fileName)))
+      zip(zipfile = file_path_sans_ext(fileName), 
+          files = filesToUpload)
+      drive_upload(media = paste0(tools::file_path_sans_ext(fileName), 
+                                  ".zip"),
                                 path = googledrive::as_id(GDriveFolder))
       return(raster::stack(fileName))
     }
