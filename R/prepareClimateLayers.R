@@ -33,7 +33,7 @@ utils::globalVariables(c("MDC_0", "MDC_m", "pixelID"))
 #' @param model For naming and shortcut for variables: ie. `birds` or `fireSense`.
 #'              If you wanna provide the variables to be produced, don't use birds or fireSense here.
 #'
-#' @param droughtMonths numeric. Months for fireSense to calculate MonthDoughtCode (MDC) i.e. `4:9`.
+#' @param droughtMonths numeric. Months for fireSense to calculate MonthlyDroughtCode (MDC) i.e. `4:9`.
 #'
 #' @param returnCalculatedLayersForFireSense Logical. Should it calculate MDC (TRUE) or return the original variables (FALSE)? Default is FALSE.
 #'
@@ -82,48 +82,48 @@ prepareClimateLayers <- function(pathInputs = NULL,
                                  overwriteOriginalData = FALSE){ # If TRUE, it returns the 
   # calculated MDC layers already, not the original stack with Tmax and PPT
 
+
   googledrive::drive_auth(email = authEmail)
   # 1. Make sure it has all defaults
   if (!all(droughtMonths %in% 4:9)){
     stop("Drought calculation for Months other than April to June is not yet supported") # TODO
   }
-  if (is.null(model)){
+  if (is.null(model)) {
     stop("Please provide the model for which you are creating the variables (i.e. 'birds', 'fireSense', 'NA')")
   }
-  if (is.null(rasterToMatch)){
+  if (is.null(rasterToMatch)) {
     message("rasterToMatch is NULL, no post processing will happen")
   }
-  if (is.null(ensemble)){
+  if (is.null(ensemble)) {
     ensemble <- "r11i1p1"
     message("ensemble is NULL, using default ", ensemble)
   }
-  if (is.null(RCP)){
+  if (is.null(RCP)) {
     RCP <- paste0("RCP", 45)
     message("RCP is NULL, using default ", RCP)
   }
-  if (is.null(climateModel)){
+  if (is.null(climateModel)) {
     climateModel <- "CanESM2"
     message("climateModel is NULL, using default ", climateModel)
   }
-  if (is.null(GDriveFolder)){
-    message(paste0("GDriveFolder is NULL, using default folder ",
-    "(https://drive.google.com/open?id=1Ww_GYtxB9ZALGjjJnML_F4Mgl8UR-zl9).",
-    "Ignore this message if you have already the file(s) locally."))
+  if (is.null(GDriveFolder)) {
     GDriveFolder <- "https://drive.google.com/open?id=1Ww_GYtxB9ZALGjjJnML_F4Mgl8UR-zl9"
+    message("GDriveFolder is NULL, using default folder ", GDriveFolder, ".",
+            "Ignore this message if you have already the file locally.")
   }
-  if (is.null(pathInputs)){
-    message(paste0("pathInputs is NULL, using default temp folder: ", tempdir()))
+  if (is.null(pathInputs)) {
     pathInputs <- tempdir()
+    message(paste0("pathInputs is NULL, using default temp folder: ", pathInputs))
   }
   if (is.null(climateFilePath)){
     climateFilePath <- "https://drive.google.com/open?id=1wcgytGJmfZGaapZZ9M9blfGa-45eLVWE"
     threeArcMin <- TRUE
-    message("This function uses CanESM2 RCP45 resolution 3ArcMinute (~3 x 5Km).", 
+    message("This function uses CanESM2 RCP45 resolution 3ArcMinute (~3 x 5Km).",
             "\nFile downloaded from climateFilePath URL: ", climateFilePath,").",
-            "\nIf another layer is intended, please provide the URL to the file.", 
+            "\nIf another layer is intended, please provide the URL to the file.",
             "\n(This function does not download the files from ClimateNA)")
   }
-  if (is.null(fileResolution)){ # For naming purposes mostly. Should only be passed if user is also passing the path to the complete file
+  if (is.null(fileResolution)) { # For naming purposes mostly. Should only be passed if user is also passing the path to the complete file
     if (threeArcMin){
       fileResolution <- "3ArcMin"
       message("fileResolution is NULL. Using the original")
@@ -218,7 +218,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
       # A. If we have the year, return
       return(stack(fileName))
     } else if (all(file.exists(paste0(file_path_sans_ext(fileName), ".zip")),
-                    !isTRUE(overwrite))) {
+                   !isTRUE(overwrite))) {
       # B0. Check if we have the zip locally
       message(green(paste0(fileName, " as a zipfile exists locally.",
                                  " Will be unzipped and returned as rasterStack. ")))
@@ -300,7 +300,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
         # •	Annual: MAT, MWMT, MCMT, TD, AHM, SHM, EMT, EXT and MAR;
         # •	Seasonal: Tmax, Tmin, Tave and Rad;
         # •	Monthly: Tmax, Tmin, Tave and Rad.'
-        variablesStack <- raster::stack(lapply(names(variablesStack), function(lay){
+        variablesStack <- raster::stack(lapply(names(variablesStack), function(lay) {
           if (lay %in% c("MAT", "MWMT", "MCMT", "TD", "AHM", "SHM", "EMT", "EXT", "MAR",
                          paste0("Tmax0", droughtMonths),
                          paste0("Tmin0", droughtMonths),
