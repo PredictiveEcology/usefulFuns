@@ -26,12 +26,14 @@ utils::globalVariables(c("PRENAME"))
 #' @rdname defineStudyArea
 #'
 #' @examples
+#' \dontrun{
 #' ## rp is the whole North American boreal region
 #' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = NULL)
-#'
+#' }
+#'\dontrun{
 #' ## Alberta
 #' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "Alberta", mapSubset = NULL)
-#'
+#'}
 #' \dontrun{
 #' ## Alberta inside boreal extension
 #' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = "Alberta")
