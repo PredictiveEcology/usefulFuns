@@ -83,6 +83,7 @@ Collate:
     'prepInputStack.R'
     'prepInputsLayers_DUCKS.R'
     'prepareClimateLayers.R'
+    'prepareClimateLayersWithBackup.R'
     'provinceBCRStudyArea.R'
     'reviseSpeciesTraits.R'
     'subsetNonNARas.R'
