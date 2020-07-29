@@ -53,23 +53,28 @@ Handy for shared projects.}
 
 \item{studyArea}{shapefile of study area}
 
-\item{model}{For naming and shortcut for variables: ie. `birds` or `fireSense`.
-If you wanna provide the variables to be produced, don't use birds or fireSense here.}
+\item{model}{For naming and shortcut for variables: i.e., \code{"birds"} or \code{"fireSense"}.
+If providing the variables to be produced, don't use \code{"birds"} nor
+\code{"fireSense"} here.}
 
-\item{droughtMonths}{numeric. Months for fireSense to calculate MonthlyDroughtCode (MDC) i.e. `4:9`.}
+\item{droughtMonths}{Numeric. Months to calculate Monthly Drought Code (MDC) i.e. `4:9`.}
 
-\item{returnCalculatedLayersForFireSense}{Logical. Should it calculate MDC (TRUE) or return the original variables (FALSE)? Default is FALSE.}
+\item{returnCalculatedLayersForFireSense}{Logical. Should it calculate MDC (TRUE) or return the
+original variables (FALSE)? Default is FALSE.}
 
-\item{yearsWithClimateProjections}{Numeric. The user can pass the years that have climate projection in the data. Default to 2011:2100.}
+\item{yearsWithClimateProjections}{Numeric. The user can pass the years that have climate
+projection in the data. Default to \code{2011:2100}.}
 
-\item{overwrite}{logical. Default to FALSE. Should the layers be overwritten if exist?}
+\item{overwrite}{logical. Default FALSE. Should the layers be overwritten if exist?}
 
-\item{overwriteOriginalData}{logical. Default to FALSE. If changes happen in the original layer
-(the one provided in climateFilePath),
-set this to TRUE to overwrite the zip files downloaded.}
+\item{overwriteOriginalData}{logical. Default FALSE. If changes happen in the original layer
+(the one provided in climateFilePath), set this to TRUE to overwrite
+the zip files downloaded and return the calculated MDC layers
+already, not the original stack with \code{Tmax} and \code{PPT}.}
 }
 \value{
-This function returns a list of all years, with each year being the local path for the raster stack that contains all variables
+A list of all years, with each year being the local path for the raster stack that
+        contains all variables.
 }
 \description{
 Designed primarily for NWT project, but somewhat flexible.
