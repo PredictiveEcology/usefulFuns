@@ -1,7 +1,9 @@
-utils::globalVariables(c("..column", "direction", "id", "location",
+utils::globalVariables(c("..column", "direction", "ID", "id", "location",
                          "result", "sd", "simulation", "species", "value"))
 
 ## helpers for bootstrapPercentChanges
+
+#' @importFrom data.table data.table rbindlist
 .calculateSignificantChangesInBirds <- function(dataPath, years, species = NULL, pixelBased = TRUE,
                                                 sampleSize = "auto", redFactorTimes = 15,
                                                 studyArea = NULL, repetition = NULL) { # limited to 2 years!
@@ -11,16 +13,16 @@ utils::globalVariables(c("..column", "direction", "id", "location",
     splittedAllNames2 <- splittedAllNames[!splittedAllNames %in% grepMulti(x = splittedAllNames,
                                                                            patterns = paste0("_", years[1]))]
     splitted <- unlist(lapply(splittedAllNames, function(birdFilename) {
-      if (length(birdFilename)==1) return(NULL)
+      if (length(birdFilename) == 1) return(NULL)
       return(birdFilename[length(birdFilename)])
     }))
     species <- substrBoth(strng = splitted, howManyCharacters = 4, fromEnd = FALSE)
   }
-  if (length(years)>2) stop("Currently this function only compares 2 years")
-  tableOfChanges <- data.table::rbindlist(lapply(species, function(bird){
-    birdInyears <- lapply(years, function(y){
+  if (length(years) > 2) stop("Currently this function only compares 2 years")
+  tableOfChanges <- data.table::rbindlist(lapply(species, function(bird) {
+    birdInyears <- lapply(years, function(y) {
       rasPath <- grepMulti(x = list.files(dataPath, recursive = TRUE, full.names = TRUE), patterns = c(bird, y))
-      if (length(rasPath)==0){
+      if (length(rasPath) == 0) {
         stop("The raster file for ", bird, " for year ", y, " wasn't found. Maybe not all species were run for all years? ",
              "You can pass specific species to be ran using the argument 'species'")
       }
@@ -29,7 +31,7 @@ utils::globalVariables(c("..column", "direction", "id", "location",
     })
     names(birdInyears) <- years
     dtForTest <- cbindFromList(birdInyears)
-    if (!is.null(studyArea)){
+    if (!is.null(studyArea)) {
       # rasPath <- grepMulti(x = list.files(dataPath, recursive = TRUE, full.names = TRUE), patterns = c(bird)) # JUST A TEMPLATE!
       # # location <- reproducible::Cache(.prepStudyAreaForBirds, studyArea = studyArea, dataPath = dataPath, RTMpath = rasPath[1],
       # #                                 userTags = c("object:location", "purpose:Edehzhie"))
@@ -48,8 +50,8 @@ utils::globalVariables(c("..column", "direction", "id", "location",
         return(mod)
       })
       names(byLocationModelList) <- uniqueLocations
-      dt <- data.table::rbindlist(lapply(uniqueLocations, function(loc){
-        direction <- ifelse(byLocationModelList[[loc]]$p.value>=0.05,"no change",
+      dt <- data.table::rbindlist(lapply(uniqueLocations, function(loc) {
+        direction <- ifelse(byLocationModelList[[loc]]$p.value >= 0.05, "no change",
                             ifelse(byLocationModelList[[loc]]$mean1 < byLocationModelList[[loc]]$mean2,
                                    "increased","decreased"))
         dt <- data.table::data.table(species = bird, tTest = byLocationModelList$p.value,
@@ -60,7 +62,7 @@ utils::globalVariables(c("..column", "direction", "id", "location",
                                     pixelBased = pixelBased, sampleSize = sampleSize,
                                     species = species,
                                     redFactorTimes = redFactorTimes, bird = bird)
-      direction <- ifelse(r$p.value>=0.05,"no change",
+      direction <- ifelse(r$p.value >= 0.05,"no change",
                           ifelse(r$mean1 < r$mean2, "increased","decreased"))
       dt <- data.table::data.table(species = bird, tTest = r$p.value, result = direction)
     }
@@ -70,17 +72,18 @@ utils::globalVariables(c("..column", "direction", "id", "location",
   return(tableOfChanges)
 }
 
-.calculatePercentageChanges <- function(changesTable, column){
-  if (is(changesTable, "list")){
-    changesTable <- rbindlist(lapply(X = names(changesTable), FUN = function(simulation){
+#' @importFrom data.table data.table rbindlist
+.calculatePercentageChanges <- function(changesTable, column) {
+  if (is(changesTable, "list")) {
+    changesTable <- rbindlist(lapply(X = names(changesTable), FUN = function(simulation) {
       tb <- changesTable[[simulation]]
       tb$simulation <- simulation
       return(tb)
     })
     )
   }
-  if ("location" %in% names(changesTable)){
-    if ("simulation" %in% names(changesTable)){
+  if ("location" %in% names(changesTable)) {
+    if ("simulation" %in% names(changesTable)) {
       stop("You have provided both locations and different simulations/scenarios for this analysis. This is still not supported.")
     }
     dt <- data.table::rbindlist(lapply(unique(changesTable$location), function(locality){
@@ -91,12 +94,13 @@ utils::globalVariables(c("..column", "direction", "id", "location",
                                    location = locality)
     }))
   } else {
-    if ("simulation" %in% names(changesTable)){
-      dt <- data.table::rbindlist(lapply(unique(changesTable$simulation), function(scenario){
+    if ("simulation" %in% names(changesTable)) {
+      dt <- data.table::rbindlist(lapply(unique(changesTable$simulation), function(scenario) {
         changesVector <- table(changesTable[simulation == scenario, ..column,])
         dt <- data.table::data.table(direction = names(changesVector),
                                      value = as.numeric(changesVector),
-                                     percent = 100*(as.numeric(changesVector)/NROW(changesTable[simulation == scenario, ..column,])),
+                                     percent = 100*(as.numeric(changesVector) /
+                                                      NROW(changesTable[simulation == scenario, ..column,])),
                                      simulation = scenario)
       }))
     } else {
@@ -109,14 +113,14 @@ utils::globalVariables(c("..column", "direction", "id", "location",
   return(dt)
 }
 
-.whichSpeciesChange <- function(changesTable){
+.whichSpeciesChange <- function(changesTable) {
   if (!is(changesTable, "list"))
     stop("changesTable needs to be a list, even if of only one element")
-  listOfChanges <- lapply(1:length(changesTable), function(repetition){
+  listOfChanges <- lapply(1:length(changesTable), function(repetition) {
     tb <- changesTable[[repetition]]
-    if ("location" %in% names(tb)){
+    if ("location" %in% names(tb)) {
       uniqueLocations <- unique(tb$location)
-      dt  <- lapply(uniqueLocations, function(locality){
+      dt  <- lapply(uniqueLocations, function(locality) {
         dt <- .whichSpeciesChangeDT(tb = tb[location == locality])
         return(dt)
       })
@@ -128,8 +132,8 @@ utils::globalVariables(c("..column", "direction", "id", "location",
   })
   names(listOfChanges) <- paste0("repetition", (1:length(changesTable)))
   # Reorder the three elements, needs to make a reduce for each
-  if (is(changesTable, "list")){
-    if ("location" %in% names(changesTable[[1]])){
+  if (is(changesTable, "list")) {
+    if ("location" %in% names(changesTable[[1]])) {
       tb <- changesTable[[1]]
       uniqueLocations <- unique(tb$location)
       allLocations <- lapply(uniqueLocations, function(locality) {
@@ -162,8 +166,8 @@ utils::globalVariables(c("..column", "direction", "id", "location",
   }
 }
 
-.whichSpeciesChangeDT <- function(tb){
-  if (!is(tb, "list")){
+.whichSpeciesChangeDT <- function(tb) {
+  if (!is(tb, "list")) {
     inc <- tb[result == "increased", species]
     dec <- tb[result == "decreased", species]
     noChange <- tb[result == "no change", species]
@@ -182,8 +186,9 @@ utils::globalVariables(c("..column", "direction", "id", "location",
   }
 }
 
-.calculatePvalueOfRasters <- function(dtForTest, pixelBased = FALSE,
-                                      sampleSize, species, redFactorTimes, bird) {
+#' @importFrom effsize cohen.d
+.calculatePvalueOfRasters <- function(dtForTest, pixelBased = FALSE, sampleSize, species,
+                                      redFactorTimes, bird) {
   if (pixelBased) {
     if (!is.null(sampleSize)) {
       if (all(sampleSize == "auto", bird == species[[1]])) {
@@ -205,7 +210,7 @@ utils::globalVariables(c("..column", "direction", "id", "location",
         # Huge	      2.0	Sawilowsky, 2009
         vectorSize <- length(treatment)
         message(crayon::yellow("Calculating ideal sample size using Cohen's D and Hedges'g effect size statistics..."))
-        while (cohen$estimate < limit){
+        while (cohen$estimate < limit) {
           newSample <- sample(x = 1:NROW(treatment),
                               size = vectorSize,
                               replace = FALSE)
@@ -216,14 +221,15 @@ utils::globalVariables(c("..column", "direction", "id", "location",
         message(crayon::green(paste0("Ideal sample size calculated as ",
                                      length(sampleSize), "\n with sample size effect calcutated as")))
         print(cohen)
-        stop(paste0("Please pass the ideal size calculated", length(sampleSize)," to the module's parameter 'sampleSize' and ",
+        stop(paste0("Please pass the ideal size calculated", length(sampleSize),
+                    " to the module's parameter 'sampleSize' and ",
                     "restart the simulation (i.e. by using 'mySimOut <- restartSpades()'). ",
                     "The current version still doesn't have this process automated"))
       }
       # SAMPLE FROM TABLE AND RUN THE TEST
       dtForTest[["ID"]] <- 1:NROW(dtForTest)
       env <- environment()
-      if (!exists("sbsetID")){
+      if (!exists("sbsetID")) {
         if (tryCatch({
           pryr::where(name = "sbsetID", env = env)
           return(FALSE)},
@@ -268,6 +274,7 @@ utils::globalVariables(c("..column", "direction", "id", "location",
   return(location)
 }
 
+#' @importFrom stats pt
 .tTestMeansSD <- function(mean1, mean2, sd1, sd2, sampleSize1, sampleSize2, m0 = 0,
                           equal.variance = FALSE) {
   # FROM Macro: https://stats.stackexchange.com/questions/30394/how-to-perform-two-sample-t-tests-in-r-by-inputting-sample-statistics-rather-tha
@@ -280,19 +287,22 @@ utils::globalVariables(c("..column", "direction", "id", "location",
   if (equal.variance == FALSE ) {
     se <- sqrt( (sd1^2/sampleSize1) + (sd2^2/sampleSize2) )
     # welch-satterthwaite df
-    df <- ( (sd1^2/sampleSize1 + sd2^2/sampleSize2)^2 )/( (sd1^2/sampleSize1)^2/(sampleSize1-1) +
-                                                            (sd2^2/sampleSize2)^2/(sampleSize2-1) )
+    df <- ((sd1^2/sampleSize1 + sd2^2/sampleSize2)^2 )/((sd1^2/sampleSize1)^2/(sampleSize1 - 1) +
+                                                            (sd2^2/sampleSize2)^2/(sampleSize2 - 1))
   } else {
     # pooled standard deviation, scaled by the sample sizes
-    se <- sqrt( (1/sampleSize1 + 1/sampleSize2) * ((sampleSize1-1)*sd1^2 + (sampleSize2-1)*sd2^2)/(sampleSize1+sampleSize2-2) )
+    se <- sqrt( (1/sampleSize1 + 1/sampleSize2) *
+                  ((sampleSize1 - 1)*sd1^2 + (sampleSize2 - 1)*sd2^2) / (sampleSize1 + sampleSize2 - 2))
     df <- sampleSize1 + sampleSize2 - 2
   }
   t <- (mean1 - mean2 - m0)/se
-  dat <- c(mean1-mean2, se, t, 2*stats::pt(-abs(t),df))
+  dat <- c(mean1 - mean2, se, t, 2*stats::pt(-abs(t), df))
   names(dat) <- c("DifferenceOfMeans", "stdError", "t", "pValue")
   return(dat)
 }
 
+#' @importFrom data.table data.table
+#' @importFrom stats t.test
 .calcICPercentChange <- function(percChange) {
   increasedIC <- tryCatch({
     stats::t.test(percChange[direction == "increased", value], conf.level = 0.95)$conf.int},

@@ -30,22 +30,27 @@ utils::globalVariables(c("MDC_0", "MDC_m", "pixelID"))
 #'
 #' @param studyArea shapefile of study area
 #'
-#' @param model For naming and shortcut for variables: ie. `birds` or `fireSense`.
-#'              If you wanna provide the variables to be produced, don't use birds or fireSense here.
+#' @param model For naming and shortcut for variables: i.e., \code{"birds"} or \code{"fireSense"}.
+#'              If providing the variables to be produced, don't use \code{"birds"} nor
+#'              \code{"fireSense"} here.
 #'
-#' @param droughtMonths numeric. Months for fireSense to calculate MonthlyDroughtCode (MDC) i.e. `4:9`.
+#' @param droughtMonths Numeric. Months to calculate Monthly Drought Code (MDC) i.e. `4:9`.
 #'
-#' @param returnCalculatedLayersForFireSense Logical. Should it calculate MDC (TRUE) or return the original variables (FALSE)? Default is FALSE.
+#' @param returnCalculatedLayersForFireSense Logical. Should it calculate MDC (TRUE) or return the
+#'                                           original variables (FALSE)? Default is FALSE.
 #'
-#' @param yearsWithClimateProjections Numeric. The user can pass the years that have climate projection in the data. Default to 2011:2100.
+#' @param yearsWithClimateProjections Numeric. The user can pass the years that have climate
+#'                                    projection in the data. Default to \code{2011:2100}.
 #'
-#' @param overwrite logical. Default to FALSE. Should the layers be overwritten if exist?
+#' @param overwrite logical. Default FALSE. Should the layers be overwritten if exist?
 #'
-#' @param overwriteOriginalData logical. Default to FALSE. If changes happen in the original layer (the one provided in climateFilePath),
-#'                              set this to TRUE to overwrite the zip files downloaded and return the calculated MDC layers already,
-#'                              not the original stack with \code{Tmax} and \code[PPT}.
+#' @param overwriteOriginalData logical. Default FALSE. If changes happen in the original layer
+#'                              (the one provided in climateFilePath), set this to TRUE to overwrite
+#'                              the zip files downloaded and return the calculated MDC layers
+#'                              already, not the original stack with \code{Tmax} and \code{PPT}.
 #'
-#' @return This function returns a list of all years, with each year being the local path for the raster stack that contains all variables
+#' @return A list of all years, with each year being the local path for the raster stack that
+#'         contains all variables.
 #'
 #' @author Tati Micheletti
 #' @export
@@ -54,6 +59,7 @@ utils::globalVariables(c("MDC_0", "MDC_m", "pixelID"))
 #' @importFrom googledrive drive_auth drive_get drive_ls
 #' @importFrom raster crs crs<- getValues raster setValues stack
 #' @importFrom reproducible assessDataType basename2 Cache postProcess preProcess
+#' @importFrom sp CRS
 #' @importFrom stats na.omit
 #' @importFrom tools file_path_sans_ext
 #' @importFrom utils zip
@@ -68,12 +74,13 @@ prepareClimateLayers <- function(pathInputs = NULL,
                                  fileResolution = NULL,
                                  authEmail = NULL,
                                  RCP = NULL, # 45
-                                 climateModel = NULL, # CCSM ~CanESM2~ ==> 2019-11-21 changed to CCSM due to the "squareness" of CanESM2
+                                 climateModel = NULL, # CCSM ~CanESM2~
+                                 ## 2019-11-21 changed to CCSM due to the "squareness" of CanESM2
                                  ensemble = NULL, # r11i1p1
                                  rasterToMatch = NULL,
                                  studyArea = NULL,
-                                 model = NULL, # 'birds', 'fireSense'. If providing other variables, don't use birds or fireSense here.
-                                 droughtMonths = 4:9, # Months for fireSense to calculate MonthDoughtCode (MDC)
+                                 model = NULL,
+                                 droughtMonths = 4:9,
                                  returnCalculatedLayersForFireSense = FALSE,
                                  yearsWithClimateProjections = 2011:2100,
                                  overwrite = FALSE,
@@ -110,7 +117,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
     pathInputs <- tempdir()
     message(paste0("pathInputs is NULL, using default temp folder: ", pathInputs))
   }
-  if (is.null(climateFilePath)){
+  if (is.null(climateFilePath)) {
     climateFilePath <- "https://drive.google.com/open?id=1wcgytGJmfZGaapZZ9M9blfGa-45eLVWE"
     threeArcMin <- TRUE
     message("This function uses CanESM2 RCP45 resolution 3ArcMinute (~3 x 5Km).",
@@ -118,19 +125,20 @@ prepareClimateLayers <- function(pathInputs = NULL,
             "\nIf another layer is intended, please provide the URL to the file.",
             "\n(This function does not download the files from ClimateNA)")
   }
-  if (is.null(fileResolution)) { # For naming purposes mostly. Should only be passed if user is also passing the path to the complete file
+  if (is.null(fileResolution)) {
+    ## For naming purposes mostly. Should only be passed if user also passing complete filepath
     if (threeArcMin) {
       fileResolution <- "3ArcMin"
-      message("fileResolution is NULL. Using the original")
+      message("fileResolution is NULL. Using the original.")
     } else {
-      stop("Please inform the resolution in fileResolution when passing a climate archive file path")
+      stop("Please inform the resolution in fileResolution when passing a climate archive file path.")
     }
   }
-  if (is.null(years)){
+  if (is.null(years)) {
     years <- 2011:2100
     message("Years is NULL. Using the original time series (2011-2100)")
   }
-  if (all(is.null(variables), !model %in% c("birds", "fireSense"))){
+  if (all(is.null(variables), !model %in% c("birds", "fireSense"))) {
     variables <- c("AHM", "bFFP", "CMD01", "CMD02", "CMD03", "CMD04", "CMD05",
                    "CMD06", "CMD07", "CMD08", "CMD09", "CMD10", "CMD11", "CMD12",
                    "CMD", "CMD_at", "CMD_sm", "CMD_sp", "CMD_wt", "DD_0_01", "DD_0_02",
@@ -168,10 +176,12 @@ prepareClimateLayers <- function(pathInputs = NULL,
                    "Tmax_wt", "Tmin01", "Tmin02", "Tmin03", "Tmin04", "Tmin05",
                    "Tmin06", "Tmin07", "Tmin08", "Tmin09", "Tmin10", "Tmin11", "Tmin12",
                    "Tmin_at", "Tmin_sm", "Tmin_sp", "Tmin_wt")
-    message(crayon::red(paste0("variables is NULL, using all variables available in the climate layers. ",
-                               "ATTENTION! This might be very slow!", " Total number of variables loaded: ", length(variables))))
+    message(crayon::red(paste(
+      "variables is NULL, using all variables available in the climate layers.",
+      "ATTENTION! This might be very slow! Total number of variables loaded: ", length(variables))
+    ))
   }
-  if (model == "birds"){
+  if (model == "birds") {
     variables <- c("AHM", "bFFP", "CMD", "DD_0", "DD_18",
                    "DD18", "DD5", "eFFP", "EMT", "EXT", "FFP",
                    "MAP", "MAT", "MCMT", "MSP", "MWMT", "NFFD",
@@ -184,7 +194,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
 
   # 2. Check if we have the years chosen (we should lapply through years)
   yearsList <- lapply(X = years, FUN = function(y) {
-    # Check if the year is in the climate projection range. If not, don't 
+    # Check if the year is in the climate projection range. If not, don't
     # even bother, return a raster of NA's
     if (!y %in% 2011:2100) {
       message(red(paste0("The year", y, "does not have climate projections. Returning NULL")))
@@ -221,7 +231,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
         preProcess(url = paste0("https://drive.google.com/open?id=", filesInFolder$id[rw]),
                    alseExtract = "similar",
                    archive = paste0(basename2(file_path_sans_ext(fileName)), ".zip"),
-                   destinationPath = pathInputs) 
+                   destinationPath = pathInputs)
         # Currently not really working. Giving error:
         # Error in grepl(archive, pattern = destinationPathUser) :
         #   object 'destinationPathUser' not found
@@ -237,7 +247,7 @@ prepareClimateLayers <- function(pathInputs = NULL,
           message(red(paste0(fullDatasetName, " does not exist in your pathInputs (", pathInputs,
                              ") or needs to be overwritten. Downloading, unzipping ",
                              "and creating layers... This might take a few hours.")))
-          preProcess(url = climateFilePath, 
+          preProcess(url = climateFilePath,
                      targetFile = "MAP.asc", # targetFile just to avoid error
                      filename2 = fullDatasetName,
                      destinationPath = pathInputs)
@@ -248,17 +258,17 @@ prepareClimateLayers <- function(pathInputs = NULL,
           ## ==> This hasn't been tested with the full file path. Just guessing it works... done by hand.
         }
         datasetsPath <- file.path(pathInputs, file_path_sans_ext(fullDatasetName))
-        folders <- setdiff(list.dirs(path = datasetsPath), datasetsPath) 
+        folders <- setdiff(list.dirs(path = datasetsPath), datasetsPath)
         # excluding original folder from the variable
         currentYearsFolder <- grepMulti(x = folders,  patterns = c(climateModel, RCP, ensemble, y))
         currentYearFiles <- list.files(currentYearsFolder)
         filesToLoad <- paste0(variables, ".asc")
         variablesStack <- stack(lapply(X = filesToLoad, FUN = function(variable) {
           ras <- raster(x = file.path(currentYearsFolder, variable))
-          crs(ras) <- raster::CRS(paste0('+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0'))
+          crs(ras) <- sp::CRS(paste0('+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0'))
           if (any(!is.null(rasterToMatch), !is.null(studyArea)))
-            ras <- postProcess(x = ras, 
-                               studyArea = studyArea, 
+            ras <- postProcess(x = ras,
+                               studyArea = studyArea,
                                rasterToMatch = rasterToMatch,
                                filename2 = NULL)
           return(ras)
@@ -289,15 +299,15 @@ prepareClimateLayers <- function(pathInputs = NULL,
         }))
 
         # For fireSense, do the calculations already'
-        if (all(model == "fireSense", isTRUE(returnCalculatedLayersForFireSense))){
+        if (all(model == "fireSense", isTRUE(returnCalculatedLayersForFireSense))) {
           # Day length adjustement L_f in Drought Code (taken from Van Wagner 1987)
-          L_f <- function(Month){
+          L_f <- function(Month) {
             c('4' = 0.9,
               '5' = 3.8,
               '6' = 5.8,
               '7' = 6.4,
               '8' = 5.0,
-              '9' = 2.4)[[as.character(Month)]] 
+              '9' = 2.4)[[as.character(Month)]]
             ## TODO: [ FIX ] Update for all Months, check latitude problem. Ideally, bring original table in here.
           }
 
