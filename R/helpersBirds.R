@@ -221,14 +221,14 @@ utils::globalVariables(c("..column", "direction", "id", "location",
                     "The current version still doesn't have this process automated"))
       }
       # SAMPLE FROM TABLE AND RUN THE TEST
-      dtForTest$ID <- 1:NROW(dtForTest)
+      dtForTest[["ID"]] <- 1:NROW(dtForTest)
       env <- environment()
       if (!exists("sbsetID")){
         if (tryCatch({
           pryr::where(name = "sbsetID", env = env)
           return(FALSE)},
           error = function(e) return(TRUE))) {
-          assign(x = "sbsetID", value = sample(x = dtForTest[!is.na(dtForTest)[ID]]$ID,
+          assign(x = "sbsetID", value = sample(x = dtForTest[!is.na(dtForTest)[ID], ID],
                                                size = sampleSize, replace = FALSE),
                  envir = env)
         } else {
