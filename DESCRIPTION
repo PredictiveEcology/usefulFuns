@@ -33,6 +33,7 @@ Imports:
     RColorBrewer,
     remotes,
     reproducible,
+    sp,
     sf,
     showtext,
     SpaDES.core, 
