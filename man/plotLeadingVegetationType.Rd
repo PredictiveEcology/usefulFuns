@@ -9,7 +9,10 @@ plotLeadingVegetationType(
   typeSim,
   colNA = "grey85",
   saveRAS = TRUE,
-  overwrite = FALSE
+  overwrite = FALSE,
+  sppColorVect,
+  sppEquivCol,
+  sppEquivalencies_CA
 )
 }
 \arguments{
@@ -22,6 +25,12 @@ plotLeadingVegetationType(
 \item{saveRAS}{logical. Save the raster for posterior use?}
 
 \item{overwrite}{logical.}
+
+\item{sppColorVect}{named character vector with the species colors in hex format}
+
+\item{sppEquivCol}{character with the column from sppEquivalencies_CA to use for the map}
+
+\item{sppEquivalencies_CA}{sppEquivalencies_CA object from LandR (LandR::sppEquivalencies_CA) changed or not}
 }
 \value{
 plot

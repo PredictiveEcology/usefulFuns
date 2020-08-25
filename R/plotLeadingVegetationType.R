@@ -1,5 +1,3 @@
-utils::globalVariables(c("Boreal", "NWT"))
-
 #' Plots Leading Vegetation Type using cohortData and pixelGroupMap
 #'
 #' @param dataPath character. Path to data
@@ -7,6 +5,9 @@ utils::globalVariables(c("Boreal", "NWT"))
 #' @param colNA character. The color to use for NA.
 #' @param saveRAS logical. Save the raster for posterior use?
 #' @param overwrite logical.
+#' @param sppColorVect named character vector with the species colors in hex format
+#' @param sppEquivCol character with the column from sppEquivalencies_CA to use for the map
+#' @param sppEquivalencies_CA sppEquivalencies_CA object from LandR (LandR::sppEquivalencies_CA) changed or not
 #'
 #' @return plot
 #'
@@ -28,7 +29,10 @@ plotLeadingVegetationType <- function(dataPath,
                                       typeSim,
                                       colNA = "grey85",
                                       saveRAS = TRUE,
-                                      overwrite = FALSE) {
+                                      overwrite = FALSE,
+                                      sppColorVect,
+                                      sppEquivCol,
+                                      sppEquivalencies_CA) {
   if (!isTRUE(overwrite)) {
     fileName <- grepMulti(
       x = list.files(dataPath, full.names = TRUE),
@@ -45,28 +49,6 @@ plotLeadingVegetationType <- function(dataPath,
   cohorDataList <- bringObjectTS(path = dataPath, rastersNamePattern = "cohortData")
   pixelGroupList <- bringObjectTS(path = dataPath, rastersNamePattern = "pixelGroupMap")
 
-  sppEquivCol <- "NWT"
-  data("sppEquivalencies_CA", package = "LandR", envir = environment())
-  sppEquivalencies_CA[, NWT := c(
-    Abie_Bal = "Abie_Bal",
-    Betu_Pap = "Betu_Pap",
-    Lari_Lar = "Lari_Lar",
-    Pice_Gla = "Pice_Gla",
-    Pice_Mar = "Pice_Mar",
-    Pinu_Ban = "Pinu_Ban",
-    Popu_Tre = "Popu_Tre"
-  )[Boreal]]
-
-  sppEquivalencies_CA <- sppEquivalencies_CA[!is.na(NWT)]
-  sppEquivalencies_CA$EN_generic_short <- sppEquivalencies_CA$NWT
-  sppColorVect <- LandR::sppColors(
-    sppEquiv = sppEquivalencies_CA, sppEquivCol = sppEquivCol,
-    palette = "Set1"
-  )
-  mixed <- structure("#D0FB84", names = "Mixed")
-  sppColorVect[length(sppColorVect) + 1] <- mixed
-  attributes(sppColorVect)$names[length(sppColorVect)] <- "Mixed"
-
   # LEADING TYPE ~~~~~~~~~~~~~~
 
   leadingSpecies <- lapply(X = names(cohorDataList), function(index) {
@@ -74,8 +56,11 @@ plotLeadingVegetationType <- function(dataPath,
     pixelGroup <- pixelGroupList[[index]]
     r <- LandR::vegTypeMapGenerator(
       x = cohort, pixelGroupMap = pixelGroup,
-      vegLeadingProportion = 0.8, mixedType = 2, sppEquiv = sppEquivalencies_CA,
-      sppEquivCol = "NWT", colors = sppColorVect, pixelGroupColName = "pixelGroup",
+      vegLeadingProportion = 0.8, mixedType = 2,
+      sppEquiv = sppEquivalencies_CA,
+      sppEquivCol = sppEquivCol,
+      colors = sppColorVect,
+      pixelGroupColName = "pixelGroup",
       doAssertion = options("LandR.assertions" = FALSE)
     )
     return(r)
