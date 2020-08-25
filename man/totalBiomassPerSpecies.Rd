@@ -11,7 +11,10 @@ totalBiomassPerSpecies(
   columnsType = FALSE,
   overstory = FALSE,
   overwrite = FALSE,
-  maxVal = 2e+10
+  maxVal = 2e+10,
+  sppColorVect,
+  sppEquivCol,
+  sppEquivalencies_CA
 )
 }
 \arguments{
@@ -29,6 +32,12 @@ totalBiomassPerSpecies(
 
 \item{maxVal}{numeric. Max value for y axis. Passing this ensures that both overstory
 and all biomass plots are comparable Default to 1e10.}
+
+\item{sppColorVect}{named character vector with the species colors in hex format}
+
+\item{sppEquivCol}{character with the column from sppEquivalencies_CA to use for the map}
+
+\item{sppEquivalencies_CA}{sppEquivalencies_CA object from LandR (LandR::sppEquivalencies_CA) changed or not}
 }
 \value{
 plot

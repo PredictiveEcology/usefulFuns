@@ -1,5 +1,5 @@
 utils::globalVariables(c(".", "..cols", ":=",
-                         "age", "B", "Boreal", "bWeightedAge", "noPixels", "NWT",
+                         "age", "B", "bWeightedAge", "noPixels",
                          "speciesCode", "year"))
 
 #' Plots biomass per species: proportional or absolute, and total or just overstory
@@ -12,6 +12,9 @@ utils::globalVariables(c(".", "..cols", ":=",
 #' @param overwrite logical.
 #' @param maxVal numeric. Max value for y axis. Passing this ensures that both overstory
 #'               and all biomass plots are comparable Default to 1e10.
+#' @param sppColorVect named character vector with the species colors in hex format
+#' @param sppEquivCol character with the column from sppEquivalencies_CA to use for the map
+#' @param sppEquivalencies_CA sppEquivalencies_CA object from LandR (LandR::sppEquivalencies_CA) changed or not
 #'
 #' @return plot
 #'
@@ -34,7 +37,10 @@ totalBiomassPerSpecies <- function(dataPath,
                                    columnsType = FALSE,
                                    overstory = FALSE,
                                    overwrite = FALSE,
-                                   maxVal = 2e10) {
+                                   maxVal = 2e10,
+                                   sppColorVect,
+                                   sppEquivCol,
+                                   sppEquivalencies_CA) {
   prop <- NULL
   overS <- NULL
   if (isTRUE(proportional)) prop <- "_Prop"
@@ -54,23 +60,6 @@ totalBiomassPerSpecies <- function(dataPath,
   cohortDataList <- bringObjectTS(path = dataPath, rastersNamePattern = "cohortData")
   pixelGroupList <- bringObjectTS(path = dataPath, rastersNamePattern = "pixelGroupMap")
 
-  sppEquivCol <- "NWT"
-  data("sppEquivalencies_CA", package = "LandR", envir = environment())
-  sppEquivalencies_CA[, NWT := c(Abie_Bal = "Abie_Bal",
-                                 Betu_Pap = "Betu_Pap",
-                                 Lari_Lar = "Lari_Lar",
-                                 Pice_Gla = "Pice_Gla",
-                                 Pice_Mar = "Pice_Mar",
-                                 Pinu_Ban = "Pinu_Ban",
-                                 Popu_Tre = "Popu_Tre")[Boreal]]
-
-  sppEquivalencies_CA <- sppEquivalencies_CA[!is.na(NWT)]
-  sppEquivalencies_CA$EN_generic_short <- sppEquivalencies_CA$NWT
-  sppColorVect <- LandR::sppColors(sppEquiv = sppEquivalencies_CA, sppEquivCol = sppEquivCol,
-                                   palette = "Set1")
-  mixed <- structure("#D0FB84", names = "Mixed")
-  sppColorVect[length(sppColorVect)+1] <- mixed
-  attributes(sppColorVect)$names[length(sppColorVect)] <- "Mixed"
   biomassBySpecies <- rbindlist(lapply(X = names(cohortDataList), FUN = function(yr) {
     cohort <- cohortDataList[[yr]]
     pixelGroup <- pixelGroupList[[yr]]
