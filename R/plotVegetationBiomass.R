@@ -52,7 +52,7 @@ plotVegetationBiomass <- function(years = c(2011, 2100),
     return(tbl[[1]])
   })
   names(pixelGroupList) <- paste0("Year", years)
-  # browser() # just commented out 09DEC19 :: why was it here...?
+
   # BIOMASS ~~~~~~~~~~~~~~~~
   maxBiomassPlot <- lapply(X = c(1:length(cohorDataList)), function(index) {
     cohort <- cohorDataList[[index]]
@@ -80,26 +80,26 @@ plotVegetationBiomass <- function(years = c(2011, 2100),
   cols <- rev(heat.colors(nb))
   parSetup <- par()
   invisible(on.exit(par(parSetup)))
-  if (length(years < 4)) {
+  if (length(years) < 4) {
     par(mfrow = c(1, length(years)))
   } else {
-    if (all(length(years > 3), length(years < 7))) {
+    if (all(length(years) > 3, length(years) < 7)) {
       par(mfrow = c(length(years) / 2, length(years)))
     }
   }
 
   png(filename = file.path(dataPath, paste0("biomassVegetation", typeSim, ".png")), height = 600, width = 900)
   quickPlot::clearPlot()
-  plot(maxBiomassPlot[[1]],
+  raster::plot(maxBiomassPlot[[1]],
     breaks = brks, col = cols, lab.breaks = brks,
     main = paste0("Max biomass ", names(maxBiomassPlot)[[1]], " - ", typeSim), colNA = colNA
   )
-  plot(maxBiomassPlot[[2]],
+  raster::plot(maxBiomassPlot[[2]],
     breaks = brks, col = cols, lab.breaks = brks,
     main = paste0("Max biomass ", names(maxBiomassPlot)[[2]], " - ", typeSim), colNA = colNA
   )
 
-  shouldPlot <- FALSE # TODO MAKE IT A PARAMETER. SET TO FALSE FOR SERVER
+  shouldPlot <- ifelse(amc::isRstudio(), FALSE, TRUE) # TODO MAKE IT A PARAMETER. SET TO FALSE FOR SERVER
   if (shouldPlot) {
     p <- recordPlot()
     dev.off()
