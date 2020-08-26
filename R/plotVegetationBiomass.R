@@ -17,7 +17,7 @@
 #' @importFrom grDevices dev.off heat.colors png recordPlot
 #' @importFrom LandR sppColors vegTypeMapGenerator
 #' @importFrom quickPlot clearPlot
-#' @importFrom raster writeRaster
+#' @importFrom raster plot writeRaster
 #' @importFrom SpaDES.core paddedFloatToChar
 #'
 #' @include bringObjectTS.R
