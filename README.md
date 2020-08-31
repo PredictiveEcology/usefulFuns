@@ -1,8 +1,8 @@
 # usefulFuns
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/PredictiveEcology/usefulFuns.svg?branch=master)](https://travis-ci.org/PredictiveEcology/usefulFuns)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/PredictiveEcology/usefulFuns?branch=master&svg=true)](https://ci.appveyor.com/project/PredictiveEcology/usefulFuns)
+[![R build status](https://github.com/PredictiveEcology/usefulFuns/workflows/R-CMD-check/badge.svg)](https://github.com/PredictiveEcology/usefulFuns/actions)
+[![Codecov test coverage](https://codecov.io/gh/PredictiveEcology/usefulFuns/branch/master/graph/badge.svg)](https://codecov.io/gh/PredictiveEcology/usefulFuns?branch=master)
 <!-- badges: end -->
 
 ##  Useful functions
