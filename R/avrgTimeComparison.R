@@ -5,10 +5,10 @@ utils::globalVariables(c("average", "IC", "rasType", "scenario"))
 #' @param ... List or tables of results coming from \code{meanValuesTime} to be compared.
 #' @param folderID character. Google folder id to upload to.
 #'                 Only needs to be provided if `upload == TRUE`. Default is `NULL``
-#' @param upload logical. Should the raster be updated to googledrive? Only works if the
+#' @param upload logical. Should the raster be uploaded to Google Drive? Only works if the
 #'               raster exists OR is set to be written.
 #' @param outputFolder character. Path to the folder where it should be saved.
-#' @param comparisonID character. Name to indentify the comparison (for file name)
+#' @param comparisonID character. Name to identify the comparison (for file name)
 #' @param plotCI logical. Should the plot have confidence interval?
 #'
 #' @return list of significant species or scenarios with indication of increasing or decreasing

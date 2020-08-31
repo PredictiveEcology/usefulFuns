@@ -2,7 +2,7 @@
 % Please edit documentation in R/substrBoth.R
 \name{substrBoth}
 \alias{substrBoth}
-\title{substrBoth get a sub-string based on the number of characters and the side to start}
+\title{Get a sub-string based on the number of characters and the side to start}
 \usage{
 substrBoth(strng, howManyCharacters, fromEnd = TRUE)
 }
@@ -11,13 +11,13 @@ substrBoth(strng, howManyCharacters, fromEnd = TRUE)
 
 \item{howManyCharacters}{numeric. How many characters should be returned in the sub-string?}
 
-\item{fromEnd}{logical. Default is TRUE. Should te subset start in the end of the string?}
+\item{fromEnd}{logical. Default is TRUE. Should the subset start in the end of the string?}
 }
 \value{
 character string of the subset.
 }
 \description{
-substrBoth get a sub-string based on the number of characters and the side to start
+Get a sub-string based on the number of characters and the side to start
 }
 \author{
 Tati Micheletti

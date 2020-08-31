@@ -1,23 +1,22 @@
+#' Calculate pixels in a rule
+#'
 #' Uses a set of rules to calculate how many non-NA pixels in a raster follow those rules,
 #' using a shapefile to subset those of interest
 #'
-#' @param ras rasterLayer to calculate the n of pixels that follow a given rule
+#' @param ras `RasterLayer` to calculate the number of pixels that follow a given rule
 #' @param rule character string of rule to determine which pixels should be computed
 #' @param shp shapefile indicating the different areas to subset the pixels to consider in the calculation
 #' @param pol numeric. Representation of the polygon of interest in `pol` for the calculation
 #' @param ... Additional arguments
 #'
-#' @return A list of the percent disturbance, total pixels not NA and how many pixels are disturbed according to the ruls
+#' @return A list of the percent disturbance, total pixels not NA and how many pixels are disturbed
+#'         according to the rules.
 #'
 #' @author Tati Micheletti
 #' @export
 #' @importFrom raster getValues
 #' @rdname calculatePixelsInaRule
-
-calculatePixelsInaRule <- function(ras,
-                                 rule,
-                                 pol,
-                                 shp, ...){
+calculatePixelsInaRule <- function(ras, rule, pol, shp, ...) {
   dots <- list(...)
   e <- environment()
   lapply(X = seq_along(dots), FUN = function(each){

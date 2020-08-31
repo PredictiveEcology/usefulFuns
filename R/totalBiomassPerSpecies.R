@@ -5,13 +5,13 @@ utils::globalVariables(c(".", "..cols", ":=",
 #' Plots biomass per species: proportional or absolute, and total or just overstory
 #'
 #' @param dataPath character. Path to data
-#' @param typeSim character. Which typeSimulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
+#' @param typeSim character. Which type of simulation is it? i.e., `'LandR_SCFM'` or `'LandR.CS_fS'`
 #' @param columnsType logical. Should the plot be continuous (lines) or columns?
 #' @param proportional logical. Should the plot be of the proportional biomass?
 #' @param overstory logical. Should the plot be of the overstory biomass?
 #' @param overwrite logical.
 #' @param maxVal numeric. Max value for y axis. Passing this ensures that both overstory
-#'               and all biomass plots are comparable Default to 1e10.
+#'               and all biomass plots are comparable Default to `1e10`.
 #'
 #' @return plot
 #'
@@ -39,10 +39,10 @@ totalBiomassPerSpecies <- function(dataPath,
   overS <- NULL
   if (isTRUE(proportional)) prop <- "_Prop"
   if (isTRUE(overstory)) overS <- "_Overstory"
-  if (!isTRUE(overwrite)){
+  if (!isTRUE(overwrite)) {
     pat <- c("biomassMapStack_", typeSim, prop, overS)
     fileName <- grepMulti(x = list.files(dataPath, full.names = TRUE), patterns = pat) #[ FIX ] It won't make the "missing" leading years...
-    if (length(fileName) != 0){
+    if (length(fileName) != 0) {
       message("Plots exist and overwrite is FALSE. Returning paths")
       return(fileName)
     }
@@ -69,7 +69,7 @@ totalBiomassPerSpecies <- function(dataPath,
   sppColorVect <- LandR::sppColors(sppEquiv = sppEquivalencies_CA, sppEquivCol = sppEquivCol,
                                    palette = "Set1")
   mixed <- structure("#D0FB84", names = "Mixed")
-  sppColorVect[length(sppColorVect)+1] <- mixed
+  sppColorVect[length(sppColorVect) + 1] <- mixed
   attributes(sppColorVect)$names[length(sppColorVect)] <- "Mixed"
   biomassBySpecies <- rbindlist(lapply(X = names(cohortDataList), FUN = function(yr) {
     cohort <- cohortDataList[[yr]]
@@ -109,7 +109,7 @@ totalBiomassPerSpecies <- function(dataPath,
       y <- biomassBySpecies$propBiomassBySpecies  # Propor = TRUE, Overst = FALSE
     }
   } else {
-    if (isTRUE(overstory)){
+    if (isTRUE(overstory)) {
       y <- biomassBySpecies$overstoryBiomass # Propor = FALSE, Overst = TRUE
     } else {
       y <- biomassBySpecies$BiomassBySpecies  # Propor = FALSE, Overst = FALSE
@@ -119,16 +119,16 @@ totalBiomassPerSpecies <- function(dataPath,
   png(filename = file.path(dataPath, paste0("biomassMapStack_", typeSim, prop, overS, ".png")),
       height = 600, width = 900)
 
-  if (columnsType){
-    plot2 <- ggplot(data = biomassBySpecies, aes(x = year, y = y,
-                                                 fill = speciesCode), position = "fill") +
+  if (columnsType) {
+    plot2 <- ggplot(data = biomassBySpecies,
+                    aes(x = year, y = y, fill = speciesCode), position = "fill") +
       geom_col(aes(y = y)) +
       scale_fill_viridis_d() +
       labs(x = "Year", y = "Total Biomass", title = paste0("Total biomass by species\n",
                                                            "across pixels - ", typeSim, " ", overS)) +
       theme_bw() +
       theme(legend.text = element_text(size = 20), legend.title = element_blank(),
-            text = element_text(size=20),
+            text = element_text(size = 20),
             axis.text.x = element_text(size = 20),
             title = element_text(size = 22)) +
       ylim(0, maxVal)
@@ -143,7 +143,7 @@ totalBiomassPerSpecies <- function(dataPath,
       labs(x = "Year", y = "Total Biomass", title = paste0("Total biomass by species\n",
                                                            "across pixels - ", typeSim, " ", overS)) +
       theme(legend.text = element_text(size = 16), legend.title = element_blank(),
-            text = element_text(size=16),
+            text = element_text(size = 16),
             axis.text.x = element_text(size = 16)) +
       ylim(0, maxVal)
     clearPlot()

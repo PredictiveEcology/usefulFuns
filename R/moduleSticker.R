@@ -2,16 +2,16 @@ utils::globalVariables(c("module", "parameter", "value"))
 
 ## hexSticker helpers
 
-#' Function to create stikers for SpaDES modules
+#' Function to create stickers for `SpaDES` modules
 #'
-#' @param moduleTable Table with the information to generate the sticker (i.e. figure name, height, colors, etc)
-#' @param moduleName charcter string of the module's name.
-#' @param directory charachter string of the directory where the sticker should be saved
+#' @param moduleTable Table with the information to generate the sticker (i.e. figure name, height, colours, etc)
+#' @param moduleName character string of the module's name.
+#' @param directory character string of the directory where the sticker should be saved
 #' @param useCache logical. Should the process of downloading and loading the table be cached?
-#' @param savedSticker Character string. Name of the file to e saved. If not provided,
+#' @param savedSticker Character string. Name of the file to be saved. If not provided,
 #'                     saves with the name of the figure. Useful if more than one stickers
 #'                     have the same figure
-#' @param ... Other parameters for ggplot2 (i.e. fontface, lineheight)
+#' @param ... Other parameters for `ggplot2` (i.e. `fontface`, `lineheight`)
 #'
 #' @return This function returns the location where the sticker is available
 #'
@@ -42,7 +42,7 @@ moduleSticker <- function(moduleTable = NULL, moduleName, directory = getwd(),
 
   imageURL <- paste0("https://github.com/tati-micheletti/host/raw/master/images/",
                      moduleTable[parameter == "imageName", value], ".png")
-  if (is.null(savedSticker)){
+  if (is.null(savedSticker)) {
     savedSticker <- file.path(directory, paste0("stickers/",
                                                 moduleTable[parameter == "imageName", value],
                                                 "_hex.png"))
@@ -86,9 +86,9 @@ moduleSticker <- function(moduleTable = NULL, moduleName, directory = getwd(),
   return(message("Your sticker has been saved: ", savedSticker))
 }
 
-#' Function to show the modules that have stickers available
+#' Show the modules that have stickers available
 #'
-#' @return This function returns a vector of all modules that have stickers available
+#' @return A character vector of all modules that have stickers available.
 #'
 #' @author Tati Micheletti
 #' @export

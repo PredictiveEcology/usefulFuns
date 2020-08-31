@@ -7,15 +7,15 @@
 meanValuesTime(ras, scenario, initialTime)
 }
 \arguments{
-\item{ras}{RasterStack. Time series used to calculate the mean value through time}
+\item{ras}{\code{RasterStack}. Time series used to calculate the mean value through time.}
 
-\item{scenario}{character. Which scenario are you running ie. `LandR.CS_fS`
-Needs to match the rasters. Default is NULL (i.e. the whole raster is only one area)}
+\item{scenario}{character. Which scenario are you running i.e., \code{LandR.CS_fS}
+Needs to match the rasters. Default is NULL (i.e., the whole raster is only one area)}
 
 \item{initialTime}{numeric. Format of the first year of analysis.}
 }
 \value{
-table with average, SD and CI95%
+table with \code{average}, \code{SD} and \verb{CI95\%}
 }
 \description{
 Calculates the mean value of rasters through time

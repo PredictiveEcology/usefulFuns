@@ -1,4 +1,6 @@
-#' grepMulti works similarly to \code{grepl}, but for multiple patterns and returning the object.
+#' Grep using multiple patterns
+#'
+#' Works similarly to `grepl`, but for multiple patterns and returning the object.
 #'
 #' @param x object where to look for patterns.
 #'
@@ -14,7 +16,7 @@
 grepMulti <- function(x, patterns, unwanted = NULL) {
   rescued <- sapply(x, function(fun) all(sapply(X = patterns, FUN = grepl, fun)))
   recovered <- x[rescued]
-  if (!is.null(unwanted)){
+  if (!is.null(unwanted)) {
     discard <- sapply(recovered, function(fun) all(sapply(X = unwanted, FUN = grepl, fun)))
     afterFiltering <- recovered[!discard]
     return(afterFiltering)

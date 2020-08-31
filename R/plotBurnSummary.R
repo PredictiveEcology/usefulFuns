@@ -3,7 +3,7 @@ utils::globalVariables(c("areaBurned", "sumAB", "Nfires", "val", "var", "year"))
 #' Plots summary of burns
 #'
 #' @param dataPath character. Path to data
-#' @param typeSim character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
+#' @param typeSim character. Which simulation is it? i.e., `'LandR_SCFM'` or `'LandR.CS_fS'`
 #' @param lastYear TODO
 #' @param theObject TODO
 #' @param overwrite logical. Default FALSE

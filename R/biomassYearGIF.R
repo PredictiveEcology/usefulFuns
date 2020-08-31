@@ -2,11 +2,11 @@ utils::globalVariables(c("group", "x", "y"))
 
 #' Creates a GIF of total biomass change
 #'
-#' @param years numeric. Years available/intended to be used for the giphy
-#' @param dataPath character. Path to data
-#' @param uploadTo character. Google drive folder id. (i.e. "1ZqPVs33HxnnmjLUW94i7AuwAS-nloPGH")
+#' @param years numeric. Years available/intended to be used for the animated gif.
+#' @param dataPath character. Path to data.
+#' @param uploadTo character. Google drive folder id. (i.e. `"1ZqPVs33HxnnmjLUW94i7AuwAS-nloPGH"`)
 #'
-#' @return RasterStack
+#' @return `RasterStack`
 #'
 #' @author Tati Micheletti
 #' @export
@@ -23,7 +23,7 @@ utils::globalVariables(c("group", "x", "y"))
 #' @rdname biomassYearGIF
 #'
 biomassYearGIF <- function(dataPath, years = NULL, uploadTo) {
-  if (is.null(years)){
+  if (is.null(years)) {
     ysrName <- paddedFloatToChar(seq(0,100, by = 10), padL = 3)
   } else {
     ysrName <- years
@@ -31,7 +31,7 @@ biomassYearGIF <- function(dataPath, years = NULL, uploadTo) {
 
   predictedRas <- lapply(X = ysrName, FUN = function(yr) {
     tryCatch({
-      simBM <- readRDS(file.path(dataPath, paste0("simulatedBiomassMap_year", yr,".rds")))
+      simBM <- readRDS(file.path(dataPath, paste0("simulatedBiomassMap_year", yr, ".rds")))
       names(simBM) <- paste0("totalBiomassYear", yr)
       return(simBM)
     }, error = function(e){
@@ -43,7 +43,7 @@ biomassYearGIF <- function(dataPath, years = NULL, uploadTo) {
   out  <- raster::stack(predictedRas)
 
   gifName <- file.path(dataPath, paste0("totalBiomass", toupper(format(Sys.time(), "%d%b%y")),".gif"))
-  ceiling_dec <- function(x, level = 1) round(x + 5*10^(-level-1), level)
+  ceiling_dec <- function(x, level = 1) round(x + 5*10^(-level - 1), level)
   mxVal <- ceiling_dec(max(raster::maxValue(out)), level = 2)
   breaks <- quantile(x = out, probs = seq(from = 0, to = 1, by = 0.1), na.rm = TRUE) %>%
     apply(MARGIN = 2, FUN = max)

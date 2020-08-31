@@ -1,11 +1,12 @@
-utils::globalVariables(c("BiomassBySpecies", "medianBiomass", "meanBiomass", "pixelGroup",
-                         "totalBiomass"))
+utils::globalVariables(c(
+  "BiomassBySpecies", "medianBiomass", "meanBiomass", "pixelGroup", "totalBiomass"
+))
 
 #' Creates a GIF of biomass change
 #'
-#' @param years numeric. Years available/intended to be used for the giphy
+#' @param years numeric. Years available/intended to be used for the animated gif.
 #' @param dataPath character. Path to data
-#' @param uploadTo character. Google drive folder id. (i.e. "1ZqPVs33HxnnmjLUW94i7AuwAS-nloPGH")
+#' @param uploadTo character. Google drive folder id. (i.e. `"1ZqPVs33HxnnmjLUW94i7AuwAS-nloPGH"`)
 #'
 #' @return list of plots
 #'
@@ -67,11 +68,11 @@ biomassPerSpeciesYearGIF <- function(dataPath, years = NULL, uploadTo) {
     #               position=position_dodge(.9))
 
   medianBiomassPerSpecies <- ggplot(dt, aes(x = year, y = medianBiomass, group = speciesCode)) +
-    geom_line(size=1.2, aes(color = speciesCode)) +
+    geom_line(size = 1.2, aes(color = speciesCode)) +
     ggtitle(label = "Median biomass per species per year")
 
   totalBiomassPerSpecies <- ggplot(dt, aes(x = year, y = totalBiomass, group = speciesCode)) +
-    geom_line(size=1.2, aes(color = speciesCode)) +
+    geom_line(size = 1.2, aes(color = speciesCode)) +
     ggtitle(label = "Total biomass per species per year")
 
   p <- lapply(X = c("totalBiomassPerSpecies", "medianBiomassPerSpecies", "meanBiomassPerSpecies"),
@@ -81,7 +82,7 @@ biomassPerSpeciesYearGIF <- function(dataPath, years = NULL, uploadTo) {
     png(gifName, width = 700, height = 480)
     print(get(plotting))
     dev.off()
-    if (is.character(uploadTo)){
+    if (is.character(uploadTo)) {
       googledrive::drive_upload(gifName, path = as_id(uploadTo))
     }
   })

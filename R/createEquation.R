@@ -1,11 +1,11 @@
 utils::globalVariables(c("Coefficient", "StdErr", "Value"))
 
-#' createEquation writes an equation based on a data.frame (or data.table), bootstraping a
+#' Write an equation based on a `data.frame` (or `data.table`), bootstrapping a
 #' set of covariates around the standard error present in the table.
 #'
-#' @param model data.frame. Needs to have as column names 'Coefficient', and 'Value' and 'StdErr' for a
-#'              given parameter. The model table NEEDS to have at least two rows, one being the 'Intercept'
-#'              as 'Coefficient'. If 'Intercept' is not found, it enters \code{browser()} mode.
+#' @param model `data.frame`with columns `Coefficient`, and `Value` and `StdErr` for a given parameter.
+#'              The model table NEEDS to have at least two rows, one being the `Intercept`
+#'              as `Coefficient`. If `Intercept` is not found, it enters `browser()` mode.
 #'
 #' @param replicates numeric. Number of repetitions to be added to the bootstrapping.
 #'
@@ -23,7 +23,7 @@ createEquation <- function(model, replicates = 100) {
   }
   coeffs <- model[Coefficient != "Intercept", Coefficient]
   eq <- model[Coefficient == "Intercept", Value]
-  for (coef in coeffs){
+  for (coef in coeffs) {
     eq <- paste0(eq, " + ", coef, " * ", "rnorm(n = ", replicates, ", mean = ", model[Coefficient == coef, Value], ",
                  sd = ", model[Coefficient == coef, StdErr], ")")
   }

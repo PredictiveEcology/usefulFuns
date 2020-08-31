@@ -2,23 +2,23 @@
 % Please edit documentation in R/nameAndBringOn.R
 \name{nameAndBringOn}
 \alias{nameAndBringOn}
-\title{nameAndBringOn name's a raster, postProcess to RTM and brings it to memory.}
+\title{Name a raster, \code{postProcess} it using RTM, and brings it to memory}
 \usage{
 nameAndBringOn(ras, name, RTM = NULL)
 }
 \arguments{
-\item{ras}{RasterLayer.}
+\item{ras}{\code{RasterLayer}.}
 
 \item{name}{character. Name of the raster layer.}
 
-\item{RTM}{RasterLayer template. If a RTM is passed, the function masks the raster to it, converting 
-non-NA inside it to 0}
+\item{RTM}{\code{RasterLayer} template.
+If a RTM is passed, the function masks the raster to it, converting non-NA to 0.}
 }
 \value{
-RasterLtack
+\code{RasterStack}
 }
 \description{
-nameAndBringOn name's a raster, postProcess to RTM and brings it to memory.
+Name a raster, \code{postProcess} it using RTM, and brings it to memory
 }
 \author{
 Tati Micheletti

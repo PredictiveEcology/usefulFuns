@@ -1,24 +1,22 @@
-#' nameAndBringOn name's a raster, postProcess to RTM and brings it to memory.
+#' Name a raster, `postProcess` it using RTM, and brings it to memory
 #'
-#' @param ras RasterLayer.      
-#' @param RTM RasterLayer template. If a RTM is passed, the function masks the raster to it, converting 
-#'            non-NA inside it to 0
+#' @param ras `RasterLayer`.
+#' @param RTM `RasterLayer` template.
+#'             If a RTM is passed, the function masks the raster to it, converting non-NA to 0.
 #' @param name character. Name of the raster layer.
-#' 
-#' @return RasterLtack
+#'
+#' @return `RasterStack`
 #'
 #' @author Tati Micheletti
 #' @export
 #' @importFrom raster raster setValues getValues
-#' 
+#'
 #' @rdname nameAndBringOn
-
-nameAndBringOn <- function(ras, name, RTM = NULL){
-  
+nameAndBringOn <- function(ras, name, RTM = NULL) {
   # Bring into memory, name and if a RTM is passed, mask non-NA inside it to 0
   names(ras) <- name
   ras[] <- ras[]
-  if (!is.null(RTM)){
+  if (!is.null(RTM)) {
     ras <- postProcess(ras, rasterToMatch = RTM, filename2 = NULL, destinationPath = tempdir(), useCache = FALSE)
     rasVals <- raster::getValues(ras)
     valsRTM <- raster::getValues(RTM)

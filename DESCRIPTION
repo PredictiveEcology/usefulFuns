@@ -7,7 +7,9 @@ Maintainer: Tati Micheletti <tati.micheletti@gmail.com>
 Description: A few functions and wrappers around useful code.
 License: GPL (>=2)
 Encoding: UTF-8
+Language: en-CA
 LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends:
     R (>= 3.6)
@@ -42,7 +44,8 @@ Imports:
     sysfonts
 Suggests:
     covr,
-    lintr
+    lintr,
+    spelling
 Remotes:
     achubaty/amc@development,
     jimhester/lintr,

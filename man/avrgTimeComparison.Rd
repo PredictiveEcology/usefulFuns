@@ -16,15 +16,15 @@ avrgTimeComparison(
 \arguments{
 \item{...}{List or tables of results coming from \code{meanValuesTime} to be compared.}
 
-\item{upload}{logical. Should the raster be updated to googledrive? Only works if the
+\item{upload}{logical. Should the raster be uploaded to Google Drive? Only works if the
 raster exists OR is set to be written.}
 
 \item{outputFolder}{character. Path to the folder where it should be saved.}
 
-\item{comparisonID}{character. Name to indentify the comparison (for file name)}
+\item{comparisonID}{character. Name to identify the comparison (for file name)}
 
 \item{folderID}{character. Google folder id to upload to.
-Only needs to be provided if `upload == TRUE`. Default is `NULL``}
+Only needs to be provided if \code{upload == TRUE}. Default is `NULL``}
 
 \item{plotCI}{logical. Should the plot have confidence interval?}
 }

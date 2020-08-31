@@ -2,24 +2,24 @@
 % Please edit documentation in R/calculatePixelsInaRule.R
 \name{calculatePixelsInaRule}
 \alias{calculatePixelsInaRule}
-\title{Uses a set of rules to calculate how many non-NA pixels in a raster follow those rules,
-using a shapefile to subset those of interest}
+\title{Calculate pixels in a rule}
 \usage{
 calculatePixelsInaRule(ras, rule, pol, shp, ...)
 }
 \arguments{
-\item{ras}{rasterLayer to calculate the n of pixels that follow a given rule}
+\item{ras}{\code{RasterLayer} to calculate the number of pixels that follow a given rule}
 
 \item{rule}{character string of rule to determine which pixels should be computed}
 
-\item{pol}{numeric. Representation of the polygon of interest in `pol` for the calculation}
+\item{pol}{numeric. Representation of the polygon of interest in \code{pol} for the calculation}
 
 \item{shp}{shapefile indicating the different areas to subset the pixels to consider in the calculation}
 
 \item{...}{Additional arguments}
 }
 \value{
-A list of the percent disturbance, total pixels not NA and how many pixels are disturbed according to the ruls
+A list of the percent disturbance, total pixels not NA and how many pixels are disturbed
+according to the rules.
 }
 \description{
 Uses a set of rules to calculate how many non-NA pixels in a raster follow those rules,

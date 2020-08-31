@@ -2,7 +2,7 @@
 % Please edit documentation in R/grepMulti.R
 \name{grepMulti}
 \alias{grepMulti}
-\title{grepMulti works similarly to \code{grepl}, but for multiple patterns and returning the object.}
+\title{Grep using multiple patterns}
 \usage{
 grepMulti(x, patterns, unwanted = NULL)
 }
@@ -17,7 +17,7 @@ grepMulti(x, patterns, unwanted = NULL)
 The objects with specified patterns combined
 }
 \description{
-grepMulti works similarly to \code{grepl}, but for multiple patterns and returning the object.
+Works similarly to \code{grepl}, but for multiple patterns and returning the object.
 }
 \author{
 Tati Micheletti

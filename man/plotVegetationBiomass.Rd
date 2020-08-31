@@ -14,13 +14,13 @@ plotVegetationBiomass(
 )
 }
 \arguments{
-\item{years}{numeric. Years available/intended to be used for the giphy}
+\item{years}{numeric. Years available/intended to be used.}
 
-\item{dataPath}{character. Path to data}
+\item{dataPath}{character. Path to data.}
 
-\item{typeSim}{character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
+\item{typeSim}{character. Which simulation is it? i.e., \code{'LandR_SCFM'} or \code{'LandR.CS_fS'}.}
 
-\item{colNA}{character. The color to use for NA.}
+\item{colNA}{character. The colour to use for \code{NA}.}
 
 \item{saveRAS}{logical. Save the raster for posterior use?}
 

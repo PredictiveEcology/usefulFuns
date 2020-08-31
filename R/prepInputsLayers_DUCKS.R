@@ -1,9 +1,8 @@
 #' Prepare DUCKS layer
 #'
-#' This function is intended to prepare the DUCKS Unlimited Hybrid Wetland v. 2.1 layer
-#' to be used for different purposes.
-#' The output is a RasterLayer cropped and reprojected to the \code{studyArea},
-#' as well as resampled to the \code{rasterToMatch} if any of these are provided.
+#' Intended to prepare the DUCKS Unlimited Hybrid Wetland v. 2.1 layer for different purposes.
+#' The output is a `RasterLayer` cropped and reprojected to the `studyArea`, and resampled to the
+#' `rasterToMatch` if any of these are provided.
 #'
 #' @param destinationPath Path where to save the downloaded file.
 #' @param lccLayer Which year should be used as a base for the vegetation layer? Default to 2005

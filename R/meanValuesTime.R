@@ -1,10 +1,11 @@
 #' Calculates the mean value of rasters through time
 #'
-#' @param ras RasterStack. Time series used to calculate the mean value through time
-#' @param scenario character. Which scenario are you running ie. `LandR.CS_fS`
-#'            Needs to match the rasters. Default is NULL (i.e. the whole raster is only one area)
+#' @param ras `RasterStack`. Time series used to calculate the mean value through time.
+#' @param scenario character. Which scenario are you running i.e., `LandR.CS_fS`
+#'            Needs to match the rasters. Default is NULL (i.e., the whole raster is only one area)
 #' @param initialTime numeric. Format of the first year of analysis.
-#' @return table with average, SD and CI95%
+#'
+#' @return table with `average`, `SD` and `CI95%`
 #'
 #' @author Tati Micheletti
 #' @export
@@ -15,10 +16,10 @@
 #' @rdname meanValuesTime
 meanValuesTime <- function(ras, scenario, initialTime) {
   # scenario == "LandR.CS_fS" | "LandR_fS" | "LandR_SCFM" | "LandR.CS_SCFM"
-  if (is(ras, "RasterStack")){
-    fullTable <- lapply(names(ras), FUN = function(year){
+  if (is(ras, "RasterStack")) {
+    fullTable <- lapply(names(ras), FUN = function(year) {
       eachRasToCalc <- ras[[year]]
-        if (is(eachRasToCalc, "list")){
+        if (is(eachRasToCalc, "list")) {
           meanAndUnc <- lapply(eachRasToCalc, function(eachRas){
             average <- median(eachRas[], na.rm = TRUE)
             rasType <- ifelse(grepl(names(eachRas), pattern = "Uncertain"), "SD", "AVERAGE")

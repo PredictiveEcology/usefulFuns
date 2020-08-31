@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotLeadingVegetationType.R
 \name{plotLeadingVegetationType}
 \alias{plotLeadingVegetationType}
-\title{Plots Leading Vegetation Type using cohortData and pixelGroupMap}
+\title{Plots Leading Vegetation Type using \code{cohortData} and \code{pixelGroupMap}}
 \usage{
 plotLeadingVegetationType(
   dataPath,
@@ -15,9 +15,9 @@ plotLeadingVegetationType(
 \arguments{
 \item{dataPath}{character. Path to data}
 
-\item{typeSim}{character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
+\item{typeSim}{character. Which simulation is it? i.e. \code{'LandR_SCFM'} or \code{'LandR.CS_fS'}.}
 
-\item{colNA}{character. The color to use for NA.}
+\item{colNA}{character. The colour to use for \code{NA}.}
 
 \item{saveRAS}{logical. Save the raster for posterior use?}
 
@@ -27,7 +27,7 @@ plotLeadingVegetationType(
 plot
 }
 \description{
-Plots Leading Vegetation Type using cohortData and pixelGroupMap
+Plots Leading Vegetation Type using \code{cohortData} and \code{pixelGroupMap}
 }
 \author{
 Tati Micheletti

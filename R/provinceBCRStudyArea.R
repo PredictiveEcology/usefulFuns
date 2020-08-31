@@ -2,21 +2,19 @@ utils::globalVariables(c("BCR", "NAME_1"))
 
 #' Preparing study area based on BCR and Canadian or American provinces or states.
 #'
-#' @description
-#' Downloads, reprojects, crops and masks to speficic areas in canada such as:
-#' BCR6, random areas, provinces and territories, or any of the last in the
-#' BCR6.
+#' Downloads, reprojects, crops and masks to specific areas in Canada such as:
+#' BCR6, random areas, provinces and territories, or any of the last in the BCR6.
 #'
-#' @param bcr               Numeric. Bird Conservation Region in North America that you want to crop for.
-#'                          Default is `NULL`. If `NULL``, it returns only the shapefile of the province.
-#' @param province          Character string. Province or territory. Default is `NULL`. If null, returns
-#'                          the map of ??.
-#' @param country           Character string. 3 letter ISO for a specific country. The complete list of
-#'                          countries can be seen by calling `raster::getData('ISO3')
+#' @param bcr         Numeric. Bird Conservation Region in North America that you want to crop for.
+#'                    Default is `NULL`. If `NULL``, it returns only the shapefile of the province.
+#' @param province    Character string. Province or territory. Default is `NULL`. If null, returns
+#'                    the map of ??.
+#' @param country     Character string. 3 letter ISO for a specific country. The complete list of
+#'                    countries can be seen by calling `raster::getData('ISO3')`.
 #'
-#' @param ...               Arguments to be passed to `prepInputs` or `Cache` (i.e. targetFile,
-#'                          cacheId, destinationPath, overwrite, etc.).
-#' @details If you provide a bcr that is outside of a province area, the object returned is `NULL`.
+#' @param ...         Arguments to be passed to `prepInputs` or `Cache` (i.e. `targetFile`,
+#'                    `cacheId`, `destinationPath`, `overwrite`, etc.).
+#' @details If you provide a BCR that is outside of a province area, the object returned is `NULL`.
 #'
 #' @author Tati Micheletti
 #' @export

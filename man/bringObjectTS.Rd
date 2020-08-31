@@ -2,7 +2,7 @@
 % Please edit documentation in R/bringObjectTS.R
 \name{bringObjectTS}
 \alias{bringObjectTS}
-\title{bringObjectTS brings objects that represent time series into a list}
+\title{Bring objects that represent time series into a list}
 \usage{
 bringObjectTS(path, rastersNamePattern)
 }
@@ -13,10 +13,10 @@ bringObjectTS(path, rastersNamePattern)
 }
 \value{
 A list of the objects that were read from disk. Currently the
-            function only works with `.tif` (i.e. raster) and `.rds` objects.
+function only works with \code{.tif} (i.e. raster) and \code{.rds} objects.
 }
 \description{
-bringObjectTS brings objects that represent time series into a list
+Bring objects that represent time series into a list
 }
 \author{
 Tati Micheletti

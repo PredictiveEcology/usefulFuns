@@ -1,4 +1,4 @@
-#' bringObjectTS brings objects that represent time series into a list
+#' Bring objects that represent time series into a list
 #'
 #' @param path path to the directory containing the files to be brought as list.
 #'

@@ -7,17 +7,17 @@
 prepInputStack(...)
 }
 \arguments{
-\item{...}{Arguments passed to \code{fun} (i.e,. user supplied),
-  \code{\link{postProcess}} and \code{\link[reproducible]{Cache}}.
- Since \code{...} is passed to \code{\link{postProcess}}, these will
- \code{...} will also be passed into the inner functions, e.g., \code{\link{cropInputs}}.
- User should supply several named arguments here, including:
-\code{targetFile}, \code{archive}, \code{url}, \code{alsoExtract}, \code{destinationPath},
-\code{fun}, \code{quick}, \code{purge}, \code{overwrite}, and \code{useCache}.
- See details and examples.}
+\item{...}{Arguments passed to \code{fun} (i.e,. user supplied), \code{\link{postProcess}} and
+\code{\link[reproducible]{Cache}}.
+Since \code{...} is passed to \code{postProcess}, these will also be passed into the inner
+functions, e.g., \code{\link{cropInputs}}.
+User should supply several named arguments here, including:
+\code{targetFile}, \code{archive}, \code{url}, \code{alsoExtract}, \code{destinationPath}, \code{fun}, \code{quick},
+\code{purge}, \code{overwrite}, and \code{useCache}.
+See details and examples.}
 }
 \value{
-RasterStack
+\code{RasterStack}
 }
 \description{
 Simple wrapper around \code{prepInputs} for a stack of raster layers

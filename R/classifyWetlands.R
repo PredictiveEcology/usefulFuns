@@ -2,15 +2,15 @@ utils::globalVariables(c(".N", "cells", "N"))
 
 #' Classify wetlands (really!) using the wetlands layer set as input and a either LCC05 or LCC2010
 #'
-#' @param LCC numeric. 2005 (250m resolution) or 2010 (30m resolution) landcover  rasters.
+#' @param LCC numeric. `2005` (250 m resolution) or `2010` (30 m resolution) landcover rasters.
 #'
 #' @param wetLayerInput Which wetland should be used as input (raster with projection).
 #'                      It was originally designed to work with the DUCKS Unlimited Waterland
-#'                      layer (30m) but can work with any waterlayers that have the following code:
-#'                      possibleLakes == 0
-#'                      water bodies == 1
-#'                      wetlands == 2
-#'                      uplands > 2
+#'                      layer (30 m) but can work with any water layers that have the following code:
+#'                      `possibleLakes == 0`,
+#'                      `water bodies == 1`,
+#'                      `wetlands == 2`,
+#'                      `uplands > 2`.
 #'
 #' @param pathData Where the layers are stored and/or should be saved to
 #'
@@ -38,14 +38,14 @@ classifyWetlands <- function(LCC,
   rasLCC <- LandR::prepInputsLCC(year = LCC, destinationPath = pathData,
                                  studyArea = studyArea, filename2 = paste0("LCC", LCC),
                                  format = "GTiff", overwrite = TRUE)
-  if (as.character(crs(rasLCC))!=as.character(crs(wetLayerInput))) {
+  if (as.character(crs(rasLCC)) != as.character(crs(wetLayerInput))) {
     rasLCC <- raster::projectRaster(from = rasLCC, crs = crs(wetLayerInput))
   }
   # get xy of all pixels in DUCKS that are 1, 2 or 3+
-  possibleLakes <- which(values(wetLayerInput)==0) ###
-  watIndex <- which(values(wetLayerInput)==1)
-  wetIndex <- which(values(wetLayerInput)==2)
-  upIndex <- which(values(wetLayerInput)>2)
+  possibleLakes <- which(values(wetLayerInput) == 0)
+  watIndex <- which(values(wetLayerInput) == 1)
+  wetIndex <- which(values(wetLayerInput) == 2)
+  upIndex <- which(values(wetLayerInput) > 2)
 
   # extract the pixel numbers of these xy from LCC05.
   lakes <- xyFromCell(wetLayerInput, possibleLakes) ###
@@ -88,7 +88,7 @@ classifyWetlands <- function(LCC,
   lccWetLayer[lccWatIndex] <- 1
 
   # Mask it with RTM
-if (exists("RasterToMatch")){
+if (exists("RasterToMatch")) {
   prepRTM <- reproducible::postProcess(RasterToMatch, rasterToMatch = lccWetLayer, filename2 = NULL)
 } else
   prepRTM <- NULL

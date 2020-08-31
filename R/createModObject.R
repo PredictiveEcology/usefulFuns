@@ -1,16 +1,18 @@
-#' This function checks a sim list for a specific object at a specific time, or
-#' searches for it in an input folder (i.e. saved outputs). This function
-#' simulates the existence of a sim list with specific objects in time t.
+#' Create a simulation model object
+#'
+#' Check a `simList` for a specific object at a specific time, or
+#' searches for it in an input folder (i.e. saved outputs).
+#' Simulates the existence of a `simList` with specific objects in time `t`.
 #'
 #' @param data character string of the object or file name to be searched for
 #'
 #' @param fun function to be used to recover the file. Default is `readRDS`
 #'
-#' @param sim simList. Default is `NULL`.
+#' @param sim `simList` object. Default `NULL`.
 #'
 #' @param pathInput path to the directory containing the files to be searched for.
 #'
-#' @param currentTime Numeric. Current time to be used to serach for the object.
+#' @param currentTime Numeric. Current time to be used to search for the object.
 #'
 #' @return A list of the objects that were read from disk. Currently the
 #'             function only works with `.tif` (i.e. raster) and `.rds` objects.
@@ -22,12 +24,11 @@
 #' @importFrom raster raster
 #' @importFrom SpaDES.core paddedFloatToChar
 #' @rdname createModObject
-
 createModObject <- function(data, sim = NULL, pathInput, currentTime, fun = readRDS){
   if (all(is.null(sim), is.null(pathInput)))
     stop("Either a simList or a folder containing the data need to be supplied")
   dt <- NULL
-  if (!is.null(sim) & !is.null(sim[[data]])){
+  if (!is.null(sim) & !is.null(sim[[data]])) {
     dt <- sim[[data]]
   } else {
     message(crayon::yellow(paste0(data, " not supplied by another module.",
@@ -40,7 +41,7 @@ createModObject <- function(data, sim = NULL, pathInput, currentTime, fun = read
     dataName <- grepMulti(x = list.files(pathInput,
                                          recursive = TRUE),
                           patterns = c(data, SpaDES.core::paddedFloatToChar(currentTime, padL = 3)))
-    if (length(dataName) == 0){
+    if (length(dataName) == 0) {
       dt <- NULL
     } else {
       dt <- do.call(what = fun, args = list(file.path(pathInput, dataName)))
@@ -49,7 +50,7 @@ createModObject <- function(data, sim = NULL, pathInput, currentTime, fun = read
       message(paste0(data, " loaded from " ,
                      crayon::magenta(file.path(pathInput, dataName)),
                      " for year ", SpaDES.core::paddedFloatToChar(currentTime, padL = 3))) else
-                      message(crayon::red(paste0("No file found for ", currentTime,". Returning NULL")))
+                       message(crayon::red(paste0("No file found for ", currentTime,". Returning NULL")))
   }
   return(dt)
 }

@@ -13,23 +13,21 @@ defineStudyArea(
 }
 \arguments{
 \item{testArea}{Logical. Indicates if the test area should
-be anything other than `NULL`. Default is `NULL`.}
+be anything other than \code{NULL}. Default is \code{NULL}.}
 
-\item{specificTestArea}{A character string with a province or territory, or 'boreal'.
-if boreal region (following Brandt et al., 2013) is wanted.
-Default is `NULL`.}
+\item{specificTestArea}{A character string with a province or territory name, or \code{'boreal'}.
+(following Brandt \emph{et al.}, 2013). Default is \code{NULL}.}
 
-\item{mapSubset}{If specificTestArea is supplied as 'boreal', this can be set
+\item{mapSubset}{If \code{specificTestArea} is supplied as \code{'boreal'}, this can be set
 as a character string with a province or territory that is contained
-in the boreal or 'Canada' if the whole Canadian boreal is wanted.
-Default is `NULL`.}
+in the boreal or \code{'Canada'} if the whole Canadian boreal is wanted.
+Default is \code{NULL}.}
 
-\item{destinationFolder}{Path to where to save downloaded files. Default is `tempdir()`.}
+\item{destinationFolder}{Path to where to save downloaded files. Default is \code{tempdir()}.}
 }
 \description{
-Downloads, reprojects, crops and masks to speficic areas in canada such as:
-boreal, random areas, provinces and territories, or any of the last in the
-boreal.
+Downloads, reprojects, crops and masks to specific areas in Canada such as:
+boreal, random areas, provinces and territories, or any of the last in the boreal.
 }
 \examples{
 ## rp is the whole North American boreal region

@@ -7,19 +7,19 @@
 checkPackagesVersions(simList = NULL, filePath = NULL)
 }
 \arguments{
-\item{simList}{simList object resulting from a SpaDES call. Default is `NULL`.}
+\item{simList}{\code{simList} object resulting from a \code{SpaDES.core::spades()} call. Default \code{NULL}.}
 
 \item{filePath}{Character string. If passed, the table is written to the specified file path,
-as an `RDS` file. Default is `NULL`.}
+as an \code{RDS} file. Default \code{NULL}.}
 }
 \description{
-Returns a data.table of versions of all packages attached to your current R session, or used in
-a simulation - including git commit if a package was installed from github and similars.
+Returns a \code{data.table} of versions of all packages attached to your current R session, or used in
+a simulation - including git commit if a package was installed from e.g., GitHub.
 }
 \details{
 If you don't provide it, the function will return the information regarding your
-         current R session's informartion. When running a simulation, it is automatically
-         be created by the `spades()` and attached as the invisible object `.packagesVersions`.
+current R session's information. When running a simulation, it is automatically
+be created by the \code{spades()} and attached as the invisible object \code{.packagesVersions}.
 }
 \author{
 Tati Micheletti

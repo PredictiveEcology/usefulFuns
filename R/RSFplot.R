@@ -1,15 +1,16 @@
 #' ECCC's RSF plot style
 #'
-#' @param ras RasterLayer. Layer to generate 10 binned green to red (caribou RSF) map.
+#' @param ras `RasterLayer`. Layer to generate 10 binned green to red (caribou RSF) map.
 #' @param folderID character. Google folder id to upload to.
 #'                 Only needs to be provided if `upload == TRUE`. Default is `NULL``
 #' @param rasName character. Name of the raster to be saved.
 #' @param outputFolder character. Path to the folder where it should be saved.
 #' @param writeReclasRas logical. Default is `FALSE`. Should the raster be written to disk?
-#' @param upload logical. Should the raster be updated to googledrive? Only works if the
+#' @param upload logical. Should the raster be uploaded to Google Drive? Only works if the
 #'               raster exists OR is set to be written.
 #'
-#' @return Plots that have similat binning system to ECCC's 2011 Caribou RSF
+#' @return Used for side effects of generating plots that have similar binning system to
+#'         ECCC's 2011 Caribou RSF, and optionally uploading them to Google Drive.
 #'
 #' @author Tati Micheletti
 #' @export

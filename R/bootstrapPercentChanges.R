@@ -1,4 +1,4 @@
-#' Bootstraps rasters for testing significancy on comparable rasters of different species or scenarios
+#' Bootstrap rasters for testing significance on comparable rasters of different species or scenarios
 #'
 #' @param years numeric. Years to compare. Currently this function only compares 2 years.
 #' @param dataPath character. Path to raster data.
@@ -9,7 +9,8 @@
 #'                   Cohen's D And Hedges G Effect Size.
 #' @param n numeric. Default is 100. How many iterations (random selection of `sampleSize` pixels) should be done?
 #' @param species character. Default is NULL. Which species should this function be ran ?
-#' @param useFuture logical. Should use future to parallelize? Requires `future` and `future_apply`` packages
+#' @param useFuture logical. Should use \pkg{future} to parallelize?
+#'                  Requires `future` and `future_apply`` packages.
 #'
 #' @return list of significant species or scenarios with indication of increasing or decreasing
 #'

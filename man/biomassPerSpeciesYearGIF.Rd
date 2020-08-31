@@ -9,9 +9,9 @@ biomassPerSpeciesYearGIF(dataPath, years = NULL, uploadTo)
 \arguments{
 \item{dataPath}{character. Path to data}
 
-\item{years}{numeric. Years available/intended to be used for the giphy}
+\item{years}{numeric. Years available/intended to be used for the animated gif.}
 
-\item{uploadTo}{character. Google drive folder id. (i.e. "1ZqPVs33HxnnmjLUW94i7AuwAS-nloPGH")}
+\item{uploadTo}{character. Google drive folder id. (i.e. \code{"1ZqPVs33HxnnmjLUW94i7AuwAS-nloPGH"})}
 }
 \value{
 list of plots

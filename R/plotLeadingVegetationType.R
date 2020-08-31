@@ -1,10 +1,10 @@
 utils::globalVariables(c("Boreal", "NWT"))
 
-#' Plots Leading Vegetation Type using cohortData and pixelGroupMap
+#' Plots Leading Vegetation Type using `cohortData` and `pixelGroupMap`
 #'
 #' @param dataPath character. Path to data
-#' @param typeSim character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
-#' @param colNA character. The color to use for NA.
+#' @param typeSim character. Which simulation is it? i.e. `'LandR_SCFM'` or `'LandR.CS_fS'`.
+#' @param colNA character. The colour to use for `NA`.
 #' @param saveRAS logical. Save the raster for posterior use?
 #' @param overwrite logical.
 #'

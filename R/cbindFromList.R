@@ -1,16 +1,14 @@
-#' @title cbindFromList: column binds a list of data frames or data.tables, returning a merged table with unique columns
+#' Column binds a list of `data.frame`s or `data.table`s
 #'
-#' @param lst List of data.tables or data.frames to column bind
+#' @param lst List of `data.table`s or `data.frame`s to column bind.
 #'
-#' @importFrom data.table data.table
 #'
-#' @return Returns a merged data.table
-#' @export
 #' @author Tati Micheletti
-#'
+#' @return Returns a merged `data.table` with unique columns
+#' @export
+#' @importFrom data.table data.table
 #' @rdname cbindFromList
-
-cbindFromList <- function(lst){
+cbindFromList <- function(lst) {
   bindedList <- do.call(cbind, args = lst)
   bindedList <- data.table::data.table(bindedList)
   bindedList[, which(duplicated(names(bindedList))) := NULL]

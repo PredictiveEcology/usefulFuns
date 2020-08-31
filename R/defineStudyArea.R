@@ -1,21 +1,17 @@
 utils::globalVariables(c("PRENAME"))
 
-#' @title
 #' Preparing study area for Canadian projects
 #'
-#' @description
-#' Downloads, reprojects, crops and masks to speficic areas in canada such as:
-#' boreal, random areas, provinces and territories, or any of the last in the
-#' boreal.
+#' Downloads, reprojects, crops and masks to specific areas in Canada such as:
+#' boreal, random areas, provinces and territories, or any of the last in the boreal.
 #'
 #' @param testArea          Logical. Indicates if the test area should
 #'                          be anything other than `NULL`. Default is `NULL`.
-#' @param specificTestArea  A character string with a province or territory, or 'boreal'.
-#'                          if boreal region (following Brandt et al., 2013) is wanted.
-#'                          Default is `NULL`.
-#' @param mapSubset         If specificTestArea is supplied as 'boreal', this can be set
+#' @param specificTestArea  A character string with a province or territory name, or `'boreal'`.
+#'                          (following Brandt _et al._, 2013). Default is `NULL`.
+#' @param mapSubset         If `specificTestArea` is supplied as `'boreal'`, this can be set
 #'                          as a character string with a province or territory that is contained
-#'                          in the boreal or 'Canada' if the whole Canadian boreal is wanted.
+#'                          in the boreal or `'Canada'` if the whole Canadian boreal is wanted.
 #'                          Default is `NULL`.
 #' @param destinationFolder Path to where to save downloaded files. Default is `tempdir()`.
 #'

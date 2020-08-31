@@ -1,25 +1,25 @@
 utils::globalVariables(c("deciduous", "domSp"))
 
-#' Get the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.
+#' Get the necessary layers for predictive modules such as `caribouPopGrowth` and `caribouRSF`.
 #'
 #' @param currentTime numeric. Current time being used (i.e. \code{time(sim)}).
-#' @param cohortData data.table. Output from LandR_Biomass module.
-#' @param pixelGroupMap raster to identify the cohortData.
-#' @param startTime numeric. startTime of the simulation. Needed to verify and potentially adjust relative simulation times.
-#' @param endTime numeric. endTime of the simulation. Needed to verify and potentially adjust relative simulation times.
+#' @param cohortData `data.table`. Output from `LandR_Biomass` module.
+#' @param pixelGroupMap raster to identify the `cohortData`.
+#' @param startTime numeric. start time of the simulation. Needed to verify and potentially adjust relative simulation times.
+#' @param endTime numeric. end time of the simulation. Needed to verify and potentially adjust relative simulation times.
 #' @param recoveryTime numeric. Recovery time in years that the forest needs to support Caribou. Default = 40.
 #' @param listSACaribou list of shapefiles with polygons for which we want to calculate lambda for the caribou demographic model.
-#' @param anthropogenicLayer Anthropogenic disturbance (raster) layer. Currently, 500m buffered anthropogenic disturbance for demographic models.
+#' @param anthropogenicLayer Anthropogenic disturbance (raster) layer. Currently, 500 m buffered anthropogenic disturbance for demographic models.
 #' @param roadDensity Anthropogenic disturbance (raster) layer. Currently, road density layer used for RSF models.
-#' @param waterRaster Raster layer indicating water bodies.
+#' @param waterRaster `RasterLayer` indicating water bodies.
 #' @param isRSF logical. Identify if it should get the layers for the RSF or demographic model.
 #' @param decidousSp binary raster layer indicating if the dominant biomass in a pixel belongs to a deciduous species.
 #' @param oldBurnTime numeric. Definition of the initial interval considered to be old burn. The end of this time is 20 years later (i.e. 40-60 years).
-#' @param elevation RasterLayer of elevation
-#' @param vrug RasterLayer of ruggeness
-#' @param LCC05 RasterLayer of landcover classes 2005
+#' @param elevation `RasterLayer` of elevation
+#' @param vrug `RasterLayer` of ruggedness
+#' @param LCC05 `RasterLayer` of landcover classes 2005
 #' @param reclassLCC05 List with reclassification for LCC05 values (i.e. LCC05 classes that should be classified as shrub or herbs)
-#' @param rasterToMatch RasterLayer template for these layers to match.
+#' @param rasterToMatch `RasterLayer` template for these layers to match.
 #' @param destinationPath TODO
 #'
 #' @return TODO

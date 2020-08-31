@@ -2,15 +2,15 @@
 % Please edit documentation in R/createEquation.R
 \name{createEquation}
 \alias{createEquation}
-\title{createEquation writes an equation based on a data.frame (or data.table), bootstraping a
+\title{Write an equation based on a \code{data.frame} (or \code{data.table}), bootstrapping a
 set of covariates around the standard error present in the table.}
 \usage{
 createEquation(model, replicates = 100)
 }
 \arguments{
-\item{model}{data.frame. Needs to have as column names 'Coefficient', and 'Value' and 'StdErr' for a
-given parameter. The model table NEEDS to have at least two rows, one being the 'Intercept'
-as 'Coefficient'. If 'Intercept' is not found, it enters \code{browser()} mode.}
+\item{model}{\code{data.frame}with columns \code{Coefficient}, and \code{Value} and \code{StdErr} for a given parameter.
+The model table NEEDS to have at least two rows, one being the \code{Intercept}
+as \code{Coefficient}. If \code{Intercept} is not found, it enters \code{browser()} mode.}
 
 \item{replicates}{numeric. Number of repetitions to be added to the bootstrapping.}
 }
@@ -20,7 +20,7 @@ function call or the cached version (i.e., the result from a previous call
 to this same cached function with identical arguments).
 }
 \description{
-createEquation writes an equation based on a data.frame (or data.table), bootstraping a
+Write an equation based on a \code{data.frame} (or \code{data.table}), bootstrapping a
 set of covariates around the standard error present in the table.
 }
 \author{

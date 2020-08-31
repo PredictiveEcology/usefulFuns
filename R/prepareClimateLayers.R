@@ -1,24 +1,24 @@
 utils::globalVariables(c("MDC_0", "MDC_m", "pixelID"))
 
-#' Function to create raster stack for climate sensitive models
+#' Create raster stack for climate sensitive models
 #'
 #' Designed primarily for NWT project, but somewhat flexible.
 #'
-#' @param pathInputs Default NULL (TODO: description needed)
+#' @param pathInputs Default `NULL` (TODO: description needed)
 #'
-#' @param variables Character string of the variables to be used, i.e. c("PPT", "Tmax").
+#' @param variables Character string of the variables to be used, i.e. `c("PPT", "Tmax")`.
 #'
-#' @param years Character string of the years to use. i.e. c(2011:20100).
+#' @param years Character string of the years to use. i.e. `c(2011:20100)`.
 #'
-#' @param GDriveFolder Character string of the folder in google drive to upload the layers to.
+#' @param GDriveFolder Character string of the folder in Google Drive to upload the layers to.
 #'                     Handy for shared projects.
 #'
 #' @param climateFilePath Character string of the path to the climate file in google drive
-#'                        (i.e. "https://drive.google.com/open?id=1wcgytGJmfZGaapZZ9M9blfGa-45eLVWE" for
-#'                        `Canada3ArcMinute.7z`)
+#'                        (i.e. `"https://drive.google.com/open?id=1wcgytGJmfZGaapZZ9M9blfGa-45eLVWE"`
+#'                        for `Canada3ArcMinute.7z`)
 #' @param fileResolution Character string of the for naming purposes (i.e. `3ArcMinute`)
 #'
-#' @param authEmail Character string of googledrive e.mail for authentication for non-interactive use.
+#' @param authEmail Character string of Google email for authentication for non-interactive use.
 #'
 #' @param RCP Character string of RCP to be used (i.e. `45`)
 #'
@@ -26,13 +26,12 @@ utils::globalVariables(c("MDC_0", "MDC_m", "pixelID"))
 #'
 #' @param ensemble Character string of climate ensemble to be used (i.e. `r11i1p1`)
 #'
-#' @param rasterToMatch RasterLayer template for these layers to match
+#' @param rasterToMatch `RasterLayer` template for these layers to match
 #'
 #' @param studyArea shapefile of study area
 #'
-#' @param model For naming and shortcut for variables: i.e., \code{"birds"} or \code{"fireSense"}.
-#'              If providing the variables to be produced, don't use \code{"birds"} nor
-#'              \code{"fireSense"} here.
+#' @param model For naming and shortcut for variables: i.e., `"birds"` or `"fireSense"`.
+#'              If providing the variables to be produced, don't use `"birds"` nor `"fireSense"` here.
 #'
 #' @param droughtMonths Numeric. Months to calculate Monthly Drought Code (MDC) i.e. `4:9`.
 #'
@@ -40,14 +39,14 @@ utils::globalVariables(c("MDC_0", "MDC_m", "pixelID"))
 #'                                           original variables (FALSE)? Default is FALSE.
 #'
 #' @param yearsWithClimateProjections Numeric. The user can pass the years that have climate
-#'                                    projection in the data. Default to \code{2011:2100}.
+#'                                    projection in the data. Default to `2011:2100`.
 #'
 #' @param overwrite logical. Default FALSE. Should the layers be overwritten if exist?
 #'
 #' @param overwriteOriginalData logical. Default FALSE. If changes happen in the original layer
-#'                              (the one provided in climateFilePath), set this to TRUE to overwrite
+#'                              (the one provided in `climateFilePath`), set this to TRUE to overwrite
 #'                              the zip files downloaded and return the calculated MDC layers
-#'                              already, not the original stack with \code{Tmax} and \code{PPT}.
+#'                              already, not the original stack with `Tmax` and `PPT`.
 #'
 #' @return A list of all years, with each year being the local path for the raster stack that
 #'         contains all variables.

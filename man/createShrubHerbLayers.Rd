@@ -12,7 +12,7 @@ createShrubHerbLayers(
 )
 }
 \arguments{
-\item{landCoverECCC}{RasterLayer LCC2005 reclassified to ECCC land cover.}
+\item{landCoverECCC}{\code{RasterLayer} LCC2005 reclassified to ECCC landcover.}
 
 \item{reclassLCC05}{List with reclassification for LCC05 values
 (i.e. LCC05 classes that should be classified as shrub or herbs)}
@@ -22,7 +22,7 @@ createShrubHerbLayers(
 \item{includeCrops}{Logical. Should this layer include crops?}
 }
 \value{
-RasterLayer of herbs or shrubs
+\code{RasterLayer} of herbs or shrubs
 }
 \description{
 Creates the necessary shrub or herb layers for predictive caribou RSF module.

@@ -3,8 +3,9 @@ utils::globalVariables(c("meanAge", "medianAge", "years"))
 #' Plots of forest age
 #'
 #' @param dataPath character. Path to data
-#' @param typeSim character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'
-#' @param addCaribousuitability logical. Should the plot show which forest ages are better or worse for Caribou in a color coded way?
+#' @param typeSim character. Which simulation is it? i.e., `'LandR_SCFM'` or `'LandR.CS_fS'`
+#' @param addCaribousuitability logical. Should the plot show which forest ages are better or worse
+#'                              for Caribou in a colour-coded way?
 #' @param overwrite logical.
 #'
 #' @return plot

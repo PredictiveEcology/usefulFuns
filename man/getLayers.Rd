@@ -2,7 +2,7 @@
 % Please edit documentation in R/getLayers.R
 \name{getLayers}
 \alias{getLayers}
-\title{Get the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.}
+\title{Get the necessary layers for predictive modules such as \code{caribouPopGrowth} and \code{caribouRSF}.}
 \usage{
 getLayers(
   currentTime,
@@ -29,23 +29,23 @@ getLayers(
 \arguments{
 \item{currentTime}{numeric. Current time being used (i.e. \code{time(sim)}).}
 
-\item{cohortData}{data.table. Output from LandR_Biomass module.}
+\item{cohortData}{\code{data.table}. Output from \code{LandR_Biomass} module.}
 
-\item{pixelGroupMap}{raster to identify the cohortData.}
+\item{pixelGroupMap}{raster to identify the \code{cohortData}.}
 
-\item{startTime}{numeric. startTime of the simulation. Needed to verify and potentially adjust relative simulation times.}
+\item{startTime}{numeric. start time of the simulation. Needed to verify and potentially adjust relative simulation times.}
 
-\item{endTime}{numeric. endTime of the simulation. Needed to verify and potentially adjust relative simulation times.}
+\item{endTime}{numeric. end time of the simulation. Needed to verify and potentially adjust relative simulation times.}
 
 \item{recoveryTime}{numeric. Recovery time in years that the forest needs to support Caribou. Default = 40.}
 
 \item{listSACaribou}{list of shapefiles with polygons for which we want to calculate lambda for the caribou demographic model.}
 
-\item{anthropogenicLayer}{Anthropogenic disturbance (raster) layer. Currently, 500m buffered anthropogenic disturbance for demographic models.}
+\item{anthropogenicLayer}{Anthropogenic disturbance (raster) layer. Currently, 500 m buffered anthropogenic disturbance for demographic models.}
 
 \item{roadDensity}{Anthropogenic disturbance (raster) layer. Currently, road density layer used for RSF models.}
 
-\item{waterRaster}{Raster layer indicating water bodies.}
+\item{waterRaster}{\code{RasterLayer} indicating water bodies.}
 
 \item{isRSF}{logical. Identify if it should get the layers for the RSF or demographic model.}
 
@@ -53,15 +53,15 @@ getLayers(
 
 \item{oldBurnTime}{numeric. Definition of the initial interval considered to be old burn. The end of this time is 20 years later (i.e. 40-60 years).}
 
-\item{elevation}{RasterLayer of elevation}
+\item{elevation}{\code{RasterLayer} of elevation}
 
-\item{vrug}{RasterLayer of ruggeness}
+\item{vrug}{\code{RasterLayer} of ruggedness}
 
-\item{LCC05}{RasterLayer of landcover classes 2005}
+\item{LCC05}{\code{RasterLayer} of landcover classes 2005}
 
 \item{reclassLCC05}{List with reclassification for LCC05 values (i.e. LCC05 classes that should be classified as shrub or herbs)}
 
-\item{rasterToMatch}{RasterLayer template for these layers to match.}
+\item{rasterToMatch}{\code{RasterLayer} template for these layers to match.}
 
 \item{destinationPath}{TODO}
 }
@@ -69,7 +69,7 @@ getLayers(
 TODO
 }
 \description{
-Get the necessary layers for predictive modules such as caribouPopGrowth and caribouRSF.
+Get the necessary layers for predictive modules such as \code{caribouPopGrowth} and \code{caribouRSF}.
 }
 \author{
 Tati Micheletti
