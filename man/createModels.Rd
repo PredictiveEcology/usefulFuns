@@ -2,9 +2,7 @@
 % Please edit documentation in R/createModels.R
 \name{createModels}
 \alias{createModels}
-\title{Designed as a helper to create caribou models based on 2011 ECCC report on population
-demographics and RSF.
-This function uses \code{createEquation} internally.}
+\title{Create caribou models based on 2011 ECCC report on population demographics and RSF.}
 \usage{
 createModels(caribouCoefTable = NULL, modelsToUse = "M3")
 }
@@ -13,17 +11,15 @@ createModels(caribouCoefTable = NULL, modelsToUse = "M3")
 If not provided, will use as default the one from ECCC 2011 for
 population demographics.}
 
-\item{modelsToUse}{Character string of the model to be used. Currently only "M3" and "M7"
-(demographics) and "TaigaPlains" (RSF) have been implemented. Default is "M3".}
+\item{modelsToUse}{Character string of the model to be used. Currently only \code{"M3"} and \code{"M7"}
+(demographics) and \code{"TaigaPlains"} (RSF) have been implemented. Default \code{"M3"}.}
 }
 \value{
-names list of the quote of the model that can be parsed to generate the simulated data
+named list of the quote of the model that can be parsed to generate the simulated data
 bootstrapped using the model coefficients.
 }
 \description{
-Designed as a helper to create caribou models based on 2011 ECCC report on population
-demographics and RSF.
-This function uses \code{createEquation} internally.
+Uses \code{createEquation} internally.
 }
 \author{
 Tati Micheletti

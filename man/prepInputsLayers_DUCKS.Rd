@@ -37,8 +37,7 @@ If \code{NULL}, the default is used.}
 RasterLayer
 }
 \description{
-This function is intended to prepare the DUCKS Unlimited Hybrid Wetland v. 2.1 layer
-to be used for different purposes.
-The output is a RasterLayer cropped and reprojected to the \code{studyArea},
-as well as resampled to the \code{rasterToMatch} if any of these are provided.
+Intended to prepare the DUCKS Unlimited Hybrid Wetland v. 2.1 layer for different purposes.
+The output is a \code{RasterLayer} cropped and reprojected to the \code{studyArea}, and resampled to the
+\code{rasterToMatch} if any of these are provided.
 }

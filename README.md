@@ -1,8 +1,8 @@
 # usefulFuns
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/PredictiveEcology/usefulFuns.svg?branch=master)](https://travis-ci.org/PredictiveEcology/usefulFuns)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/PredictiveEcology/usefulFuns?branch=master&svg=true)](https://ci.appveyor.com/project/PredictiveEcology/usefulFuns)
+[![R build status](https://github.com/PredictiveEcology/usefulFuns/workflows/R-CMD-check/badge.svg)](https://github.com/PredictiveEcology/usefulFuns/actions)
+[![Codecov test coverage](https://codecov.io/gh/PredictiveEcology/usefulFuns/branch/master/graph/badge.svg)](https://codecov.io/gh/PredictiveEcology/usefulFuns?branch=master)
 <!-- badges: end -->
 
 ##  Useful functions
@@ -11,11 +11,11 @@
 devtools::install_github("PredictiveEcology/usefulFuns")
 ```
 
-### Making hexStickers
+### Making hex stickers
 
-The functions to generate stickers are modulesAvailable() and moduleSticker(). An example of how to create the stickers is in the host repo (https://github.com/tati-micheletti/host/blob/master/stickers/generateStickers.R), but here is the main idea:
-1. The table 'moduleTable' contains all information necessary for each one of the stickers (i.e. color scheme, image, etc.). This table is located in "https://github.com/tati-micheletti/host/raw/master/stickers/moduleTable.csv", and the sourced image file in https://github.com/tati-micheletti/host/tree/master/images. The images names need to match the image's names in the table.
+The functions to generate stickers are `modulesAvailable()` and `moduleSticker()`. An example of how to create the stickers is in the [host](https://github.com/tati-micheletti/host/blob/master/stickers/generateStickers.R) repo, but here is the main idea:
+1. The table `moduleTable` contains all information necessary for each one of the stickers (i.e., colour scheme, image, etc.). This table is located in <https://github.com/tati-micheletti/host/raw/master/stickers/moduleTable.csv>, and the sourced image file in <https://github.com/tati-micheletti/host/tree/master/images>. The images names need to match the image's names in the table.
 2. To change a sticker follow the following:
-  2.1. Change the parameters you are interested in changing in the table at https://github.com/tati-micheletti/host/blob/master/stickers/moduleTable.csv before downloading it, or in your local table after downloading it. If you modify your local copy of the table, please make sure you pass it to the function in 2.2.  
+  2.1. Change the parameters you are interested in changing in the table at <https://github.com/tati-micheletti/host/blob/master/stickers/moduleTable.csv> before downloading it, or in your local table after downloading it. If you modify your local copy of the table, please make sure you pass it to the function in 2.2.  
   2.2. Run the function `usefulFuns::moduleSticker()`  
 3. Re-adjust parameters as needed.

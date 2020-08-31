@@ -1,6 +1,5 @@
+^\.github$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^codecov\.yml$
 figures/
-^\.travis\.yml$
-^appveyor\.yml$
-^appveyor_cache\.txt$

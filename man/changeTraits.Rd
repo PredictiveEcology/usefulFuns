@@ -2,14 +2,14 @@
 % Please edit documentation in R/changeTraits.R
 \name{changeTraits}
 \alias{changeTraits}
-\title{changeTraits provides an easy way of modifying species trait's table in LandR by 
+\title{Provides an easy way of modifying species traits table in \code{LandR} by
 multiplication of original traits by a specified factor}
 \usage{
 changeTraits(speciesTable, param, facMult, species)
 }
 \arguments{
-\item{speciesTable}{speciesTable data.table from LandR. Contains different traits in columns and 
-a row for each species.}
+\item{speciesTable}{\code{speciesTable} object (\code{data.table}) from \code{LandR}.
+Contains different traits in columns and  a row for each species.}
 
 \item{param}{Character vector of the trait to be modified.}
 
@@ -18,10 +18,10 @@ a row for each species.}
 \item{species}{character string of the Species for which the trait should be modified}
 }
 \value{
-Returns a data.table updated with the new parameters.
+A \code{data.table} updated with the new parameters.
 }
 \description{
-changeTraits provides an easy way of modifying species trait's table in LandR by 
+Provides an easy way of modifying species traits table in \code{LandR} by
 multiplication of original traits by a specified factor
 }
 \author{

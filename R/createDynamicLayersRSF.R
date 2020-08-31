@@ -1,20 +1,22 @@
-#' createDynamicLayerRSF creates the necessary layers for predictive caribou RSF module.
-#' It is a function designed to work inside a SpaDES module.
+#' Create the necessary layers for predictive caribou RSF module.
 #'
-#' @param ageMap RasterLayer. Map with forest age.
-#' @param biomassMap RasterLayer. Map with forest biomass.
+#' Intended for use within a SpaDES module.
+#'
+#' @param ageMap `RasterLayer` of forest age.
+#' @param biomassMap `RasterLayer`of forest biomass.
 #' @param biomassMapName character. Name of the forest biomass layer.
-#' @param roadDensity Anthropogenic disturbance (raster) layer. Currently, road density layer used for both RSF and demographic models.
+#' @param roadDensity Anthropogenic disturbance (raster) layer. Currently, road density layer used
+#'                    for both RSF and demographic models.
 #' @param roadDensityName character. Name of the road Density layer in the model.
-#' @param waterRaster Raster layer indicating water bodies.
+#' @param waterRaster `RasterLayer` indicating water bodies.
 #' @param oldBurnName character. Name of the old burn layer in the model.
-#' @param newBurnName character. Name of the old burn layer in the model.
+#' @param newBurnName character. Name of the new burn layer in the model.
 #' @param waterRasterName character. Name of the water layer in the model.
 #' @param oldBurnTime numeric. Definition of the initial interval considered to be old burn.
 #'                    The end of this time is 20 years later (i.e. 40-60 years).
-#' @param RTM RasterLayer template for these layers to match.
+#' @param RTM `RasterLayer` template for these layers to match.
 #'
-#' @return RasterStack of layers
+#' @return `RasterStack` of layers
 #'
 #' @author Tati Micheletti
 #' @export

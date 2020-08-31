@@ -17,7 +17,7 @@ totalBiomassPerSpecies(
 \arguments{
 \item{dataPath}{character. Path to data}
 
-\item{typeSim}{character. Which typeSimulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
+\item{typeSim}{character. Which type of simulation is it? i.e., \code{'LandR_SCFM'} or \code{'LandR.CS_fS'}}
 
 \item{proportional}{logical. Should the plot be of the proportional biomass?}
 
@@ -28,7 +28,7 @@ totalBiomassPerSpecies(
 \item{overwrite}{logical.}
 
 \item{maxVal}{numeric. Max value for y axis. Passing this ensures that both overstory
-and all biomass plots are comparable Default to 1e10.}
+and all biomass plots are comparable Default to \code{1e10}.}
 }
 \value{
 plot

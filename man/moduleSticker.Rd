@@ -2,7 +2,7 @@
 % Please edit documentation in R/moduleSticker.R
 \name{moduleSticker}
 \alias{moduleSticker}
-\title{Function to create stikers for SpaDES modules}
+\title{Function to create stickers for \code{SpaDES} modules}
 \usage{
 moduleSticker(
   moduleTable = NULL,
@@ -14,25 +14,25 @@ moduleSticker(
 )
 }
 \arguments{
-\item{moduleTable}{Table with the information to generate the sticker (i.e. figure name, height, colors, etc)}
+\item{moduleTable}{Table with the information to generate the sticker (i.e. figure name, height, colours, etc)}
 
-\item{moduleName}{charcter string of the module's name.}
+\item{moduleName}{character string of the module's name.}
 
-\item{directory}{charachter string of the directory where the sticker should be saved}
+\item{directory}{character string of the directory where the sticker should be saved}
 
 \item{useCache}{logical. Should the process of downloading and loading the table be cached?}
 
-\item{savedSticker}{Character string. Name of the file to e saved. If not provided,
+\item{savedSticker}{Character string. Name of the file to be saved. If not provided,
 saves with the name of the figure. Useful if more than one stickers
 have the same figure}
 
-\item{...}{Other parameters for ggplot2 (i.e. fontface, lineheight)}
+\item{...}{Other parameters for \code{ggplot2} (i.e. \code{fontface}, \code{lineheight})}
 }
 \value{
 This function returns the location where the sticker is available
 }
 \description{
-Function to create stikers for SpaDES modules
+Function to create stickers for \code{SpaDES} modules
 }
 \author{
 Tati Micheletti

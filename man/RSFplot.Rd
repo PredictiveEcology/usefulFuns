@@ -14,22 +14,23 @@ RSFplot(
 )
 }
 \arguments{
-\item{ras}{RasterLayer. Layer to generate 10 binned green to red (caribou RSF) map.}
+\item{ras}{\code{RasterLayer}. Layer to generate 10 binned green to red (caribou RSF) map.}
 
-\item{upload}{logical. Should the raster be updated to googledrive? Only works if the
+\item{upload}{logical. Should the raster be uploaded to Google Drive? Only works if the
 raster exists OR is set to be written.}
 
-\item{writeReclasRas}{logical. Default is `FALSE`. Should the raster be written to disk?}
+\item{writeReclasRas}{logical. Default is \code{FALSE}. Should the raster be written to disk?}
 
 \item{outputFolder}{character. Path to the folder where it should be saved.}
 
 \item{rasName}{character. Name of the raster to be saved.}
 
 \item{folderID}{character. Google folder id to upload to.
-Only needs to be provided if `upload == TRUE`. Default is `NULL``}
+Only needs to be provided if \code{upload == TRUE}. Default is `NULL``}
 }
 \value{
-Plots that have similat binning system to ECCC's 2011 Caribou RSF
+Used for side effects of generating plots that have similar binning system to
+ECCC's 2011 Caribou RSF, and optionally uploading them to Google Drive.
 }
 \description{
 ECCC's RSF plot style

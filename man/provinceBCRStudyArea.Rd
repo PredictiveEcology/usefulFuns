@@ -8,24 +8,23 @@ provinceBCRStudyArea(bcr = NULL, province = NULL, country, ...)
 }
 \arguments{
 \item{bcr}{Numeric. Bird Conservation Region in North America that you want to crop for.
-Default is `NULL`. If `NULL``, it returns only the shapefile of the province.}
+Default is \code{NULL}. If `NULL``, it returns only the shapefile of the province.}
 
-\item{province}{Character string. Province or territory. Default is `NULL`. If null, returns
+\item{province}{Character string. Province or territory. Default is \code{NULL}. If null, returns
 the map of ??.}
 
 \item{country}{Character string. 3 letter ISO for a specific country. The complete list of
-countries can be seen by calling `raster::getData('ISO3')}
+countries can be seen by calling \code{raster::getData('ISO3')}.}
 
-\item{...}{Arguments to be passed to `prepInputs` or `Cache` (i.e. targetFile,
-cacheId, destinationPath, overwrite, etc.).}
+\item{...}{Arguments to be passed to \code{prepInputs} or \code{Cache} (i.e. \code{targetFile},
+\code{cacheId}, \code{destinationPath}, \code{overwrite}, etc.).}
 }
 \description{
-Downloads, reprojects, crops and masks to speficic areas in canada such as:
-BCR6, random areas, provinces and territories, or any of the last in the
-BCR6.
+Downloads, reprojects, crops and masks to specific areas in Canada such as:
+BCR6, random areas, provinces and territories, or any of the last in the BCR6.
 }
 \details{
-If you provide a bcr that is outside of a province area, the object returned is `NULL`.
+If you provide a BCR that is outside of a province area, the object returned is \code{NULL}.
 }
 \author{
 Tati Micheletti

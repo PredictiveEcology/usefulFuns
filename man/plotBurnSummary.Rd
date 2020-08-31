@@ -15,7 +15,7 @@ plotBurnSummary(
 \arguments{
 \item{dataPath}{character. Path to data}
 
-\item{typeSim}{character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
+\item{typeSim}{character. Which simulation is it? i.e., \code{'LandR_SCFM'} or \code{'LandR.CS_fS'}}
 
 \item{lastYear}{TODO}
 

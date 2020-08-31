@@ -14,9 +14,10 @@ forestAgePlot(
 \arguments{
 \item{dataPath}{character. Path to data}
 
-\item{typeSim}{character. Which simulation is it? i.e. 'LandR_SCFM' | 'LandR.CS_fS'}
+\item{typeSim}{character. Which simulation is it? i.e., \code{'LandR_SCFM'} or \code{'LandR.CS_fS'}}
 
-\item{addCaribousuitability}{logical. Should the plot show which forest ages are better or worse for Caribou in a color coded way?}
+\item{addCaribousuitability}{logical. Should the plot show which forest ages are better or worse
+for Caribou in a colour-coded way?}
 
 \item{overwrite}{logical.}
 }

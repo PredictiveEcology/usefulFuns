@@ -4,8 +4,7 @@
 \name{createDynamicLayersRSF}
 \alias{createDynamicLayersRSF}
 \alias{createStaticLayersRSF}
-\title{createDynamicLayerRSF creates the necessary layers for predictive caribou RSF module.
-It is a function designed to work inside a SpaDES module.}
+\title{Create the necessary layers for predictive caribou RSF module.}
 \usage{
 createDynamicLayersRSF(
   ageMap,
@@ -36,9 +35,9 @@ createStaticLayersRSF(
 )
 }
 \arguments{
-\item{ageMap}{RasterLayer. Map with forest age.}
+\item{ageMap}{\code{RasterLayer} of forest age.}
 
-\item{biomassMap}{RasterLayer. Map with forest biomass.}
+\item{biomassMap}{\code{RasterLayer}of forest biomass.}
 
 \item{biomassMapName}{character. Name of the forest biomass layer.}
 
@@ -47,23 +46,24 @@ The end of this time is 20 years later (i.e. 40-60 years).}
 
 \item{oldBurnName}{character. Name of the old burn layer in the model.}
 
-\item{newBurnName}{character. Name of the old burn layer in the model.}
+\item{newBurnName}{character. Name of the new burn layer in the model.}
 
-\item{roadDensity}{Anthropogenic disturbance (raster) layer. Currently, road density layer used for both RSF and demographic models.}
+\item{roadDensity}{Anthropogenic disturbance (raster) layer. Currently, road density layer used
+for both RSF and demographic models.}
 
 \item{roadDensityName}{character. Name of the road Density layer in the model.}
 
-\item{waterRaster}{Raster layer indicating water bodies.}
+\item{waterRaster}{\code{RasterLayer} indicating water bodies.}
 
 \item{waterRasterName}{character. Name of the water layer in the model.}
 
-\item{RTM}{RasterLayer template for these layers to match.}
+\item{RTM}{\code{RasterLayer} template for these layers to match.}
 
-\item{elevation}{RasterLayer of elevation}
+\item{elevation}{\code{RasterLayer} of elevation}
 
-\item{vrug}{RasterLayer of ruggedness}
+\item{vrug}{\code{RasterLayer} of ruggedness}
 
-\item{LCC}{RasterLayer of landcover classes 2005}
+\item{LCC}{\code{RasterLayer} of landcover classes 2005}
 
 \item{shrubName}{character. Name of the shrub layer in the model.}
 
@@ -76,21 +76,18 @@ The end of this time is 20 years later (i.e. 40-60 years).}
 \item{reclassLCC05}{List with reclassification for LCC05 values
 (i.e. LCC05 classes that should be classified as shrub or herbs)}
 
-\item{dynamicLayers}{RasterStack to be stacked with the staticLayers
+\item{dynamicLayers}{\code{RasterStack} to be stacked with the \code{staticLayers}
 created in the current function to be passed for the model prediction.}
 
 \item{destinationPath}{TODO}
 }
 \value{
-RasterStack of layers
+\code{RasterStack} of layers
 
-RasterStack of layers
+\code{RasterStack}
 }
 \description{
-createDynamicLayerRSF creates the necessary layers for predictive caribou RSF module.
-It is a function designed to work inside a SpaDES module.
-
-Create the necessary layers for predictive caribou RSF module
+Intended for use within a SpaDES module.
 }
 \author{
 Tati Micheletti

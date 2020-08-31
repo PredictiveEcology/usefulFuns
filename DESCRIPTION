@@ -7,8 +7,10 @@ Maintainer: Tati Micheletti <tati.micheletti@gmail.com>
 Description: A few functions and wrappers around useful code.
 License: GPL (>=2)
 Encoding: UTF-8
+Language: en-CA
 LazyData: true
-RoxygenNote: 7.1.0
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
 Depends:
     R (>= 3.6)
 Imports:
@@ -33,6 +35,7 @@ Imports:
     RColorBrewer,
     remotes,
     reproducible,
+    sp,
     sf,
     showtext,
     SpaDES.core, 
@@ -41,11 +44,13 @@ Imports:
     sysfonts
 Suggests:
     covr,
-    lintr
+    lintr,
+    spelling
 Remotes:
     achubaty/amc@development,
     jimhester/lintr,
-    PredictiveEcology/LandR@development
+    PredictiveEcology/LandR@development,
+    PredictiveEcology/reproducible@development
 Collate: 
     'RSFplot.R'
     'avrgTimeComparison.R'

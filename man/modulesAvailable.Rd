@@ -2,15 +2,15 @@
 % Please edit documentation in R/moduleSticker.R
 \name{modulesAvailable}
 \alias{modulesAvailable}
-\title{Function to show the modules that have stickers available}
+\title{Show the modules that have stickers available}
 \usage{
 modulesAvailable()
 }
 \value{
-This function returns a vector of all modules that have stickers available
+A character vector of all modules that have stickers available.
 }
 \description{
-Function to show the modules that have stickers available
+Show the modules that have stickers available
 }
 \author{
 Tati Micheletti

@@ -2,18 +2,18 @@
 % Please edit documentation in R/cbindFromList.R
 \name{cbindFromList}
 \alias{cbindFromList}
-\title{cbindFromList: column binds a list of data frames or data.tables, returning a merged table with unique columns}
+\title{Column binds a list of \code{data.frame}s or \code{data.table}s}
 \usage{
 cbindFromList(lst)
 }
 \arguments{
-\item{lst}{List of data.tables or data.frames to column bind}
+\item{lst}{List of \code{data.table}s or \code{data.frame}s to column bind.}
 }
 \value{
-Returns a merged data.table
+Returns a merged \code{data.table} with unique columns
 }
 \description{
-cbindFromList: column binds a list of data frames or data.tables, returning a merged table with unique columns
+Column binds a list of \code{data.frame}s or \code{data.table}s
 }
 \author{
 Tati Micheletti

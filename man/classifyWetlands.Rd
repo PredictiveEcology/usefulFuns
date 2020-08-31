@@ -13,15 +13,15 @@ classifyWetlands(
 )
 }
 \arguments{
-\item{LCC}{numeric. 2005 (250m resolution) or 2010 (30m resolution) landcover  rasters.}
+\item{LCC}{numeric. \code{2005} (250 m resolution) or \code{2010} (30 m resolution) landcover rasters.}
 
 \item{wetLayerInput}{Which wetland should be used as input (raster with projection).
 It was originally designed to work with the DUCKS Unlimited Waterland
-layer (30m) but can work with any waterlayers that have the following code:
-possibleLakes == 0
-water bodies == 1
-wetlands == 2
-uplands > 2}
+layer (30 m) but can work with any water layers that have the following code:
+\code{possibleLakes == 0},
+\verb{water bodies == 1},
+\code{wetlands == 2},
+\code{uplands > 2}.}
 
 \item{pathData}{Where the layers are stored and/or should be saved to}
 

@@ -2,31 +2,29 @@
 % Please edit documentation in R/createModObject.R
 \name{createModObject}
 \alias{createModObject}
-\title{This function checks a sim list for a specific object at a specific time, or
-searches for it in an input folder (i.e. saved outputs). This function
-simulates the existence of a sim list with specific objects in time t.}
+\title{Create a simulation model object}
 \usage{
 createModObject(data, sim = NULL, pathInput, currentTime, fun = readRDS)
 }
 \arguments{
 \item{data}{character string of the object or file name to be searched for}
 
-\item{sim}{simList. Default is `NULL`.}
+\item{sim}{\code{simList} object. Default \code{NULL}.}
 
 \item{pathInput}{path to the directory containing the files to be searched for.}
 
-\item{currentTime}{Numeric. Current time to be used to serach for the object.}
+\item{currentTime}{Numeric. Current time to be used to search for the object.}
 
-\item{fun}{function to be used to recover the file. Default is `readRDS`}
+\item{fun}{function to be used to recover the file. Default is \code{readRDS}}
 }
 \value{
 A list of the objects that were read from disk. Currently the
-            function only works with `.tif` (i.e. raster) and `.rds` objects.
+function only works with \code{.tif} (i.e. raster) and \code{.rds} objects.
 }
 \description{
-This function checks a sim list for a specific object at a specific time, or
-searches for it in an input folder (i.e. saved outputs). This function
-simulates the existence of a sim list with specific objects in time t.
+Check a \code{simList} for a specific object at a specific time, or
+searches for it in an input folder (i.e. saved outputs).
+Simulates the existence of a \code{simList} with specific objects in time \code{t}.
 }
 \author{
 Tati Micheletti

@@ -2,12 +2,12 @@
 % Please edit documentation in R/makeReclassifyMatrix.R
 \name{makeReclassifyMatrix}
 \alias{makeReclassifyMatrix}
-\title{makeReclassifyMatrix creates a matrix to use for reclassification of rasters}
+\title{Create a matrix to use for reclassification of rasters}
 \usage{
 makeReclassifyMatrix(table, originalCol, reclassifiedTo)
 }
 \arguments{
-\item{table}{data.frame or data.table that has the original classificaton 
+\item{table}{\code{data.frame} or \code{data.table} that has the original classification
 and the desired classification to replace the first.}
 
 \item{originalCol}{character. Column in the table that identifies the original classification.}
@@ -18,7 +18,7 @@ and the desired classification to replace the first.}
 Matrix to use for reclassification of rasters
 }
 \description{
-makeReclassifyMatrix creates a matrix to use for reclassification of rasters
+Create a matrix to use for reclassification of rasters
 }
 \author{
 Tati Micheletti

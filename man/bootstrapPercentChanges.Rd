@@ -2,7 +2,7 @@
 % Please edit documentation in R/bootstrapPercentChanges.R
 \name{bootstrapPercentChanges}
 \alias{bootstrapPercentChanges}
-\title{Bootstraps rasters for testing significancy on comparable rasters of different species or scenarios}
+\title{Bootstrap rasters for testing significance on comparable rasters of different species or scenarios}
 \usage{
 bootstrapPercentChanges(
   dataPath,
@@ -23,20 +23,21 @@ bootstrapPercentChanges(
 we want to use on the bootstrapping? If "auto" it calculates internally
 Cohen's D And Hedges G Effect Size.}
 
-\item{n}{numeric. Default is 100. How many iterations (random selection of `sampleSize` pixels) should be done?}
+\item{n}{numeric. Default is 100. How many iterations (random selection of \code{sampleSize} pixels) should be done?}
 
 \item{shp}{character or shapefile. If you wish to calculate these metrics for separate areas.
 Needs to match the rasters. Default is NULL (i.e. the whole raster is only one area)}
 
 \item{species}{character. Default is NULL. Which species should this function be ran ?}
 
-\item{useFuture}{logical. Should use future to parallelize? Requires `future` and `future_apply`` packages}
+\item{useFuture}{logical. Should use \pkg{future} to parallelize?
+Requires \code{future} and `future_apply`` packages.}
 }
 \value{
 list of significant species or scenarios with indication of increasing or decreasing
 }
 \description{
-Bootstraps rasters for testing significancy on comparable rasters of different species or scenarios
+Bootstrap rasters for testing significance on comparable rasters of different species or scenarios
 }
 \author{
 Tati Micheletti

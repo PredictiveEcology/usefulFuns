@@ -1,20 +1,20 @@
 #' Create the necessary layers for predictive caribou RSF module
 #'
-#' @param elevation RasterLayer of elevation
-#' @param vrug RasterLayer of ruggedness
-#' @param LCC RasterLayer of landcover classes 2005
+#' @param elevation `RasterLayer` of elevation
+#' @param vrug `RasterLayer` of ruggedness
+#' @param LCC `RasterLayer` of landcover classes 2005
 #' @param reclassLCC05 List with reclassification for LCC05 values
 #'                     (i.e. LCC05 classes that should be classified as shrub or herbs)
-#' @param RTM RasterLayer template for these layers to match.
+#' @param RTM `RasterLayer` template for these layers to match.
 #' @param shrubName character. Name of the shrub layer in the model.
 #' @param herbName character. Name of the herb layer in the model.
 #' @param vrugName character. Name of the vrug layer in the model.
 #' @param elevationName character. Name of the elevation layer in the model.
-#' @param dynamicLayers RasterStack to be stacked with the staticLayers
+#' @param dynamicLayers `RasterStack` to be stacked with the `staticLayers`
 #'                      created in the current function to be passed for the model prediction.
 #' @param destinationPath TODO
 #'
-#' @return RasterStack of layers
+#' @return `RasterStack`
 #'
 #' @author Tati Micheletti
 #' @export
