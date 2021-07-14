@@ -48,7 +48,6 @@ Suggests:
     spelling
 Remotes:
     achubaty/amc@development,
-    jimhester/lintr,
     PredictiveEcology/LandR@development,
     PredictiveEcology/reproducible@development
 Collate: 
