@@ -23,9 +23,11 @@ checkPackagesVersions <- function(simList = NULL, filePath = NULL) {
     allPackages <- c(attachedPackages$basePkgs, names(attachedPackages$otherPkgs))
     local_sha <- utils::getFromNamespace(local_sha, "remotes")
     packagesVersions <- data.table::rbindlist(lapply(X = allPackages, FUN = function(pkg) {
-      sha  <- local_sha(pkg)
-      pkgV <- data.table::data.table(package = pkg, version = sha,
-                                     repository = ifelse(nchar(sha) == 40, "git", "CRAN"))
+      sha <- local_sha(pkg)
+      pkgV <- data.table::data.table(
+        package = pkg, version = sha,
+        repository = ifelse(nchar(sha) == 40, "git", "CRAN")
+      )
     }))
     if (!is.null(filePath)) saveRDS(object = packagesVersions, file = filePath)
     return(packagesVersions)

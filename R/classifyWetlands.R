@@ -33,11 +33,13 @@ classifyWetlands <- function(LCC,
                              wetLayerInput,
                              pathData,
                              studyArea = NULL,
-                             RasterToMatch = NULL){
+                             RasterToMatch = NULL) {
   # Load LCC layer
-  rasLCC <- LandR::prepInputsLCC(year = LCC, destinationPath = pathData,
-                                 studyArea = studyArea, filename2 = paste0("LCC", LCC),
-                                 format = "GTiff", overwrite = TRUE)
+  rasLCC <- LandR::prepInputsLCC(
+    year = LCC, destinationPath = pathData,
+    studyArea = studyArea, filename2 = paste0("LCC", LCC),
+    format = "GTiff", overwrite = TRUE
+  )
   if (as.character(crs(rasLCC)) != as.character(crs(wetLayerInput))) {
     rasLCC <- raster::projectRaster(from = rasLCC, crs = crs(wetLayerInput))
   }
@@ -71,7 +73,7 @@ classifyWetlands <- function(LCC,
   # I should calculate the 50% based on both rasters resolution
   # This is how many pixels make for 50% of the total number of pixels. If the resolutions
   # are the same, this will be 0.5. If < 1, then the default is to round up to 1
-  fiftyRule <- ceiling((round(unique(res(rasLCC))/unique(res(wetLayerInput)), 0)^2)/2)
+  fiftyRule <- ceiling((round(unique(res(rasLCC)) / unique(res(wetLayerInput)), 0)^2) / 2)
 
   # If more than 50% of the pixels in the LCC are classified in , that pixel index in LCC05 is actually a wetland
   lccLakeIndex <- countLake[N >= fiftyRule, cells]
@@ -88,10 +90,11 @@ classifyWetlands <- function(LCC,
   lccWetLayer[lccWatIndex] <- 1
 
   # Mask it with RTM
-if (exists("RasterToMatch")) {
-  prepRTM <- reproducible::postProcess(RasterToMatch, rasterToMatch = lccWetLayer, filename2 = NULL)
-} else
-  prepRTM <- NULL
+  if (exists("RasterToMatch")) {
+    prepRTM <- reproducible::postProcess(RasterToMatch, rasterToMatch = lccWetLayer, filename2 = NULL)
+  } else {
+    prepRTM <- NULL
+  }
 
   lccWetLayer <- reproducible::postProcess(lccWetLayer, rasterToMatch = prepRTM, maskWithRTM = TRUE, filename2 = NULL)
   lccWetLayer[lccWetLayer == 0] <- NA

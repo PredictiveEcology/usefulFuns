@@ -26,8 +26,8 @@ RSFplot <- function(ras,
                     writeReclasRas = FALSE,
                     outputFolder = tempdir(),
                     rasName,
-                    folderID = NULL){
-  if (is(ras, "RasterStack")){
+                    folderID = NULL) {
+  if (is(ras, "RasterStack")) {
     vals <- raster::getValues(ras[[1]])
   } else {
     vals <- raster::getValues(ras)
@@ -37,22 +37,24 @@ RSFplot <- function(ras,
   }
   bin <- getBin(vals)
   mn <- min(vals, na.rm = TRUE)
-  m <- matrix(c(mn-1, mn+bin, 1,
-                mn+bin, mn+bin*2, 2,
-                mn+bin*2, mn+bin*3, 3,
-                mn+bin*3, mn+bin*4, 4,
-                mn+bin*4, mn+bin*5, 5,
-                mn+bin*5, mn+bin*6, 6,
-                mn+bin*6, mn+bin*7, 7,
-                mn+bin*7, mn+bin*8, 8,
-                mn+bin*8, mn+bin*9, 9,
-                mn+bin*9, mn+bin*10, 10), ncol = 3, byrow = TRUE)
+  m <- matrix(c(
+    mn - 1, mn + bin, 1,
+    mn + bin, mn + bin * 2, 2,
+    mn + bin * 2, mn + bin * 3, 3,
+    mn + bin * 3, mn + bin * 4, 4,
+    mn + bin * 4, mn + bin * 5, 5,
+    mn + bin * 5, mn + bin * 6, 6,
+    mn + bin * 6, mn + bin * 7, 7,
+    mn + bin * 7, mn + bin * 8, 8,
+    mn + bin * 8, mn + bin * 9, 9,
+    mn + bin * 9, mn + bin * 10, 10
+  ), ncol = 3, byrow = TRUE)
 
   r <- reclassify(ras, m)
 
-  greenRed <- colorRampPalette(c("darkgreen","yellow","red"))
+  greenRed <- colorRampPalette(c("darkgreen", "yellow", "red"))
   colsGR <- greenRed(10)
-  stk <-  lapply(1:nlayers(x = r), function(lay) {
+  stk <- lapply(1:nlayers(x = r), function(lay) {
     y <- substrBoth(strng = names(r[[lay]]), howManyCharacters = 4, fromEnd = TRUE)
     rasNameFinal <- file.path(outputFolder, paste0(rasName, "_", y, ".tif"))
 
@@ -61,27 +63,29 @@ RSFplot <- function(ras,
       scale_fill_manual(values = colsGR, aesthetics = "fill") +
       coord_equal() +
       labs(fill = paste0("RSF ", y)) +
-      theme(panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            panel.background = element_blank(),
-            axis.title = element_blank(),
-            axis.text = element_blank(),
-            axis.ticks = element_blank())
+      theme(
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank()
+      )
 
     print(p)
-    if (writeReclasRas)
+    if (writeReclasRas) {
       writeRaster(r[[lay]], filename = rasNameFinal, format = "GTiff", overwrite = TRUE)
+    }
 
-    if(upload){
+    if (upload) {
       if (is.null(folderID)) stop("Please provide folderID when upload == TRUE")
       googledrive::drive_upload(file.path(rasNameFinal),
-                                path = googledrive::as_id(folderID))
+        path = googledrive::as_id(folderID)
+      )
     }
     message("Finished RSF like plot for ", rasName, " year ", y)
     return(r[[lay]])
-    })
-message(crayon::green("Finished RSF like plots for all scenarios and years"))
+  })
+  message(crayon::green("Finished RSF like plots for all scenarios and years"))
   return(stk)
 }
-
-

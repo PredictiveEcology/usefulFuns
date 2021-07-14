@@ -19,40 +19,8 @@ meanValuesTime <- function(ras, scenario, initialTime) {
   if (is(ras, "RasterStack")) {
     fullTable <- lapply(names(ras), FUN = function(year) {
       eachRasToCalc <- ras[[year]]
-        if (is(eachRasToCalc, "list")) {
-          meanAndUnc <- lapply(eachRasToCalc, function(eachRas){
-            average <- median(eachRas[], na.rm = TRUE)
-            rasType <- ifelse(grepl(names(eachRas), pattern = "Uncertain"), "SD", "AVERAGE")
-            yr <- as.numeric(substrBoth(strng = names(eachRas), howManyCharacters = nchar(initialTime)))
-            dt <- data.table::data.table(average = average, year = yr, scenario = scenario)
-            return(dt)
-          })
-          dt <- meanAndUnc[[1]]
-          dt$SD <-  meanAndUnc[[2]][["average"]]
-          dt$IC <- dt$SD*1.96
-          return(dt)
-        } else {
-          rasType <- ifelse(grepl(names(eachRasToCalc), pattern = "Uncertain"), "SD", "AVERAGE")
-          t1 <- Sys.time()
-          Mean <- mean(eachRasToCalc[], na.rm = TRUE)
-          Median <- median(eachRasToCalc[], na.rm = TRUE)
-          yr <- as.numeric(substrBoth(strng = names(eachRasToCalc),
-                                      howManyCharacters = nchar(initialTime[1]), fromEnd = TRUE))
-          dt <- data.table::data.table(average = Mean, Median = Median,
-                                       year = yr, scenario = scenario,
-                                       rasType = rasType)
-          message("Finished statistics for ", scenario, " for ",
-                  ifelse(rasType == "SD", "uncertainty", "average"), " for year ",
-                  yr, " TIME ELAPSED: ", Sys.time() - t1)
-        return(dt)
-        }
-    })
-    fullTable <- rbindlist(fullTable)
-    return(fullTable)
-  } else {
-    fullTable <- lapply(ras, FUN = function(year){
-      eachRasToCalcTable <- lapply(year, FUN = function(eachRasToCalc){
-        meanAndUnc <- lapply(eachRasToCalc, function(eachRas){
+      if (is(eachRasToCalc, "list")) {
+        meanAndUnc <- lapply(eachRasToCalc, function(eachRas) {
           average <- median(eachRas[], na.rm = TRUE)
           rasType <- ifelse(grepl(names(eachRas), pattern = "Uncertain"), "SD", "AVERAGE")
           yr <- as.numeric(substrBoth(strng = names(eachRas), howManyCharacters = nchar(initialTime)))
@@ -60,8 +28,46 @@ meanValuesTime <- function(ras, scenario, initialTime) {
           return(dt)
         })
         dt <- meanAndUnc[[1]]
-        dt$SD <-  meanAndUnc[[2]][["average"]]
-        dt$IC <- dt$SD*1.96
+        dt$SD <- meanAndUnc[[2]][["average"]]
+        dt$IC <- dt$SD * 1.96
+        return(dt)
+      } else {
+        rasType <- ifelse(grepl(names(eachRasToCalc), pattern = "Uncertain"), "SD", "AVERAGE")
+        t1 <- Sys.time()
+        Mean <- mean(eachRasToCalc[], na.rm = TRUE)
+        Median <- median(eachRasToCalc[], na.rm = TRUE)
+        yr <- as.numeric(substrBoth(
+          strng = names(eachRasToCalc),
+          howManyCharacters = nchar(initialTime[1]), fromEnd = TRUE
+        ))
+        dt <- data.table::data.table(
+          average = Mean, Median = Median,
+          year = yr, scenario = scenario,
+          rasType = rasType
+        )
+        message(
+          "Finished statistics for ", scenario, " for ",
+          ifelse(rasType == "SD", "uncertainty", "average"), " for year ",
+          yr, " TIME ELAPSED: ", Sys.time() - t1
+        )
+        return(dt)
+      }
+    })
+    fullTable <- rbindlist(fullTable)
+    return(fullTable)
+  } else {
+    fullTable <- lapply(ras, FUN = function(year) {
+      eachRasToCalcTable <- lapply(year, FUN = function(eachRasToCalc) {
+        meanAndUnc <- lapply(eachRasToCalc, function(eachRas) {
+          average <- median(eachRas[], na.rm = TRUE)
+          rasType <- ifelse(grepl(names(eachRas), pattern = "Uncertain"), "SD", "AVERAGE")
+          yr <- as.numeric(substrBoth(strng = names(eachRas), howManyCharacters = nchar(initialTime)))
+          dt <- data.table::data.table(average = average, year = yr, scenario = scenario)
+          return(dt)
+        })
+        dt <- meanAndUnc[[1]]
+        dt$SD <- meanAndUnc[[2]][["average"]]
+        dt$IC <- dt$SD * 1.96
         return(dt)
       })
       return(rbindlist(eachRasToCalcTable))

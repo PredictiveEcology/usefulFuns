@@ -11,9 +11,11 @@
 #' @export
 #' @rdname makeReclassifyMatrix
 
-makeReclassifyMatrix <- function(table, originalCol, reclassifiedTo){
+makeReclassifyMatrix <- function(table, originalCol, reclassifiedTo) {
   # Matrix with 3 columns: from X to Y reclass to Z
-  m <- matrix(data = c(table[[originalCol]], table[[originalCol]],
-                       table[[reclassifiedTo]]), ncol = 3, byrow = FALSE)
+  m <- matrix(data = c(
+    table[[originalCol]], table[[originalCol]],
+    table[[reclassifiedTo]]
+  ), ncol = 3, byrow = FALSE)
   return(m)
 }

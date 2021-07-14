@@ -25,23 +25,23 @@ utils::globalVariables(c("BCR", "NAME_1"))
 #' @rdname provinceBCRStudyArea
 provinceBCRStudyArea <- function(bcr = NULL, province = NULL, country, ...) {
   dots <- list(...)
-  if (is.null(country) | length(country) != 1){
+  if (is.null(country) | length(country) != 1) {
     stop("Please choose one country: 'USA' for United States of America, 'CAN' for Canada, etc.
          The complete list of countries can be seen by calling `raster::getData('ISO3')`")
   }
-  if (is.null(bcr) && is.null(province)){
+  if (is.null(bcr) && is.null(province)) {
     message(crayon::yellow("BCR and province are NULL. Returning the map of ", country))
     cntry <- raster::getData(name = "GADM", download = TRUE, country = country, level = 1)
     return(cntry)
   } else {
-    if (is.null(bcr) && !is.null(province)){
+    if (is.null(bcr) && !is.null(province)) {
       message(crayon::yellow("bcr is NULL. Returning the map of ", country, " for ", paste(province, collapse = "; ")))
-      provs <- raster::getData(name = "GADM", download = TRUE, country = country, level = 1)  %>%
+      provs <- raster::getData(name = "GADM", download = TRUE, country = country, level = 1) %>%
         raster::subset(NAME_1 %in% province)
       if (length(provs) == 0) stop("The province(s) ", paste(province, collapse = "; "), " doesn't(don't) exist in ", country)
       return(provs)
     } else {
-      if (!is.null(bcr) && is.null(province)){
+      if (!is.null(bcr) && is.null(province)) {
         message(crayon::yellow("province is NULL. Returning the map of BCR ", bcr, " for ", country))
         dots$url <- "https://www.birdscanada.org/research/gislab/download/bcr_terrestrial_shape.zip"
         BCRshp <- do.call(reproducible::prepInputs, dots) %>%
@@ -49,9 +49,11 @@ provinceBCRStudyArea <- function(bcr = NULL, province = NULL, country, ...) {
         if (length(BCRshp) == 0) stop("The BCR ", bcr, " doesn't exist in ", country)
         return(BCRshp)
       } else {
-        message(crayon::yellow("Both BCR and province provided. Returning the map of BCR ", bcr, " for ",
-                               paste(province, collapse = "; "), " in ", country))
-        provs <- raster::getData(name = "GADM", download = TRUE, country = country, level = 1)  %>%
+        message(crayon::yellow(
+          "Both BCR and province provided. Returning the map of BCR ", bcr, " for ",
+          paste(province, collapse = "; "), " in ", country
+        ))
+        provs <- raster::getData(name = "GADM", download = TRUE, country = country, level = 1) %>%
           raster::subset(NAME_1 %in% province)
         if (length(provs) == 0) stop("The province(s) ", paste(province, collapse = "; "), " doesn't(don't) exist in ", country)
         dots$url <- "https://www.birdscanada.org/research/gislab/download/bcr_terrestrial_shape.zip"
@@ -65,4 +67,4 @@ provinceBCRStudyArea <- function(bcr = NULL, province = NULL, country, ...) {
       }
     }
   }
-  }
+}

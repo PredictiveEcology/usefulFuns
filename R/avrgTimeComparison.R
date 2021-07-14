@@ -28,12 +28,13 @@ avrgTimeComparison <- function(...,
                                plotCI = TRUE) {
   # Caribou RSF average through time. Can take up to 2 comparisons for now
 
-  if (is.null(comparisonID))
+  if (is.null(comparisonID)) {
     comparisonID <- "generic"
+  }
 
   dots <- list(...) # List/individual data.tables (the latter if outside of modules) of results coming from sim$averageInTime
-  depth <- function(this,thisdepth = 0) {
-    if(!is.list(this)) {
+  depth <- function(this, thisdepth = 0) {
+    if (!is.list(this)) {
       return(thisdepth)
     } else {
       return(max(unlist(lapply(this, depth, thisdepth = thisdepth + 1))))
@@ -50,13 +51,13 @@ avrgTimeComparison <- function(...,
   dtAverage <- subset(x = dt, rasType == "AVERAGE")
   dtSd <- subset(x = dt, rasType == "SD")
   if (NROW(dtSd) != 0) {
-    dtSd[, IC := average*1.96]
+    dtSd[, IC := average * 1.96]
     dtSd <- dtSd[, c("year", "scenario", "IC")]
     dt <- merge(dtAverage, dtSd)
   }
   p <- ggplot(data = dt, aes(x = year, y = average, group = scenario))
   if (plotCI & NROW(dtSd) != 0) {
-    p <- p +  geom_ribbon(aes(fill = scenario, ymin = (average - IC), ymax = (average + IC)), alpha = 0.5)
+    p <- p + geom_ribbon(aes(fill = scenario, ymin = (average - IC), ymax = (average + IC)), alpha = 0.5)
   }
   p <- p + geom_line(aes(color = scenario)) +
     theme_bw()
@@ -65,7 +66,7 @@ avrgTimeComparison <- function(...,
       theme(legend.position = "bottom")
   }
 
-  pngFig <- file.path(outputFolder, paste0("average", comparisonID,"Comparison.png"))
+  pngFig <- file.path(outputFolder, paste0("average", comparisonID, "Comparison.png"))
   png(pngFig, width = 700, height = 480)
   print(p)
   dev.off()

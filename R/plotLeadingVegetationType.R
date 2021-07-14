@@ -93,8 +93,10 @@ plotLeadingVegetationType <- function(dataPath,
   # quickPlot::clearPlot()
   # for (index in seq_along(leadingSpecies))
   #   quickPlot::Plot(leadingSpecies[[index]], title = names(leadingSpecies)[[index]])
-  png(filename = file.path(dataPath, paste0("leadingVegetation", typeSim, ".png")),
-      height = 600, width = 900)
+  png(
+    filename = file.path(dataPath, paste0("leadingVegetation", typeSim, ".png")),
+    height = 600, width = 900
+  )
   clearPlot()
   Plot(leadingSpecies[[1]], title = paste0(names(leadingSpecies)[[1]], " - ", typeSim))
   Plot(leadingSpecies[[length(leadingSpecies)]],

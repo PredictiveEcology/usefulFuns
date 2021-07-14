@@ -39,7 +39,7 @@ utils::globalVariables(c("deciduous", "domSp"))
 #' @rdname getLayers
 getLayers <- function(currentTime,
                       cohortData, # Has age info per pixel group
-                      pixelGroupMap, #Map of pixel groups
+                      pixelGroupMap, # Map of pixel groups
                       startTime,
                       endTime,
                       recoveryTime = 40,
@@ -56,23 +56,27 @@ getLayers <- function(currentTime,
                       reclassLCC05 = NULL,
                       rasterToMatch = NULL,
                       destinationPath) {
-
-  if (is.null(pixelGroupMap)){
+  if (is.null(pixelGroupMap)) {
     message(crayon::red(paste0("pixelGroupMap is NULL for year ", currentTime, ". Returning NA")))
     return(NA)
   }
   # In a posterior version, will need to make this flexible for the model covariates
   originalTime <- currentTime
-  if (startTime > 1){
+  if (startTime > 1) {
     relEndTime <- endTime - startTime
     currentTime <- originalTime - startTime
   }
 
   threadsDT <- getDTthreads()
   setDTthreads(1)
-  on.exit({setDTthreads(threadsDT)}, add = TRUE)
+  on.exit(
+    {
+      setDTthreads(threadsDT)
+    },
+    add = TRUE
+  )
   # Data assertions
-  if (length(!is.na(cohortData$age)) != length(is.na(cohortData$age))){
+  if (length(!is.na(cohortData$age)) != length(is.na(cohortData$age))) {
     message(crayon::red("cohortData age has NA values and shouldn't. Activating browser for debug"))
     browser()
   }
@@ -82,16 +86,18 @@ getLayers <- function(currentTime,
   ageMap[newAgeVals$pixelID] <- newAgeVals$age
   names(ageMap) <- "ageMap"
 
-  if (!isRSF){
-    listDistForEachShpForEachPoly <- lapply(X = names(listSACaribou), FUN = function(caribouShapefile){
+  if (!isRSF) {
+    listDistForEachShpForEachPoly <- lapply(X = names(listSACaribou), FUN = function(caribouShapefile) {
       message("Calculating disturbance for ", caribouShapefile)
-      listPolyDist <- extractDisturbanceFast(ageMap = ageMap,
-                                             caribouShapefile = listSACaribou[[caribouShapefile]],
-                                             recoveryTime = recoveryTime,
-                                             anthropogenicLayer = anthropogenicLayer,
-                                             waterRaster = waterRaster,
-                                             rasterToMatch = rasterToMatch,
-                                             destinationPath = destinationPath)
+      listPolyDist <- extractDisturbanceFast(
+        ageMap = ageMap,
+        caribouShapefile = listSACaribou[[caribouShapefile]],
+        recoveryTime = recoveryTime,
+        anthropogenicLayer = anthropogenicLayer,
+        waterRaster = waterRaster,
+        rasterToMatch = rasterToMatch,
+        destinationPath = destinationPath
+      )
     })
     names(listDistForEachShpForEachPoly) <- names(listSACaribou)
     return(listDistForEachShpForEachPoly)
@@ -104,47 +110,53 @@ getLayers <- function(currentTime,
     # Create the deciduous map
     cohortDataRed <- cohortData[, c("pixelGroup", "deciduous"), with = FALSE]
     setkey(cohortDataRed, pixelGroup)
-    cohortDataRed <- unique(cohortDataRed,  by = "pixelGroup")
-    biomassMap <- SpaDES.tools::rasterizeReduced(reduced = cohortDataRed,
-                                                 fullRaster = pixelGroupMap,
-                                                 newRasterCols = "deciduous",
-                                                 mapcode = "pixelGroup")
+    cohortDataRed <- unique(cohortDataRed, by = "pixelGroup")
+    biomassMap <- SpaDES.tools::rasterizeReduced(
+      reduced = cohortDataRed,
+      fullRaster = pixelGroupMap,
+      newRasterCols = "deciduous",
+      mapcode = "pixelGroup"
+    )
 
     # ageMap = old and new burns
     # anthropogenicLayer = roadDensity
     # waterLayer = waterRaster
     # Deciduous = biomassMap
 
-    dynamicLayers <- createDynamicLayersRSF(ageMap = ageMap,
-                                            biomassMap = biomassMap,
-                                            biomassMapName = "Deciduous",
-                                            oldBurnTime = oldBurnTime,
-                                            oldBurnName = "OldBurn",
-                                            newBurnName = "RecentBurn",
-                                            roadDensity = roadDensity,
-                                            roadDensityName = "RoadDensity",
-                                            waterRaster = waterRaster,
-                                            waterRasterName = "Water",
-                                            RTM = rasterToMatch)
+    dynamicLayers <- createDynamicLayersRSF(
+      ageMap = ageMap,
+      biomassMap = biomassMap,
+      biomassMapName = "Deciduous",
+      oldBurnTime = oldBurnTime,
+      oldBurnName = "OldBurn",
+      newBurnName = "RecentBurn",
+      roadDensity = roadDensity,
+      roadDensityName = "RoadDensity",
+      waterRaster = waterRaster,
+      waterRasterName = "Water",
+      RTM = rasterToMatch
+    )
 
-    staticLayers <- createStaticLayersRSF(elevation = elevation,
-                                          vrug = vrug,
-                                          LCC = LCC05,
-                                          shrubName = "Shrub",
-                                          herbName = "Herb",
-                                          elevationName = "Elevation",
-                                          vrugName = "Vrug",
-                                          reclassLCC05 = reclassLCC05,
-                                          dynamicLayers = dynamicLayers,
-                                          RTM = rasterToMatch,
-                                          destinationPath = destinationPath)
+    staticLayers <- createStaticLayersRSF(
+      elevation = elevation,
+      vrug = vrug,
+      LCC = LCC05,
+      shrubName = "Shrub",
+      herbName = "Herb",
+      elevationName = "Elevation",
+      vrugName = "Vrug",
+      reclassLCC05 = reclassLCC05,
+      dynamicLayers = dynamicLayers,
+      RTM = rasterToMatch,
+      destinationPath = destinationPath
+    )
 
     # We need to override the LandR_Biomass pixels with deciduous trees that were originally classified as
     # "herbaceous" by ECCC
     staticLayers[["Deciduous"]][dynamicLayers[["Water"]] == 1] <- 0
 
     dynamicLayers[["Deciduous"]] <- staticLayers[["Deciduous"]]
-    staticLayers <- raster::dropLayer(staticLayers, i = which(names(staticLayers)=="Deciduous"))
+    staticLayers <- raster::dropLayer(staticLayers, i = which(names(staticLayers) == "Deciduous"))
 
     # Stack both dynamic and static layers for prediction
     covStack <- raster::stack(dynamicLayers, staticLayers)

@@ -29,43 +29,61 @@ extractDisturbanceFast <- function(ageMap,
                                    destinationPath) {
   # Make sure that the layers align. This will only happen once until the anthropogenic layer becomes dynamic.
   areStackable <- TRUE
-  tryCatch({
-    invisible(raster::stack(waterRaster, anthropogenicLayer, ageMap, rasterToMatch))
-  }, error = function(e){
-    areStackable <- FALSE
-  })
+  tryCatch(
+    {
+      invisible(raster::stack(waterRaster, anthropogenicLayer, ageMap, rasterToMatch))
+    },
+    error = function(e) {
+      areStackable <- FALSE
+    }
+  )
   if (!areStackable) {
-    waterRaster <- reproducible::postProcess(x = waterRaster,
-                                             rasterToMatch = rasterToMatch,
-                                             destinationPath = destinationPath,
-                                             filename2 = NULL,
-                                             userTags = c("module:caribouPopGrowthModel",
-                                                          "objectName:waterRaster",
-                                                          "outterFun:postProcess"))
+    waterRaster <- reproducible::postProcess(
+      x = waterRaster,
+      rasterToMatch = rasterToMatch,
+      destinationPath = destinationPath,
+      filename2 = NULL,
+      userTags = c(
+        "module:caribouPopGrowthModel",
+        "objectName:waterRaster",
+        "outterFun:postProcess"
+      )
+    )
 
-    ageMap <- reproducible::postProcess(x = ageMap,
-                                        rasterToMatch = rasterToMatch,
-                                        destinationPath = destinationPath,
-                                        filename2 = NULL,
-                                        userTags = c("module:caribouPopGrowthModel",
-                                                     "objectName:ageMap",
-                                                     "outterFun:postProcess"))
+    ageMap <- reproducible::postProcess(
+      x = ageMap,
+      rasterToMatch = rasterToMatch,
+      destinationPath = destinationPath,
+      filename2 = NULL,
+      userTags = c(
+        "module:caribouPopGrowthModel",
+        "objectName:ageMap",
+        "outterFun:postProcess"
+      )
+    )
     if (!is.null(anthropogenicLayer)) {
-      anthropogenicLayer <- reproducible::postProcess(x = anthropogenicLayer,
-                                                      rasterToMatch = rasterToMatch,
-                                                      maskWithRTM = TRUE,
-                                                      destinationPath = destinationPath,
-                                                      filename2 = NULL,
-                                                      userTags = c("module:caribouPopGrowthModel",
-                                                                   "objectName:anthropogenicLayer",
-                                                                   "outterFun:postProcess"))
+      anthropogenicLayer <- reproducible::postProcess(
+        x = anthropogenicLayer,
+        rasterToMatch = rasterToMatch,
+        maskWithRTM = TRUE,
+        destinationPath = destinationPath,
+        filename2 = NULL,
+        userTags = c(
+          "module:caribouPopGrowthModel",
+          "objectName:anthropogenicLayer",
+          "outterFun:postProcess"
+        )
+      )
     }
     areStackable <- TRUE
-    tryCatch({
-      invisible(raster::stack(waterRaster, anthropogenicLayer, ageMap, rasterToMatch))
-    }, error = function(e){
-      areStackable <- FALSE
-    })
+    tryCatch(
+      {
+        invisible(raster::stack(waterRaster, anthropogenicLayer, ageMap, rasterToMatch))
+      },
+      error = function(e) {
+        areStackable <- FALSE
+      }
+    )
     if (!areStackable) stop("Something went wrong with the layers for extraction of disturbance (caribouPopGrowthModel). Please debug.")
   }
   # Check for anthropogenic layer and make sure it aligns with the others
@@ -86,36 +104,44 @@ extractDisturbanceFast <- function(ageMap,
   }
 
   # Extract the caribou shapefile values by fasterizing it. Way faster than raster::extract
-  caribouShapefile <- reproducible::postProcess(x = caribouShapefile,
-                                                rasterToMatch = ageMap,
-                                                destinationPath = destinationPath,
-                                                filename2 = NULL,
-                                                userTags = c("module:caribouPopGrowthModel",
-                                                             "objectName:caribouShapefile",
-                                                             "outterFun:postProcess"))
+  caribouShapefile <- reproducible::postProcess(
+    x = caribouShapefile,
+    rasterToMatch = ageMap,
+    destinationPath = destinationPath,
+    filename2 = NULL,
+    userTags = c(
+      "module:caribouPopGrowthModel",
+      "objectName:caribouShapefile",
+      "outterFun:postProcess"
+    )
+  )
   caribouShapefileSF <- sf::st_as_sf(caribouShapefile)
   nm <- if (!is.null(caribouShapefile$NAME)) "NAME" else "Name"
   caribouShapefileSF$ID <- as.numeric(seq(1:length(caribouShapefileSF[[nm]])))
-  caribouShapefileRas <- fasterize::fasterize(sf = caribouShapefileSF,
-                                              raster = ageMap,
-                                              field = "ID")
+  caribouShapefileRas <- fasterize::fasterize(
+    sf = caribouShapefileSF,
+    raster = ageMap,
+    field = "ID"
+  )
 
   # Extract Fire
-  listExtr <- lapply(X = caribouShapefileSF$ID, FUN = function(pol){
+  listExtr <- lapply(X = caribouShapefileSF$ID, FUN = function(pol) {
     # For fire:
     # From the age map calculate for each polygon the total amount of pixels that had fires
     # over the total number of pixels "available" to burn (non-NA, as NA can be cities/water/etc).
     # Then multiply by 100 to work with %.
     # We are calculating percent disturbance ONLY for those pixels that are forest/within BCR 6 NWT
-    percentFire <- calculatePixelsInaRule(ras = ageMap,
-                                          rule = "<= recoveryTime", # Need to be a character string of the rule
-                                          pol = pol,
-                                          shp = caribouShapefileRas,
-                                          recoveryTime = recoveryTime)
+    percentFire <- calculatePixelsInaRule(
+      ras = ageMap,
+      rule = "<= recoveryTime", # Need to be a character string of the rule
+      pol = pol,
+      shp = caribouShapefileRas,
+      recoveryTime = recoveryTime
+    )
     if (percentFire$percentDisturbance < 0 | percentFire$percentDisturbance > 100) {
       print("Something went wrong with the fire distubance calculation. Value is either negative or above 100%. Please debug.")
       browser() # Check pol
-    }  # Data sanity check
+    } # Data sanity check
     if (is.na(percentFire$percentDisturbance)) {
       message(crayon::red("Percent disturbance from fire is NA. Fire probably burned the whole area and nothing is regenerating.
                     Will set the disturbance to 100%, but causes should be investigated."))
@@ -126,15 +152,17 @@ extractDisturbanceFast <- function(ageMap,
     # From the anthropo layer we calculate for each polygon the total amount of pixels that had disturbances
     # over the total number of pixels "available" to have it (non-NA when na is JUST WATER).
     # Then multiply by 100 to work with %.
-    percentAnthopo <- calculatePixelsInaRule(ras = anthropogenicLayer,
-                                             rule = "> 0", # Need to be a character string of the rule
-                                             pol = pol,
-                                             shp = caribouShapefileRas)
-    if (percentAnthopo$percentDisturbance < 0 | percentAnthopo$percentDisturbance > 100){
+    percentAnthopo <- calculatePixelsInaRule(
+      ras = anthropogenicLayer,
+      rule = "> 0", # Need to be a character string of the rule
+      pol = pol,
+      shp = caribouShapefileRas
+    )
+    if (percentAnthopo$percentDisturbance < 0 | percentAnthopo$percentDisturbance > 100) {
       print("Something went wrong with the anthropogenic distubance calculation. Value is either negative or above 100%. Please debug.")
       browser()
     }
-    if (is.na(percentAnthopo$percentDisturbance)){
+    if (is.na(percentAnthopo$percentDisturbance)) {
       message(crayon::red("Percent disturbance from fire is NA. Fire probably burned the whole area and nothing is regenerating.
                     Will set the disturbance to 100%, but causes should be investigated."))
       percentAnthopo$percentDisturbance <- 100
@@ -148,28 +176,34 @@ extractDisturbanceFast <- function(ageMap,
     # can have any type of disturbance, so need to maximize (i.e. I might not be able to have fire, but
     # I sure could have anthropogenic)
     cummDist <- sum(isDistrubance, na.rm = TRUE)
-    percentCumm <- 100*(cummDist/totPixelsNotNADist)
+    percentCumm <- 100 * (cummDist / totPixelsNotNADist)
     if (percentCumm > 100) {
-      message(crayon::red(paste0("Total disturbance for polygon ",
-                                 crayon::cyan(caribouShapefileSF[[nm]][pol]), " presented ",
-                                 crayon::cyan(paste0(round(percentCumm, 0),"%")),
-                                 " pixels disturbed. \nThis might need some digging...
-                                       \nFor now, converting to 100%")))
+      message(crayon::red(paste0(
+        "Total disturbance for polygon ",
+        crayon::cyan(caribouShapefileSF[[nm]][pol]), " presented ",
+        crayon::cyan(paste0(round(percentCumm, 0), "%")),
+        " pixels disturbed. \nThis might need some digging...
+                                       \nFor now, converting to 100%"
+      )))
       percentCumm <- 100
-    }  # Data sanity check
-    if (percentCumm < 0 ) {  # Data sanity check
-      message("Something went wrong with the total distubance calculation.",
-              "Value is negative. Please debug.")
+    } # Data sanity check
+    if (percentCumm < 0) { # Data sanity check
+      message(
+        "Something went wrong with the total distubance calculation.",
+        "Value is negative. Please debug."
+      )
       browser()
     }
 
     # Making the data.frame
-    df <- data.frame(DH_Fire = percentFire$percentDisturbance,
-                     DH_Anthro = percentAnthopo$percentDisturbance,
-                     DH_Total = percentCumm)
+    df <- data.frame(
+      DH_Fire = percentFire$percentDisturbance,
+      DH_Anthro = percentAnthopo$percentDisturbance,
+      DH_Total = percentCumm
+    )
     return(df)
   })
-  #Naming both fire and anthro disturbances
+  # Naming both fire and anthro disturbances
   names(listExtr) <- caribouShapefile[[nm]]
   return(listExtr)
 }

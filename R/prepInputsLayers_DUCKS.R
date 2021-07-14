@@ -27,54 +27,66 @@ prepInputsLayers_DUCKS <- function(destinationPath, lccLayer = "2005",
                                    studyArea = NULL,
                                    rasterToMatch = NULL,
                                    overwrite = TRUE) {
-  if (is.null(url))
+  if (is.null(url)) {
     url <- "https://drive.google.com/open?id=1wNpBdLICWDJ-DGwDboPb9wVwRwtGm1go"
-  if (is.null(targetFile))
+  }
+  if (is.null(targetFile)) {
     targetFile <- "HWL_BCR6.tif"
-  if (is.null(archive))
+  }
+  if (is.null(archive)) {
     archive <- "HWL_BCR6.zip"
+  }
 
   message(yellow("  Trying to load DUCKS Unlimited Hybrid Wetland v. 2.1 layers..."))
-  tryCatch({
+  tryCatch(
+    {
       DUCKSlayer <- Cache(prepInputs,
-                          targetFile = targetFile,
-                          archive = archive,
-                          url = url,
-                          alsoExtract = "similar",
-                          destinationPath = destinationPath,
-                          fun = "raster::raster",
-                          studyArea = studyArea,
-                          rasterToMatch = rasterToMatch,
-                          datatype = "INT1U",
-                          overwrite = overwrite,
-                          userTags =  c("DUCKs", "Hybrid", "Wetland"))
+        targetFile = targetFile,
+        archive = archive,
+        url = url,
+        alsoExtract = "similar",
+        destinationPath = destinationPath,
+        fun = "raster::raster",
+        studyArea = studyArea,
+        rasterToMatch = rasterToMatch,
+        datatype = "INT1U",
+        overwrite = overwrite,
+        userTags = c("DUCKs", "Hybrid", "Wetland")
+      )
 
       message(green("  DUCKS Unlimited Hybrid Wetland v. 2.1 layers successfully loaded."))
 
-      DUCKSlayerReclass <- classifyWetlands(LCC = lccLayer, wetLayerInput = DUCKSlayer,
-                                            pathData = destinationPath, studyArea = studyArea)
+      DUCKSlayerReclass <- classifyWetlands(
+        LCC = lccLayer, wetLayerInput = DUCKSlayer,
+        pathData = destinationPath, studyArea = studyArea
+      )
 
-    return(DUCKSlayerReclass)
-  }, error = function(e){
-    message(red(paste("  Downloading DUCKS Unlimited Hybrid Wetland v. 2.1 layers failed.",
-                      "This is probably a restriction access issue.",
-                      "A wetlands layer based on LCC05 will be downloaded instead.")))
-    url <- "https://drive.google.com/open?id=10RRHsy2vX6xaOLNPQSvz66k-xn_4X7GY"
-    targetFile <- "wetlandsLayer.tif"
-    archive <- "wetlandsLayer.zip"
+      return(DUCKSlayerReclass)
+    },
+    error = function(e) {
+      message(red(paste(
+        "  Downloading DUCKS Unlimited Hybrid Wetland v. 2.1 layers failed.",
+        "This is probably a restriction access issue.",
+        "A wetlands layer based on LCC05 will be downloaded instead."
+      )))
+      url <- "https://drive.google.com/open?id=10RRHsy2vX6xaOLNPQSvz66k-xn_4X7GY"
+      targetFile <- "wetlandsLayer.tif"
+      archive <- "wetlandsLayer.zip"
 
-    LCCLayer <- Cache(prepInputs,
-                      targetFile = targetFile,
-                      archive = archive,
-                      url = url,
-                      alsoExtract = "similar",
-                      destinationPath = destinationPath,
-                      fun = "raster::raster",
-                      studyArea = studyArea,
-                      rasterToMatch = rasterToMatch,
-                      datatype = "INT1U",
-                      overwrite = overwrite,
-                      userTags =  c("LCC05wetlands", "Wetland", "Uplands"))
-    return(LCCLayer)
-  })
+      LCCLayer <- Cache(prepInputs,
+        targetFile = targetFile,
+        archive = archive,
+        url = url,
+        alsoExtract = "similar",
+        destinationPath = destinationPath,
+        fun = "raster::raster",
+        studyArea = studyArea,
+        rasterToMatch = rasterToMatch,
+        datatype = "INT1U",
+        overwrite = overwrite,
+        userTags = c("LCC05wetlands", "Wetland", "Uplands")
+      )
+      return(LCCLayer)
+    }
+  )
 }

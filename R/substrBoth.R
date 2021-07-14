@@ -17,4 +17,3 @@ substrBoth <- function(strng, howManyCharacters, fromEnd = TRUE) {
     return(substr(x = strng, start = 1, stop = howManyCharacters))
   }
 }
-

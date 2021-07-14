@@ -34,18 +34,22 @@ forestAgePlot <- function(dataPath, typeSim,
   pixelGroupList <- bringObjectTS(path = dataPath, rastersNamePattern = "pixelGroupMap")
 
   # MAX AGE
-  maxAge <- data.table::rbindlist(lapply(X = names(cohorDataList), function(index){
+  maxAge <- data.table::rbindlist(lapply(X = names(cohorDataList), function(index) {
     cohort <- cohorDataList[[index]]
     pixelGroup <- pixelGroupList[[index]]
     a <- cohort[, list(maxAge = max(age, na.rm = TRUE)), by = "pixelGroup"]
     r <- rasterizeReduced(a, pixelGroup, "maxAge", "pixelGroup")
-    return(list(meanAge = mean(r[], na.rm = TRUE),
-                minAge = min(r[], na.rm = TRUE),
-                maxAge = max(r[], na.rm = TRUE),
-                medianAge = median(r[], na.rm = TRUE),
-                years = as.numeric(substrBoth(strng = index,
-                                              howManyCharacters = 4,
-                                              fromEnd = TRUE))))
+    return(list(
+      meanAge = mean(r[], na.rm = TRUE),
+      minAge = min(r[], na.rm = TRUE),
+      maxAge = max(r[], na.rm = TRUE),
+      medianAge = median(r[], na.rm = TRUE),
+      years = as.numeric(substrBoth(
+        strng = index,
+        howManyCharacters = 4,
+        fromEnd = TRUE
+      ))
+    ))
   }))
   oldBurn <- ifelse(addCaribousuitability, "red", "white")
   recentBurn <- ifelse(addCaribousuitability, "yellow", "white")
