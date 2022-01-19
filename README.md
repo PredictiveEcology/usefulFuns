@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 [![R build status](https://github.com/PredictiveEcology/usefulFuns/workflows/R-CMD-check/badge.svg)](https://github.com/PredictiveEcology/usefulFuns/actions)
-[![Codecov test coverage](https://codecov.io/gh/PredictiveEcology/usefulFuns/branch/master/graph/badge.svg)](https://codecov.io/gh/PredictiveEcology/usefulFuns?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/PredictiveEcology/usefulFuns/branch/master/graph/badge.svg)](https://app.codecov.io/gh/PredictiveEcology/usefulFuns?branch=master)
 <!-- badges: end -->
 
 ##  Useful functions
