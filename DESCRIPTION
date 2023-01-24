@@ -1,7 +1,7 @@
 Package: usefulFuns
 Type: Package
 Title: Useful functions for my modules and packages
-Version: 0.1.0
+Version: 0.1.1
 Author: Tati Micheletti
 Maintainer: Tati Micheletti <tati.micheletti@gmail.com>
 Description: A few functions and wrappers around useful code.
@@ -10,7 +10,7 @@ Encoding: UTF-8
 Language: en-CA
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Depends:
     R (>= 3.6)
 Imports:
@@ -33,8 +33,8 @@ Imports:
     raster,
     rasterVis,
     RColorBrewer,
-    remotes,
     reproducible,
+    Require,
     sp,
     sf,
     showtext,
@@ -45,6 +45,7 @@ Imports:
 Suggests:
     covr,
     lintr,
+    remotes,
     spelling
 Remotes:
     achubaty/amc@development,

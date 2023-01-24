@@ -14,7 +14,8 @@ utils::globalVariables(c("classesECCC", "ECCC_Description"))
 #' @export
 #' @importFrom data.table data.table setkey
 #' @importFrom raster raster setValues
-#' @importFrom reproducible prepInputs postProcess Require
+#' @importFrom reproducible prepInputs postProcess
+#' @importFrom Require Require
 #'
 #' @rdname createShrubHerbLayers
 createShrubHerbLayers <- function(landCoverECCC, reclassLCC05, layerName, includeCrops = FALSE) {

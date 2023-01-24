@@ -30,12 +30,13 @@ Downloads, reprojects, crops and masks to specific areas in Canada such as:
 boreal, random areas, provinces and territories, or any of the last in the boreal.
 }
 \examples{
+\donttest{
 ## rp is the whole North American boreal region
 rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = NULL)
 
 ## Alberta
 rp <- defineStudyArea(testArea = TRUE, specificTestArea = "Alberta", mapSubset = NULL)
-\dontrun{
+
 ## Alberta inside boreal extension
 rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = "Alberta")
 }

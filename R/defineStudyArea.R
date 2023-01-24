@@ -22,12 +22,13 @@ utils::globalVariables(c("PRENAME"))
 #' @rdname defineStudyArea
 #'
 #' @examples
+#' \donttest{
 #' ## rp is the whole North American boreal region
 #' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = NULL)
 #'
 #' ## Alberta
 #' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "Alberta", mapSubset = NULL)
-#' \dontrun{
+#'
 #' ## Alberta inside boreal extension
 #' rp <- defineStudyArea(testArea = TRUE, specificTestArea = "boreal", mapSubset = "Alberta")
 #' }
@@ -57,7 +58,7 @@ defineStudyArea <- function(testArea = NULL, specificTestArea = NULL, mapSubset 
         if (is.null(mapSubset)) {
           message(crayon::yellow("Test area is TRUE, specificTestArea is 'boreal', and mapSubset is NULL. Cropping and masking to the whole Boreal."))
           rP <- reproducible::prepInputs(
-            url = "http://206.167.182.7/BAM/dataset/EnvironmentCanada/Brandt_boreal.zip",
+            url = "http://206.167.182.7/BAM/dataset/EnvironmentCanada/Brandt_boreal.zip", ## TODO: invalid URL
             destinationPath = destinationFolder
           )
         }

@@ -31,7 +31,7 @@ Needs to match the rasters. Default is NULL (i.e. the whole raster is only one a
 \item{species}{character. Default is NULL. Which species should this function be ran ?}
 
 \item{useFuture}{logical. Should use \pkg{future} to parallelize?
-Requires \code{future} and `future_apply`` packages.}
+Requires \code{future} and \code{future_apply} packages.}
 }
 \value{
 list of significant species or scenarios with indication of increasing or decreasing

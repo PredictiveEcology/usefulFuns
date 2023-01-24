@@ -20,7 +20,8 @@
 #' @export
 #' @importFrom data.table data.table setkey
 #' @importFrom raster dropLayer extent extract nlayers projectRaster raster reclassify stack
-#' @importFrom reproducible prepInputs postProcess Require
+#' @importFrom reproducible prepInputs postProcess
+#' @importFrom Require Require
 #' @importFrom SpaDES.tools rasterizeReduced
 #' @include createShrubHerbLayers.R
 #' @include nameAndBringOn.R

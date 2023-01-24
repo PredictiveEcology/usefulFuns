@@ -22,7 +22,8 @@
 #' @export
 #' @importFrom data.table data.table setkey
 #' @importFrom raster raster projectRaster extract dropLayer stack nlayers extent
-#' @importFrom reproducible prepInputs postProcess Require
+#' @importFrom reproducible prepInputs postProcess
+#' @importFrom Require Require
 #' @importFrom SpaDES.tools rasterizeReduced
 #' @include burnFromAge.R
 #' @include nameAndBringOn.R

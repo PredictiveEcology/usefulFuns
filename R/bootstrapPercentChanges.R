@@ -10,7 +10,7 @@
 #' @param n numeric. Default is 100. How many iterations (random selection of `sampleSize` pixels) should be done?
 #' @param species character. Default is NULL. Which species should this function be ran ?
 #' @param useFuture logical. Should use \pkg{future} to parallelize?
-#'                  Requires `future` and `future_apply`` packages.
+#'                  Requires `future` and `future_apply` packages.
 #'
 #' @return list of significant species or scenarios with indication of increasing or decreasing
 #'
@@ -38,7 +38,7 @@ bootstrapPercentChanges <- function(dataPath,
                                     n = 100,
                                     shp = NULL,
                                     species = NULL, useFuture = FALSE) {
-  if (class(shp) == "character") {
+  if (inherits(shp, "character")) {
     studyArea <- Cache(.prepStudyAreaForBirds,
       studyArea = shp,
       dataPath = reproducible::checkPath(file.path(dataPath, "birdRTMEdehzhieRAS"),

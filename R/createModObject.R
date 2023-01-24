@@ -41,7 +41,7 @@ createModObject <- function(data, sim = NULL, pathInput, currentTime, fun = read
     )) == 0) {
       stop(paste0("Please place the data in the input folder ", pathInput))
     }
-    if (class(currentTime) != "numeric") {
+    if (inherits(currentTime, "numeric")) {
       stop("Current time needs to be numeric!")
     }
     dataName <- grepMulti(

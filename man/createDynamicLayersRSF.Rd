@@ -91,6 +91,4 @@ Intended for use within a SpaDES module.
 }
 \author{
 Tati Micheletti
-
-Tati Micheletti
 }
