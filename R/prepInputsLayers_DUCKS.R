@@ -59,7 +59,8 @@ prepInputsLayers_DUCKS <- function(destinationPath, lccLayer = "2005",
       DUCKSlayerReclass <- classifyWetlands(
         LCC = lccLayer, wetLayerInput = DUCKSlayer,
         pathData = destinationPath, studyArea = studyArea
-      )
+      ) |>
+        Cache()
 
       return(DUCKSlayerReclass)
     },
