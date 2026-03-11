@@ -38,8 +38,8 @@ classifyWetlands <- function(LCC,
   rasLCC <- LandR::prepInputsLCC(
     year = LCC, destinationPath = pathData,
     studyArea = studyArea, writeTo = paste0("LCC", LCC, ".tif"), overwrite = TRUE
-    format = "GTiff", overwrite = TRUE
-  )
+  ) |>
+  Cache()
   if (as.character(crs(rasLCC)) != as.character(crs(wetLayerInput))) {
     rasLCC <- raster::projectRaster(from = rasLCC, crs = crs(wetLayerInput))
   }
