@@ -1,4 +1,4 @@
-utils::globalVariables(c(".N", "cells", "N"))
+utils::globalVariables(c(".N", "cell", "N"))
 
 #' Classify wetlands (really!) using the wetlands layer set as input and a either LCC05 or LCC2010
 #'
@@ -25,8 +25,8 @@ utils::globalVariables(c(".N", "cells", "N"))
 #' @author Tati Micheletti
 #' @export
 #' @importFrom data.table as.data.table data.table
-#' @importFrom LandR prepInputsLCC
-#' @importFrom raster extract projectRaster raster res values xyFromCell
+#' @importFrom LandR prepInputsLCC .compareCRS
+#' @importFrom terra extract project rast res values xyFromCell
 #' @importFrom reproducible prepInputs postProcess
 #' @rdname classifyWetlands
 classifyWetlands <- function(LCC,
@@ -40,8 +40,8 @@ classifyWetlands <- function(LCC,
     studyArea = studyArea, writeTo = paste0("LCC", LCC, ".tif"), overwrite = TRUE
   ) |>
   Cache()
-  if (as.character(crs(rasLCC)) != as.character(crs(wetLayerInput))) {
-    rasLCC <- raster::projectRaster(from = rasLCC, crs = crs(wetLayerInput))
+  if (LandR::.compareCRS(rasLCC, wetLayerInput)) {
+    rasLCC <- project(from = rasLCC, crs = crs(wetLayerInput, proj = TRUE))
   }
   # get xy of all pixels in DUCKS that are 1, 2 or 3+
   possibleLakes <- which(values(wetLayerInput) == 0)
@@ -54,19 +54,19 @@ classifyWetlands <- function(LCC,
   wetLocations <- xyFromCell(wetLayerInput, wetIndex)
   watLocations <- xyFromCell(wetLayerInput, watIndex)
   upLocations <- xyFromCell(wetLayerInput, upIndex)
-  lcc05Lakes <- as.data.table(raster::extract(rasLCC, lakes, cellnumbers = TRUE)) ###
-  lcc05Wetlands <- as.data.table(raster::extract(rasLCC, wetLocations, cellnumbers = TRUE))
-  lcc05Water <- as.data.table(raster::extract(rasLCC, watLocations, cellnumbers = TRUE))
-  lcc05Uplands <- as.data.table(raster::extract(rasLCC, upLocations, cellnumbers = TRUE))
+  lcc05Lakes <- as.data.table(extract(rasLCC, lakes, cells = TRUE)) ###
+  lcc05Wetlands <- as.data.table(extract(rasLCC, wetLocations, cells = TRUE))
+  lcc05Water <- as.data.table(extract(rasLCC, watLocations, cells = TRUE))
+  lcc05Uplands <- as.data.table(extract(rasLCC, upLocations, cells = TRUE))
 
   # TM (FEB 24th): This below only makes sense if the original wetLayerInput raster is the original 30m resolution.
   # This way we would have more than 1 pixel ID in the LCC represented by more than 1 pixel in the DUCKS layer...
   # Using the default one for the NWT, we are never going to have more than 1 pixel here
   # # Calculate how many times each pixel index exists
-  countLake <- lcc05Lakes[, .N, by = cells]
-  countWet <- lcc05Wetlands[, .N, by = cells]
-  countWat <- lcc05Water[, .N, by = cells]
-  countUp <- lcc05Uplands[, .N, by = cells]
+  countLake <- lcc05Lakes[, .N, by = cell]
+  countWet <- lcc05Wetlands[, .N, by = cell]
+  countWat <- lcc05Water[, .N, by = cell]
+  countUp <- lcc05Uplands[, .N, by = cell]
 
   # TM (FEB 24th): Now this looks weird/wrong. we can only fit 8^2 (64) 30m DUCKS pixels in 250m resolution
   # LCC05. This means that the 50% is not 50, but 64/2.
@@ -76,10 +76,10 @@ classifyWetlands <- function(LCC,
   fiftyRule <- ceiling((round(unique(res(rasLCC)) / unique(res(wetLayerInput)), 0)^2) / 2)
 
   # If more than 50% of the pixels in the LCC are classified in , that pixel index in LCC05 is actually a wetland
-  lccLakeIndex <- countLake[N >= fiftyRule, cells]
-  lccWetIndex <- countWet[N >= fiftyRule, cells]
-  lccWatIndex <- countWat[N >= fiftyRule, cells]
-  lccUpIndex <- countUp[N >= fiftyRule, cells]
+  lccLakeIndex <- countLake[N >= fiftyRule, cell]
+  lccWetIndex <- countWet[N >= fiftyRule, cell]
+  lccWatIndex <- countWat[N >= fiftyRule, cell]
+  lccUpIndex <- countUp[N >= fiftyRule, cell]
 
   # Generate and return the mask layer
   lccWetLayer <- rasLCC
@@ -91,12 +91,12 @@ classifyWetlands <- function(LCC,
 
   # Mask it with RTM
   if (exists("RasterToMatch")) {
-    prepRTM <- reproducible::postProcess(RasterToMatch, rasterToMatch = lccWetLayer, filename2 = NULL)
+    prepRTM <- postProcess(RasterToMatch, rasterToMatch = lccWetLayer, writeTo = NULL)
   } else {
     prepRTM <- NULL
   }
 
-  lccWetLayer <- reproducible::postProcess(lccWetLayer, rasterToMatch = prepRTM, maskWithRTM = TRUE, filename2 = NULL)
+  lccWetLayer <- postProcess(lccWetLayer, to = prepRTM, writeTo = NULL)
   lccWetLayer[lccWetLayer == 0] <- NA
 
   # Do uplands and wetlands
