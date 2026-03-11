@@ -37,7 +37,7 @@ classifyWetlands <- function(LCC,
   # Load LCC layer
   rasLCC <- LandR::prepInputsLCC(
     year = LCC, destinationPath = pathData,
-    studyArea = studyArea, filename2 = paste0("LCC", LCC),
+    studyArea = studyArea, writeTo = paste0("LCC", LCC, ".tif"), overwrite = TRUE
     format = "GTiff", overwrite = TRUE
   )
   if (as.character(crs(rasLCC)) != as.character(crs(wetLayerInput))) {
