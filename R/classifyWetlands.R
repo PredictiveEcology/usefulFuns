@@ -43,6 +43,16 @@ classifyWetlands <- function(LCC,
   if (LandR::.compareCRS(rasLCC, wetLayerInput)) {
     rasLCC <- project(rasLCC, crs(wetLayerInput, proj = TRUE))
   }
+
+  lccWetLayer <- .reclassWetLayer(wetLayerInput, rasLCC, RasterToMatch) |>
+    Cache()
+
+  return(lccWetLayer)
+}
+
+#' @importFrom terra extract res values xyFromCell
+#' @imporFrom data.table as.data.table
+.reclassWetLayer <- function(wetLayerInput, rasLCC, RasterToMatch = NULL) {
   # get xy of all pixels in DUCKS that are 1, 2 or 3+
   possibleLakes <- which(values(wetLayerInput) == 0)
   watIndex <- which(values(wetLayerInput) == 1)
@@ -95,7 +105,6 @@ classifyWetlands <- function(LCC,
   } else {
     prepRTM <- NULL
   }
-
   lccWetLayer <- postProcess(lccWetLayer, to = prepRTM, writeTo = NULL)
   lccWetLayer[lccWetLayer == 0] <- NA
 
@@ -108,3 +117,4 @@ classifyWetlands <- function(LCC,
 
   return(lccWetLayer)
 }
+
