@@ -100,7 +100,7 @@ classifyWetlands <- function(LCC,
   lccWetLayer[lccWatIndex] <- 1
 
   # Mask it with RTM
-  if (exists("RasterToMatch")) {
+  if (!is.null(RasterToMatch)) {
     prepRTM <- postProcess(RasterToMatch, to = lccWetLayer, writeTo = NULL)
   } else {
     prepRTM <- NULL
