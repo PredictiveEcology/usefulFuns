@@ -66,7 +66,7 @@ prepInputsLayers_DUCKS <- function(destinationPath, lccLayer = "2005",
     },
     error = function(e) {
       message(red(paste(
-        "  Downloading DUCKS Unlimited Hybrid Wetland v. 2.1 layers failed.",
+        "  Processing DUCKS Unlimited Hybrid Wetland v. 2.1 layers failed.",
         "This is probably a restriction access issue.",
         "A wetlands layer based on LCC05 will be downloaded instead."
       )))
