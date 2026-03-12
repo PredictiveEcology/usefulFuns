@@ -41,7 +41,7 @@ classifyWetlands <- function(LCC,
   ) |>
   Cache()
   if (LandR::.compareCRS(rasLCC, wetLayerInput)) {
-    rasLCC <- project(from = rasLCC, crs = crs(wetLayerInput, proj = TRUE))
+    rasLCC <- project(rasLCC, crs(wetLayerInput, proj = TRUE))
   }
   # get xy of all pixels in DUCKS that are 1, 2 or 3+
   possibleLakes <- which(values(wetLayerInput) == 0)
@@ -91,7 +91,7 @@ classifyWetlands <- function(LCC,
 
   # Mask it with RTM
   if (exists("RasterToMatch")) {
-    prepRTM <- postProcess(RasterToMatch, rasterToMatch = lccWetLayer, writeTo = NULL)
+    prepRTM <- postProcess(RasterToMatch, to = lccWetLayer, writeTo = NULL)
   } else {
     prepRTM <- NULL
   }
