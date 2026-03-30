@@ -51,7 +51,7 @@ classifyWetlands <- function(LCC,
 }
 
 #' @importFrom terra extract res values xyFromCell
-#' @imporFrom data.table as.data.table
+#' @importFrom data.table as.data.table
 .reclassWetLayer <- function(wetLayerInput, rasLCC, RasterToMatch = NULL) {
   # get xy of all pixels in DUCKS that are 1, 2 or 3+
   possibleLakes <- which(values(wetLayerInput) == 0)
