@@ -51,7 +51,7 @@ Remotes:
     achubaty/amc@development,
     PredictiveEcology/LandR@development,
     PredictiveEcology/reproducible@development,
-    hadley/pryr
+    hadley/pryr@master
 Collate: 
     'RSFplot.R'
     'avrgTimeComparison.R'
