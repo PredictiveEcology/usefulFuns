@@ -11,17 +11,17 @@
 #' @author Tati Micheletti
 #' @export
 #' @importFrom reproducible prepInputs postProcess
-#' @importFrom terra rast 
+#' @importFrom terra rast
 #'
 #' @rdname prepInputStack
 prepInputStack <- function(...) {
   message("prepInput a raster stack...")
   stackLayers <- prepInputs(...)
-  postProcessedLayers <- lapply(stackLayers, 
-                                FUN = function(layer, ...) {
-                                  postProcess(layer,...)
-                                }, ...)
-  postProcessedLayers <- rast(postProcessedLayers)
-  names(postProcessedLayers) <- names(stackLayers)
-  return(postProcessedLayers)
+  # postProcessedLayers <- lapply(stackLayers,
+  #                               FUN = function(layer, ...) {
+  #                                 postProcess(layer,...)
+  #                               }, ...)
+  # postProcessedLayers <- rast(postProcessedLayers)
+  # names(postProcessedLayers) <- names(stackLayers)
+  return(stackLayers)
 }
