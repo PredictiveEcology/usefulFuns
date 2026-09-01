@@ -268,7 +268,7 @@ utils::globalVariables(c(
       if (!exists("sbsetID")) {
         if (tryCatch(
           {
-            pryr::where(name = "sbsetID", env = env)
+            whereDefined(name = "sbsetID", env = env)
             return(FALSE)
           },
           error = function(e) {
@@ -283,7 +283,7 @@ utils::globalVariables(c(
             envir = env
           )
         } else {
-          sbsetID <- get("sbsetID", envir = pryr::where(name = "sbsetID", env = env))
+          sbsetID <- get("sbsetID", envir = whereDefined(name = "sbsetID", env = env))
         }
       }
       dtForTest <- dtForTest[sbsetID, ]

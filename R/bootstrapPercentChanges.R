@@ -21,7 +21,6 @@
 #' @importFrom effsize cohen.d
 #' @importFrom future plan
 #' @importFrom future.apply future_lapply
-#' @importFrom pryr where
 #' @importFrom raster getValues raster
 #' @importFrom reproducible prepInputs Cache
 #' @importFrom stats wilcox.test t.test
