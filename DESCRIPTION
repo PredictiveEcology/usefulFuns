@@ -28,7 +28,6 @@ Imports:
     LandR,
     magrittr,
     methods,
-    pryr,
     quickPlot,
     raster,
     rasterVis,
